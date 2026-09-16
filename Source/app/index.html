@@ -1,0 +1,1605 @@
+<!DOCTYPE html><html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="light" name="color-scheme">
+    <meta content="default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none';" http-equiv="Content-Security-Policy">
+    <title>نظام إدخال البيانات</title>
+    <meta content="#3367D6" name="theme-color">
+    <link href="assets/schemacraft.ico" rel="icon" type="image/x-icon">
+    <link href="./styles.css?v=20260906-alpha53" rel="stylesheet">
+    <script defer="" src="./workspace.js?v=20260906-alpha53"></script>
+    <script defer="" src="./app.js?v=20260906-alpha53"></script>
+  </head>
+  <body class="session-pending">
+    <div class="session-privacy-screen" id="session-privacy-screen" role="status">
+      <img src="assets/schemacraft.ico" alt="شعار SchemaCraft">
+      <strong>SchemaCraft</strong>
+      <span id="session-privacy-message">جاري التحقق من جلسة التطبيق…</span>
+    </div>
+    <svg aria-hidden="true" class="icon-sprite">
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-4-4"></path>
+      </symbol>
+      <symbol id="icon-save" viewBox="0 0 24 24">
+        <path d="M5 3h12l2 2v16H5z"></path>
+        <path d="M8 3v6h8V3M8 21v-7h8v7"></path>
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14"></path>
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24">
+        <path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14M10 11v6M14 11v6"></path>
+      </symbol>
+      <symbol id="icon-new" viewBox="0 0 24 24">
+        <path d="M6 3h8l4 4v14H6zM14 3v5h5M9 14h6M12 11v6"></path>
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19 13.5v-3l-2-.7-.5-1.2.9-1.9-2.1-2.1-1.9.9-1.2-.5-.7-2h-3l-.7 2-1.2.5-1.9-.9-2.1 2.1.9 1.9-.5 1.2-2 .7v3l2 .7.5 1.2-.9 1.9 2.1 2.1 1.9-.9 1.2.5.7 2h3l.7-2 1.2-.5 1.9.9 2.1-2.1-.9-1.9.5-1.2z"></path>
+      </symbol>
+      <symbol id="icon-exit" viewBox="0 0 24 24">
+        <path d="M10 4H4v16h6M14 8l4 4-4 4M8 12h10"></path>
+      </symbol>
+      <symbol id="icon-power" viewBox="0 0 24 24">
+        <path d="M12 3v9"></path>
+        <path d="M6.4 6.4a8 8 0 1 0 11.2 0"></path>
+      </symbol>
+      <symbol id="icon-backup" viewBox="0 0 24 24">
+        <path d="M5 4h14v5H5zM4 9h16v11H4zM9 14h6M12 11v6"></path>
+      </symbol>
+      <symbol id="icon-clear" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18"></path>
+      </symbol>
+      <symbol id="icon-unlink" viewBox="0 0 24 24">
+        <path d="M5 12h5M14 12h5M9 8l6 8M15 8l-6 8"></path>
+      </symbol>
+      <symbol id="icon-open" viewBox="0 0 24 24">
+        <path d="M14 5h5v5M19 5l-8 8M18 13v6H5V6h6"></path>
+      </symbol>
+      <symbol id="icon-edit" viewBox="0 0 24 24">
+        <path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"></path>
+      </symbol>
+      <symbol id="icon-up" viewBox="0 0 24 24">
+        <path d="m6 15 6-6 6 6"></path>
+      </symbol>
+      <symbol id="icon-down" viewBox="0 0 24 24">
+        <path d="m6 9 6 6 6-6"></path>
+      </symbol>
+      <symbol id="icon-left" viewBox="0 0 24 24"><path d="M20 12H4m6-6-6 6 6 6"></path></symbol>
+      <symbol id="icon-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"></path></symbol>
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <rect height="11" rx="2" width="14" x="5" y="10"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </symbol>
+      <symbol id="icon-unlock" viewBox="0 0 24 24">
+        <rect height="11" rx="2" width="14" x="5" y="10"></rect>
+        <path d="M8 10V7a4 4 0 0 1 7-2.6"></path>
+      </symbol>
+      <symbol id="icon-tag" viewBox="0 0 24 24">
+        <path d="M3 12V4h8l10 10-7 7z"></path>
+        <circle cx="8" cy="8" r="1"></circle>
+      </symbol>
+      <symbol id="icon-archive" viewBox="0 0 24 24">
+        <path d="M4 7h16v14H4zM3 3h18v4H3zM9 12h6"></path>
+      </symbol>
+      <symbol id="icon-restore" viewBox="0 0 24 24">
+        <path d="M4 7h16v14H4zM3 3h18v4H3zM12 17v-6M9 14l3-3 3 3"></path>
+      </symbol>
+      <symbol id="icon-fields" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16"></path>
+        <circle cx="8" cy="6" r="2"></circle>
+        <circle cx="15" cy="12" r="2"></circle>
+        <circle cx="11" cy="18" r="2"></circle>
+      </symbol>
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m3 11 9-8 9 8"></path>
+        <path d="M5 10v10h14V10M9 20v-6h6v6"></path>
+      </symbol>
+      <symbol id="icon-exchange" viewBox="0 0 24 24">
+        <path d="M7 7h13M16 3l4 4-4 4"></path>
+        <path d="M17 17H4M8 13l-4 4 4 4"></path>
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 3 5 6v5c0 4.8 2.8 8.1 7 10 4.2-1.9 7-5.2 7-10V6z"></path>
+        <path d="m9 12 2 2 4-4"></path>
+      </symbol>
+      <symbol id="icon-tune" viewBox="0 0 24 24">
+        <path d="M4 6h7M15 6h5M4 12h3M11 12h9M4 18h9M17 18h3"></path>
+        <circle cx="13" cy="6" r="2"></circle>
+        <circle cx="9" cy="12" r="2"></circle>
+        <circle cx="15" cy="18" r="2"></circle>
+      </symbol>
+      <symbol id="icon-globe" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18M12 3c3 3 4.5 6 4.5 9S15 18 12 21M12 3c-3 3-4.5 6-4.5 9S9 18 12 21"></path>
+      </symbol>
+    </svg>
+    <header class="app-header">
+      <div class="header-shell">
+        <h1 class="visually-hidden" id="app-title">نظام إدخال البيانات</h1>
+        <div class="header-main-row">
+          <div class="header-system-cluster">
+            <div class="visually-hidden status status-loading" id="app-status" role="status">
+              <span aria-hidden="true" class="status-dot"></span>
+              <span id="app-status-text">جاري فتح التطبيق…</span>
+            </div>
+            <button aria-label="اختيار مستخدم التدقيق" class="audit-user-badge" id="audit-user-badge" type="button"><span>المستخدم:</span><strong id="audit-user-name">غير محدد</strong></button>
+            <button aria-label="إدارة وضع الصلاحيات" class="session-mode-badge" id="session-mode-badge" type="button">
+              <svg aria-hidden="true" class="session-mode-icon">
+                <use href="#icon-lock"></use>
+              </svg>
+              <span id="session-mode-text">الوضع العادي</span>
+            </button>
+          </div>
+          <nav aria-label="التنقل الرئيسي" class="mode-switch global-navigation">
+            <button class="mode-button mode-button-active" data-mode="home" id="home-mode-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-home"></use>
+              </svg>
+              <span class="nav-label">الرئيسية</span>
+            </button>
+            <button class="mode-button" data-mode="search" id="search-page-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-search"></use>
+              </svg>
+              <span class="nav-label">البحث</span>
+            </button>
+            <button class="mode-button" data-mode="entry" id="entry-mode-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-new"></use>
+              </svg>
+              <span class="nav-label">إدخال البيانات</span>
+            </button>
+            <button class="mode-button admin-navigation" data-mode="import" id="import-page-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-exchange"></use>
+              </svg>
+              <span class="nav-label">الاستيراد</span>
+            </button>
+            <button class="mode-button admin-navigation" data-mode="export" id="export-page-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-exchange"></use>
+              </svg>
+              <span class="nav-label">التصدير</span>
+            </button>
+            <button class="mode-button builder-mode-button admin-navigation" data-mode="builder" id="builder-mode-button" type="button">
+              <svg aria-hidden="true" class="nav-icon">
+                <use href="#icon-fields"></use>
+              </svg>
+              <span class="nav-label">تصميم التطبيق</span>
+            </button>
+          </nav>
+          <div class="header-utility">
+            <div aria-label="أوامر التطبيق" class="header-actions">
+              <button aria-label="إغلاق البرنامج" class="header-command header-exit-command" data-tooltip="إغلاق البرنامج" id="close-app-button" type="button">
+                <svg aria-hidden="true" class="action-icon header-command-icon">
+                  <use href="#icon-power"></use>
+                </svg>
+                <span class="visually-hidden">إغلاق</span>
+              </button>
+              <button aria-label="فتح الإعدادات" class="header-command header-settings-command" data-mode="settings" data-tooltip="الإعدادات" id="settings-page-button" type="button">
+                <svg aria-hidden="true" class="action-icon header-command-icon">
+                  <use href="#icon-settings"></use>
+                </svg>
+                <span class="visually-hidden">الإعدادات</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="header-schema-navigation" id="header-schema-navigation" hidden></div>
+      </div>
+    </header>
+    <dialog class="editor-dialog" id="create-schema-dialog">
+      <div class="dialog-heading"><h2>تصميم جديد</h2><button class="dialog-close" type="button" aria-label="إغلاق" data-close-dialog="create-schema-dialog">×</button></div>
+      <form id="create-schema-form" class="dialog-content">
+          <label class="field"><span>اسم التصميم</span><input class="control" id="create-schema-name" required></label>
+          <label class="check-field"><input id="create-schema-follow" type="checkbox"><span>إنشاء ملفات فارغة تلقائيًا من تصميم آخر</span></label>
+          <label class="field" id="create-schema-source-field" hidden><span>التصميم المصدر</span><select class="control" id="create-schema-source"></select></label>
+          <p class="muted-text" id="create-schema-follow-description" hidden>تُنشأ ملفات فارغة لكل IDs الموجودة في المصدر، وتتبع الإضافات والحذف فيه تلقائيًا. حذف ملف من هذا التصميم لا يحذفه من المصدر. تبقى بيانات هذا التصميم مستقلة.</p>
+      </form>
+      <div class="dialog-actions"><button class="button button-primary" type="submit" form="create-schema-form">إنشاء التصميم</button><button class="button button-secondary" type="button" data-close-dialog="create-schema-dialog">إلغاء</button></div>
+    </dialog>
+    <main class="page">
+      <div class="page-scroll-content">
+        <noscript>
+          <div class="message message-error">
+            يجب تفعيل JavaScript لتشغيل التطبيق.
+          </div>
+        </noscript>
+        <div class="message message-error" hidden="" id="startup-error">
+          <strong>تعذّر فتح التطبيق.</strong>
+          <span id="startup-error-message"></span>
+        </div>
+        <div class="app-workspace" data-mode="entry" id="app-workspace">
+          <div class="workspace-schema-strip" hidden id="workspace-schema-strip">
+            <nav aria-label="التبديل بين تصاميم إدخال البيانات" class="schema-tabs page-schema-tabs" hidden id="entry-schema-tabs"></nav>
+            <nav aria-label="التبديل بين التصاميم في المصمّم" class="schema-tabs page-schema-tabs" hidden id="builder-schema-tabs"></nav>
+            <nav aria-label="اختيار تصميم الاستيراد" class="schema-tabs page-schema-tabs" hidden id="import-schema-tabs"></nav>
+            <nav aria-label="اختيار نوع أو تصميم التصدير" class="schema-tabs page-schema-tabs" hidden id="export-scope-tabs"></nav>
+          </div>
+          <aside aria-label="التنقل بين فئات التطبيق" class="workspace-sidebar workspace-category-navigator" id="category-navigator">
+            <div aria-expanded="true" class="category-navigator-heading collapsible-title-space" data-collapse-builder-sidebar>
+              <h2 id="category-nav-title">فئات السجل</h2>
+            </div>
+            <nav aria-label="فئات التطبيق" class="category-nav-list" id="builder-category-nav-list"></nav>
+          </aside>
+          <div class="workspace-main">
+            <section class="loading-view" id="loading-view">
+              <span aria-hidden="true" class="spinner"></span>
+              <h2>جاري تجهيز مساحة العمل…</h2>
+              <p>يتم فحص التصميم وملف Excel وحالة الإدارة.</p>
+            </section>
+
+            <section class="application-page home-view" hidden id="home-view">
+  <div aria-label="لوحة صفحات التطبيق" class="home-dashboard home-grid-6x6" id="home-navigation">
+    <section aria-labelledby="home-data-workspace-title" class="home-dashboard-card home-page-module home-tabbed-workspace home-data-card" data-card-kind="data" data-grid-x="1" data-grid-w="6">
+      <header class="home-card-heading home-unified-card-heading">
+        <h3 class="home-card-title-link" data-home-destination="entry" id="home-data-workspace-title">إدخال البيانات</h3>
+      </header>
+      <div class="home-card-content home-page-module-content" id="home-data-content">
+        <div class="home-statistics-row home-data-statistics-row" id="home-data-general-tags"></div>
+        <div class="home-schema-browser main-category-tab-workspace">
+          <nav aria-label="تصاميم البيانات" class="home-schema-browser-tabs" id="home-data-schema-tabs" role="tablist"></nav>
+          <div class="home-schema-data-list home-schema-browser-panels" id="recent-records"></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="home-builder-workspace-title" class="home-dashboard-card home-page-module home-tabbed-workspace home-builder-card admin-dashboard-card" data-admin-dashboard="builder" data-card-kind="builder" data-grid-x="1" data-grid-w="6">
+      <header class="home-card-heading home-unified-card-heading">
+        <h3 class="home-card-title-link" data-home-destination="builder" id="home-builder-workspace-title">بناء التصاميم</h3>
+      </header>
+      <div class="home-card-content home-page-module-content" id="home-builder-content">
+        <div class="home-statistics-row home-builder-statistics-row" id="home-builder-general-tags"></div>
+        <div class="home-schema-browser home-builder-schema-browser main-category-tab-workspace">
+          <nav aria-label="تصاميم المصمّم" class="home-schema-browser-tabs" id="home-builder-schema-tabs" role="tablist"></nav>
+          <div class="home-builder-schema-list home-schema-browser-panels" id="home-builder-schemas"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card" data-card-kind="table" data-grid-x="1" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link" data-home-destination="search">البحث في السجلات</h3></header>
+      <div class="home-card-content" id="home-search-content"><div class="home-dashboard-list" id="home-recent-searches"></div></div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card admin-dashboard-card" data-admin-dashboard="import" data-card-kind="table" data-grid-x="3" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link admin-dashboard-action" data-home-destination="import">استيراد البيانات</h3></header>
+      <div class="home-card-content" id="home-import-content"><div class="home-dashboard-list" id="home-recent-imports"></div></div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card admin-dashboard-card" data-admin-dashboard="export" data-card-kind="table" data-grid-x="5" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link admin-dashboard-action" data-home-destination="export">تصدير البيانات</h3></header>
+      <div class="home-card-content" id="home-export-content"><div class="home-dashboard-list" id="recent-exports"></div></div>
+    </section>
+  </div>
+</section>
+
+<dialog class="editor-dialog home-chart-dialog" id="home-chart-dialog">
+  <div class="dialog-heading"><div><h2>إعداد الرسم البياني</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="home-chart-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <p class="dialog-note" id="home-chart-dialog-schema"></p>
+    <div class="home-chart-dialog-fields">
+      <label class="field"><span>نوع الرسم</span><select class="control" id="home-chart-type"><option value="bar">شريط النسبة</option><option value="gauge">مخطط دائري</option></select></label>
+      <label class="field"><span id="home-chart-source-label">الحقل</span><select class="control" id="home-chart-field"></select></label>
+    </div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-home-chart" type="button">تطبيق الرسم</button><button class="button button-secondary" data-close-dialog="home-chart-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog home-custom-stat-dialog" id="home-custom-stat-dialog">
+  <div class="dialog-heading"><div><h2>إحصاء بيانات مخصص</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="home-custom-stat-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <div class="home-custom-stat-fields">
+      <label class="field"><span>اسم الإحصاء</span><input class="control" id="home-custom-stat-label" maxlength="80" type="text"></label>
+      <label class="field"><span>طريقة الحساب</span><select class="control" id="home-custom-stat-calculation"><option value="filled">السجلات التي تحتوي قيمة</option><option value="checked">السجلات المحددة</option><option value="distinct">القيم المختلفة</option></select></label>
+    </div>
+    <div class="home-custom-stat-schema-fields" id="home-custom-stat-schema-fields"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="save-home-custom-stat" type="button">حفظ الإحصاء</button><button class="button button-danger-quiet" hidden id="delete-home-custom-stat" type="button">حذف الإحصاء</button><button class="button button-secondary" data-close-dialog="home-custom-stat-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+            <section class="application-page full-search-view" hidden id="full-search-view">
+  <nav class="search-scope-strip schema-tabs page-schema-tabs" aria-label="نطاق البحث" role="tablist">
+    <button aria-selected="false" class="schema-tab search-global-tab" data-search-type="global" type="button">بحث عام</button>
+    <span aria-hidden="true" class="search-scope-divider"></span>
+    <span class="search-schema-tabs" id="search-schema-choice-list"></span>
+  </nav>
+
+  <div class="search-workspace-layout">
+    <aside class="search-page-sidebar">
+      <section class="workspace-panel action-rail-card search-command-panel">
+        
+        <div class="rail-button-list">
+          <button class="button button-secondary" id="search-new-button" type="button">بحث جديد</button>
+          <button class="button button-secondary" id="full-search-clear-button" type="button">مسح قيم المرشحات</button>
+          <button class="button button-secondary" id="search-clear-headers-button" type="button">إعادة حقول النتائج</button>
+        </div>
+        <p aria-live="polite" hidden class="workflow-status search-live-log" id="search-live-log">جاهز للبحث.</p>
+        <button class="button button-primary search-main-submit" id="full-search-submit-button" type="button">تشغيل البحث</button>
+      </section>
+
+
+    </aside>
+
+    <main class="search-page-main">
+      <section class="schema-search-workflow" id="schema-search-workflow">
+
+
+        <section class="workspace-panel full-search-filter-panel search-filter-sheet" id="single-schema-search-panel">
+          <div class="full-search-filter-heading"><button class="button button-secondary" id="search-filter-config-button" type="button">اختيار حقول المطابقة</button></div>
+          <div hidden class="selection-chip-list" id="schema-filter-selection-summary"></div>
+          <div class="categorized-filter-groups schema-search-filter-groups" id="schema-search-filter-groups">
+            <section class="selection-category-group schema-search-filter-category system-search-fields" id="full-search-system-fields">
+              <strong class="schema-search-filter-category-title">بيانات السجل</strong>
+              <div class="field-grid compact-grid schema-search-category-field-grid">
+                <div class="field categorized-filter-control" id="full-search-record-id-field"><label for="full-search-record-id">ID</label><input class="control" dir="ltr" id="full-search-record-id" type="text"></div>
+              </div>
+            </section>
+            <div class="builder-empty empty-state-compact full-search-fields-empty" hidden id="full-search-fields-empty">لم تُحدّد مرشحات لهذا البحث.</div>
+            <div class="full-search-dynamic-fields" id="full-search-fields"></div>
+          </div>
+        </section>
+
+        <section class="workspace-panel search-result-fields-panel">
+          <div class="section-title-line"><button class="button button-secondary" id="full-search-options-button" type="button">اختيار حقول النتائج</button></div>
+          <div class="selection-chip-list full-search-options-summary" id="full-search-options-summary"></div>
+        </section>
+      </section>
+
+      <section class="multi-schema-search global-query-workflow" hidden id="multi-schema-search">
+        <section class="workspace-panel global-search-schema-step">
+          <div class="workflow-step-heading"><span>1</span><div><h3>اختر التصاميم</h3><p class="muted-text">يمكن البحث في تصميم واحد أو عدة تصاميم.</p></div></div>
+          <div class="schema-choice-button-list" id="global-query-schema-list"></div>
+        </section>
+
+        <section class="workspace-panel global-search-config-step">
+          <div class="workflow-step-heading"><span>2</span><div><h3>اختر المرشحات وحقول النتائج</h3><p class="muted-text">ترك مرشحات المطابقة فارغة يعني البحث في كل الحقول المناسبة.</p></div></div>
+          <div class="global-search-selection-stack">
+            <section class="selection-summary-card search-selection-summary"><div class="selection-summary-heading"><button class="button button-secondary" id="general-search-filter-button" type="button">اختيار حقول المطابقة</button></div><div class="selection-chip-list" id="global-filter-selection-summary"></div></section>
+            <section class="selection-summary-card search-selection-summary"><div class="selection-summary-heading"><button class="button button-secondary" id="general-search-fields-button" type="button">اختيار حقول النتائج</button></div><div class="selection-chip-list" id="global-field-selection-summary"></div></section>
+          </div>
+        </section>
+
+        <section class="workspace-panel global-search-query-step" id="global-search-criteria-panel">
+          <div class="workflow-step-heading"><span>3</span><div><h3>اكتب عبارة البحث</h3><p class="muted-text">يبدأ البحث من زر تشغيل البحث في اللوحة اليسرى.</p></div></div>
+          <label class="field global-query-field"><span>عبارة البحث</span><input class="control" id="global-search-query" type="search" placeholder="اكتب نصًا أو رقمًا أو قيمة قائمة"></label>
+          <input id="global-search-record-code" type="hidden"><div hidden id="global-search-fields"></div>
+        </section>
+
+        <div hidden id="global-search-settings"><div id="global-search-field-options"></div></div>
+        <div hidden id="advanced-search-settings"><div id="multi-schema-choice-list"></div><div id="multi-schema-query-list"></div></div>
+        <div hidden><button id="clear-multi-schema-search" type="button">مسح</button><button id="run-multi-schema-search" type="button">بحث عام</button></div>
+      </section>
+
+      <section class="workspace-panel search-history-results-panel">
+        <div class="section-title-line history-table-heading"><div><h3>سجل عمليات البحث</h3><p class="muted-text">اعرض النتائج المحفوظة أو استعد المرشحات وحقول النتائج بصورة مستقلة.</p></div><div class="history-heading-actions"><input class="control" id="search-history-query" placeholder="الملاحظات، المستخدم أو التاريخ" type="search"><button class="button button-danger-quiet" id="clear-search-history" type="button">مسح السجل</button></div></div>
+        <div class="table-scroll search-history-table-scroll">
+          <table class="data-table search-history-table">
+            <thead><tr><th>الوقت</th><th>المستخدم</th><th>النطاق</th><th>الملاحظات</th><th>عدد النتائج</th><th>الإجراءات</th></tr></thead>
+            <tbody id="search-history-list"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</section>
+
+<dialog class="editor-dialog editor-dialog-wide search-results-dialog" id="search-results-dialog">
+  <div class="dialog-heading"><div><p class="section-kicker">نتائج البحث</p><h2 id="search-results-dialog-title">النتائج</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="search-results-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <section class="search-table-panel search-results-section" id="single-schema-results-panel">
+      <div class="search-table-summary"><strong id="full-search-summary">جاهز للبحث.</strong></div>
+      <div class="table-scroll schema-search-results-table-scroll" id="schema-search-results-table-scroll"><table class="data-table records-table"><thead id="full-search-table-head"></thead><tbody id="full-search-table-body"></tbody></table></div>
+      <div class="table-pagination"><button class="button button-secondary" id="full-search-previous" type="button">السابق</button><span id="full-search-page-label"></span><button class="button button-secondary" id="full-search-next" type="button">التالي</button></div>
+    </section>
+    <div class="multi-schema-results global-card-results" hidden id="multi-schema-results"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" data-close-dialog="search-results-dialog" type="button">تم</button></div>
+</dialog>
+
+<dialog class="editor-dialog search-notes-dialog" id="search-notes-dialog">
+  <div class="dialog-heading"><h2>ملاحظات عملية البحث</h2><button aria-label="إلغاء" class="dialog-close" id="cancel-search-notes-x" type="button">×</button></div>
+  <div class="dialog-content"><label class="check-field"><input id="full-search-include-archived" type="checkbox"><span>إظهار السجلات المؤرشفة</span></label><label class="field"><span>ملاحظات السجل <small>اختياري</small></span><textarea class="control" id="search-notes-input" rows="4" placeholder="اتركها فارغة للمتابعة دون ملاحظات"></textarea></label></div>
+  <div class="dialog-actions"><button class="button button-primary" id="confirm-search-notes" type="button">تشغيل البحث</button><button class="button button-secondary" id="cancel-search-notes" type="button">إلغاء</button></div>
+</dialog>
+
+            <section class="application-page exchange-view export-view" hidden id="export-view">
+  <select class="visually-hidden" id="export-table-schema"></select>
+  <select class="visually-hidden" id="export-portable-schema"></select>
+
+  <section class="workspace-panel exchange-mode-selector schema-export-mode-selector" hidden id="schema-export-mode-selector">
+    <div class="section-title-line"><div><h3>نوع تصدير التصميم</h3><p class="muted-text">التصميم محدد من الشريط العلوي؛ اختر مخرجه هنا.</p></div></div>
+    <div class="secondary-segmented-tabs exchange-mode-tabs" role="tablist" aria-label="نوع تصدير التصميم">
+      <button class="button button-secondary is-active" data-export-mode="table" title="تصدير سجلات التصميم إلى جدول Excel" type="button">جدول بيانات Excel</button>
+      <button class="button button-secondary" data-export-mode="portable" title="حزمة كاملة قابلة للنقل للتصميم المختار" type="button">حزمة تصميم ZIP</button>
+      <button class="button button-secondary" data-export-mode="advanced" title="قوالب تقارير وحقول ورسوم ودوال" type="button">تقرير متقدم</button>
+    </div>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel profile-export-workflow" data-export-panel="profile" id="profile-export-panel">
+    <div class="section-title-line"><div><h3>تقارير ملفات PDF</h3><p class="muted-text">أدخل ID واحدًا أو عدة IDs، ثم اختر الملفات والحقول. لكل ID تقرير PDF مستقل؛ تُجمع التقارير المتعددة في ZIP واحد.</p></div></div>
+    <div class="profile-export-search-row">
+      <label class="field"><span>IDs الأشخاص</span><textarea class="control" dir="ltr" id="profile-export-record-code" rows="2" placeholder="A1234567, B1234567" aria-describedby="profile-export-id-hint"></textarea><small class="muted-text" id="profile-export-id-hint">افصل بين IDs بفاصلة أو مسافة أو سطر جديد.</small></label>
+      <button class="button button-secondary" id="inspect-profile-export" type="button">البحث في كل التصاميم</button>
+    </div>
+    <section class="selection-summary-card profile-export-results-section">
+      <div class="section-title-line"><div><h4>الملفات المطابقة</h4><span class="quiet-badge" id="profile-export-result-count">لم يُجرَ بحث</span></div><button class="button button-secondary" disabled id="open-profile-info-fields" type="button">اختيار صيغة المعلومات العامة</button></div>
+      <p class="muted-text">اختر تصميمًا أو أكثر لكل ID. مربع عنوان التصميم يطبّق اختياره على الجميع؛ مربع تضمين ID يحدد دخوله في التصدير.</p>
+      <div class="table-scroll compact-profile-table-scroll"><table class="data-table compact-profile-table profile-export-matrix"><thead><tr><th>تضمين</th><th>ID</th><th>معلومات عامة</th></tr></thead><tbody id="profile-export-profile-table-body"><tr><td class="table-empty" colspan="3">أدخل IDs ثم شغّل البحث.</td></tr></tbody></table></div>
+    </section>
+    <section class="selection-summary-card profile-export-fields-section">
+      <div class="section-title-line"><div><h4>حقول التقرير</h4><p class="muted-text">يمكن تحديد فئة كاملة من الحوار.</p></div><button class="button button-secondary" disabled id="open-profile-export-fields" type="button">اختيار الحقول عبر التصاميم</button></div>
+      <div class="profile-export-field-tags" id="profile-export-field-tags"><span class="selection-chip selection-chip-empty">تظهر الحقول بعد البحث.</span></div>
+    </section>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="profile-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" disabled id="choose-profile-export-location" type="button">اختيار المكان</button></section>
+    <p class="workflow-status muted-text" id="profile-export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel" data-export-panel="table" hidden id="export-panel">
+    <div class="section-title-line"><div><h3>تصدير جدول Excel</h3><p class="muted-text" id="table-export-schema-label">التصميم المختار من الشريط العلوي.</p></div></div>
+    <section class="selection-summary-card exchange-selection-block"><div class="selection-summary-heading"><strong>المرشحات المختارة وقيمها</strong><button class="button button-secondary" id="open-export-filter-dialog" type="button">اختيار المرشحات</button></div><div class="categorized-filter-groups export-filter-values" id="export-filter-values"></div></section>
+    <section class="selection-summary-card exchange-selection-block"><div class="selection-summary-heading"><strong>الفئات والحقول المختارة</strong><button class="button button-secondary" id="open-export-fields-dialog" type="button">اختيار الحقول</button></div><div class="selection-chip-list categorized-selection-list" id="export-selected-field-summary"></div></section>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="table-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" id="choose-table-export-location" type="button">اختيار المكان</button></section>
+    <div class="export-checkbox-stack">
+      <label class="check-field"><input checked id="export-include-related" type="checkbox"><span>تضمين الفئات المتكررة في أوراق مستقلة</span></label>
+      <label class="check-field"><input id="export-include-attachments" type="checkbox"><span>إرفاق الملفات المطابقة داخل حزمة ZIP</span></label>
+    </div>
+    <p class="workflow-status muted-text" id="export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel" data-export-panel="portable" hidden id="portable-export-panel">
+    <div class="section-title-line"><div><h3>حزمة تصميم محمولة</h3><p class="muted-text" id="portable-export-schema-label">التصميم مختار من الشريط العلوي.</p></div></div>
+    <p>تحتوي الحزمة على Excel والتصميم والمرفقات والتعريفات العامة والتحقق من سلامة الملفات. كل حزمة تحتوي على تصميم واحد.</p>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="portable-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" id="choose-portable-export-location" type="button">اختيار المكان</button></section>
+    <p class="workflow-status muted-text" id="portable-export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section" data-export-panel="advanced" hidden id="advanced-export-panel" data-visual-only="true">
+    <div class="report-hero studio-page-hero"><div><span class="report-eyebrow">التقرير المتقدم</span><h3>بيانات واضحة.<br>تقارير تليق بعملك.</h3><p>صمّم مرة واحدة، وطبّق على ملفاتك، ثم راجع الأرقام وصدّر تقريرًا جاهزًا للمشاركة.</p><div class="studio-capabilities"><span>كتل مرئية</span><span>حسابات موثّقة</span><span>PDF بالعربية</span></div></div><div class="studio-page-art" aria-hidden="true"><div class="studio-art-paper"><div class="studio-art-heading"></div><div class="studio-art-line"></div><div class="studio-art-line short"></div><div class="studio-art-chart"><i></i><i></i><i></i><i></i></div><div class="studio-art-table"></div><small>SchemaCraft</small></div></div></div>
+    <div id="studio-launch-slot"></div>
+    <div class="studio-page-guide"><div><b>1 · صمّم</b><p>ابدأ بتخطيط جاهز أو اسحب كتلًا إلى الصفحة.</p></div><div><b>2 · اربط البيانات</b><p>اختر التصميم والحقول والملفات مرة واحدة.</p></div><div><b>3 · راجع وصدّر</b><p>افحص الأرقام، وثّق التعديلات، ثم احفظ PDF.</p></div></div>
+  </section>
+
+  <section class="exchange-history-panel export-history-panel">
+    <div class="workspace-panel history-table-card">
+      <div class="section-title-line history-table-heading"><div><h3>سجل التصدير</h3><p class="muted-text explanation-text">سجل موحد لتقارير PDF وجداول Excel وحزم ZIP. يُضبط عدد الصفوف من الإعدادات.</p></div><div class="history-heading-actions"><input class="control" id="export-history-search" placeholder="التاريخ أو الملف أو الملاحظات" type="search"><button class="button button-danger-quiet" id="clear-export-history" type="button">مسح السجل</button></div></div>
+      <div class="table-scroll"><table class="data-table exchange-history-table"><thead><tr><th>الوقت</th><th>المستخدم</th><th>النوع</th><th>الملف</th><th>السجلات</th><th>المكان</th><th>الملاحظات</th><th>الإجراءات</th></tr></thead><tbody id="export-history-body"></tbody></table></div><p class="muted-text" id="export-history-summary"></p>
+    </div>
+  </section>
+</section>
+
+<section class="application-page exchange-view import-view" hidden id="import-view">
+  <select class="visually-hidden" id="import-target-schema"></select>
+  <section class="workspace-panel import-workflow-head">
+    <div class="import-step-heading"><span>1</span><h3>ما نوع الملف؟</h3></div>
+    <div class="field"><span>نوع الاستيراد</span><select class="visually-hidden" id="import-type-select"><option value="excel">جدول Excel</option><option value="portable">حزمة SchemaCraft ZIP</option></select><div class="secondary-segmented-tabs segmented-control"><button class="button button-secondary is-active" data-import-mode="excel" type="button">Excel</button><button class="button button-secondary" data-import-mode="portable" type="button">SchemaCraft ZIP</button></div></div>
+  </section>
+  <section class="workspace-panel exchange-section admin-only-panel import-section" data-import-panel="excel" id="import-panel">
+    <div class="section-title-line"><h3>استيراد جدول Excel</h3></div>
+    <div class="import-stage"><div class="import-step-heading"><span>2</span><h4>اختيار الملف وفحصه</h4></div><div class="import-file-row"><div class="import-file-picker"><input accept=".xlsx" class="visually-hidden" id="import-file" type="file"><label class="button button-secondary" for="import-file" id="import-file-label">اختيار ملف</label><span id="import-file-name">لم يُختر ملف</span></div><button class="button button-secondary" id="inspect-import-button" type="button">فحص الملف</button></div></div>
+    <div class="import-stage import-mapping-stage">
+      <div class="import-step-heading"><span>3</span><h4>المطابقة اليدوية والتحديث</h4></div><p class="import-mapping-placeholder" id="import-mapping-placeholder">تظهر المطابقة هنا بعد فحص الملف.</p>
+      <div hidden id="import-mapping-area"><div class="import-summary-row"><div class="import-summary" id="import-summary"></div><button class="button button-secondary" id="ignore-all-import-fields" type="button">تجاهل كل الحقول</button></div><div class="import-inspection-problems" hidden id="import-inspection-problems"></div><div aria-hidden="true" class="import-mapping-header"><strong>عنوان العمود في الملف</strong><strong>الحقل المقابل في قاعدة البيانات</strong></div><div class="import-mapping-list" id="import-mapping-list"></div><div class="field-grid compact-grid"><label class="field"><span>عند وجود ID مسبقًا</span><select class="control" id="import-duplicate-policy"><option selected value="update">تحديث الحقول المطابقة بالقيم الجديدة</option><option value="skip">تخطي السجل</option><option value="reject">رفض السجل</option></select></label><label class="check-field"><input id="import-generate-missing-ids" type="checkbox"><span>أؤكد توليد ID جديد للصفوف ذات ID الفارغ</span></label><label class="check-field"><input id="import-clear-blanks" type="checkbox"><span>الخلايا الفارغة تمسح القيم الحالية (الافتراضي: الاحتفاظ)</span></label></div></div>
+    </div>
+    <div class="workflow-status import-result" id="import-result"></div>
+  </section>
+  <section class="workspace-panel exchange-section admin-only-panel" data-import-panel="portable" hidden id="portable-import-panel">
+    <div class="section-title-line"><h3>استيراد حزمة SchemaCraft</h3></div><div class="import-file-row"><div class="import-file-picker"><input accept=".zip" class="visually-hidden" id="portable-import-file" type="file"><label class="button button-secondary" for="portable-import-file">اختيار ZIP</label><span id="portable-import-file-name">لم يُختر ملف</span></div><button class="button button-secondary" id="inspect-portable-import" type="button">فحص الحزمة</button></div><div id="portable-import-summary"></div><label class="field"><span>عند تعارض سجل موجود</span><select class="control" id="portable-conflict-policy"><option selected value="newer">استخدام السجل الأحدث حسب تاريخ التعديل</option><option value="overwrite">إجبار الحزمة المستوردة على الاستبدال</option></select></label><p class="workflow-status muted-text" id="portable-import-status"></p>
+  </section>
+  <section class="exchange-history-panel import-history-panel">
+    <div class="workspace-panel history-table-card">
+      <div class="section-title-line history-table-heading"><div><h3>سجل الاستيراد</h3><p class="muted-text explanation-text">يُضبط عدد الصفوف من الإعدادات.</p></div><div class="history-heading-actions"><input class="control" id="import-history-search" placeholder="التاريخ أو الملف أو الملاحظات" type="search"><button class="button button-danger-quiet" id="clear-import-history" type="button">مسح السجل</button></div></div><div class="table-scroll"><table class="data-table exchange-history-table"><thead><tr><th>الوقت</th><th>المستخدم</th><th>الحالة</th><th>الملف</th><th>التصميم</th><th>أضيف</th><th>حُدّث</th><th>تُخطي</th><th>رُفض</th><th>الملاحظات</th><th>الإجراءات</th></tr></thead><tbody id="import-history-body"></tbody></table></div><p class="muted-text" id="import-history-summary"></p>
+    </div>
+  </section>
+</section>
+
+<dialog class="editor-dialog import-result-dialog" id="import-result-dialog"><div class="dialog-heading"><h2>نتيجة الاستيراد</h2></div><div class="dialog-content"><div class="import-result-summary" id="import-result-summary"></div><div class="import-result-details" id="import-result-details"></div><label class="field"><span>ملاحظات هذه العملية</span><textarea class="control" id="import-result-notes" rows="3" placeholder="اختياري"></textarea></label></div><div class="dialog-actions"><button class="button button-primary" id="finalize-import-result" type="button">إنهاء وحفظ في السجل</button></div></dialog>
+
+<dialog class="editor-dialog" id="export-notes-dialog"><div class="dialog-heading"><h2>ملاحظات عملية التصدير</h2></div><div class="dialog-content"><label class="field"><span>ملاحظات السجل (اختياري)</span><textarea class="control" id="export-notes-dialog-input" rows="4"></textarea></label></div><div class="dialog-actions"><button class="button button-primary" id="confirm-export-notes" type="button">اعتماد الملاحظات</button><button class="button button-secondary" id="cancel-export-notes" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="profile-export-options-dialog"><div class="dialog-heading"><div><h2>حقول تقرير الشخص</h2><p class="muted-text">يمكن اختيار الفئة كاملة أو تخصيص حقولها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="profile-export-options-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-profile-field-action="select" data-profile-field-target="report" type="button">تحديد الكل</button><button class="button button-quiet" data-profile-field-action="clear" data-profile-field-target="report" type="button">إلغاء الكل</button></div></div><div class="profile-export-selection tree-field-options" id="profile-export-selection"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-profile-export-fields" type="button">اعتماد الحقول</button><button class="button button-secondary" data-close-dialog="profile-export-options-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="profile-info-fields-dialog"><div class="dialog-heading"><div><h2>صيغة المعلومات العامة</h2><p class="muted-text">اختر حقولًا مختلفة لكل تصميم؛ ستظهر قيمها كسطر واحد في جدول الملفات.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="profile-info-fields-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-profile-field-action="select" data-profile-field-target="info" type="button">تحديد الكل</button><button class="button button-quiet" data-profile-field-action="clear" data-profile-field-target="info" type="button">إلغاء الكل</button></div></div><div class="profile-export-selection tree-field-options" id="profile-info-field-selection"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-profile-info-fields" type="button">اعتماد الصيغة</button><button class="button button-secondary" data-close-dialog="profile-info-fields-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="export-filter-dialog"><div class="dialog-heading"><div><h2>مرشحات سجلات Excel</h2><p class="muted-text">حدد فئة كاملة أو اختر حقولًا بعينها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="export-filter-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar export-selection-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-export-filter-action="select" type="button">تحديد الكل</button><button class="button button-quiet" data-export-filter-action="clear" type="button">إلغاء الكل</button></div></div><div class="export-filter-builder tree-field-options" id="export-filter-builder"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-export-filters" type="button">اعتماد المرشحات</button><button class="button button-secondary" data-close-dialog="export-filter-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="export-fields-dialog"><div class="dialog-heading"><div><h2>الفئات وحقول أعمدة Excel</h2><p class="muted-text">حدد فئة كاملة أو خصص حقولها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="export-fields-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar export-selection-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" id="export-select-all-categories" type="button">تحديد الكل</button><button class="button button-quiet" id="export-clear-categories" type="button">إلغاء الكل</button></div></div><div class="export-field-list tree-field-options" id="export-field-list"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-export-fields" type="button">اعتماد الحقول</button><button class="button button-secondary" data-close-dialog="export-fields-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog" id="profile-pdf-appearance-dialog">
+    <div class="dialog-heading"><h2>خيارات تقرير PDF</h2><button class="dialog-close" aria-label="إغلاق" data-close-dialog="profile-pdf-appearance-dialog" type="button">×</button></div>
+    <div class="dialog-content pdf-appearance-options">
+      <label class="check-field"><input type="checkbox" id="profile-pdf-show-image"><span>إظهار الصورة الشخصية أعلى يسار فئتها</span></label>
+      <label class="check-field"><input type="checkbox" id="profile-pdf-show-attachments"><span>إظهار المرفقات في نهاية الملف</span></label>
+      <p class="muted-text">تُعرض الصور داخل التقرير، وتُضاف صفحات مرفقات PDF كاملة في نهايته.</p>
+    </div>
+    <div class="dialog-actions"><button class="button button-primary" type="button" id="confirm-profile-pdf-appearance">متابعة التصدير</button><button class="button button-secondary" type="button" data-close-dialog="profile-pdf-appearance-dialog">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog editor-dialog-wide" id="import-review-dialog">
+  <div class="dialog-heading"><div><h2>مراجعة تغييرات الاستيراد</h2><p class="muted-text">لم تُحفظ التغييرات بعد. ألغِ اختيار الملف لاستبعاده، أو ألغِ تغيير قيمة للاحتفاظ بالقيمة السابقة. الملفات الجديدة تُعتمد كاملة.</p></div><button class="dialog-close" type="button" data-close-dialog="import-review-dialog" aria-label="إغلاق">×</button></div>
+  <div class="dialog-content"><p class="import-review-guidance">لم تُحفظ التغييرات بعد. ألغِ اختيار الملف لاستبعاده، أو ألغِ تغيير قيمة للاحتفاظ بالقيمة السابقة. تُعتمد الملفات الجديدة كاملة.</p><div class="import-review-toolbar"><input class="control" id="import-review-search" placeholder="بحث في IDs والحقول والقيم" aria-label="البحث في مراجعة الاستيراد"><button class="button button-secondary" type="button" data-import-review-bulk="all">تحديد الملفات الظاهرة</button><button class="button button-secondary" type="button" data-import-review-bulk="none">استبعاد الملفات الظاهرة</button><button class="button button-secondary" type="button" data-import-review-bulk="keep">الاحتفاظ بالقيم السابقة للملفات الظاهرة</button></div><p id="import-review-summary"></p><div id="import-review-errors" class="import-review-errors"></div><div id="import-review-entries"></div><p id="import-review-status" role="status"></p></div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-import-review" type="button">اعتماد الاختيارات وحفظ التغييرات</button><button class="button button-secondary" type="button" data-close-dialog="import-review-dialog">إلغاء دون حفظ</button></div>
+</dialog>
+
+            <dialog class="editor-dialog editor-dialog-wide settings-dialog" hidden id="settings-view">
+  <div class="dialog-heading">
+    <div><p class="section-kicker">تخصيص مساحة العمل</p><h2>الإعدادات</h2></div>
+    <button aria-label="إغلاق" class="dialog-close" data-close-dialog="settings-view" type="button">×</button>
+  </div>
+  <div class="dialog-content settings-dialog-content">
+    <section class="workspace-panel settings-sheet">
+      <nav aria-label="أقسام الإعدادات" class="settings-category-tabs">
+        <button aria-selected="true" class="settings-category-tab is-active" data-settings-category-tab="application" type="button">التطبيق</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="interface" type="button">الواجهة وسير العمل</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="shortcuts" type="button">الاختصارات</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="default-app" type="button">تطبيق افتراضي جديد</button>
+      </nav>
+
+      <section class="settings-section" data-settings-category="application">
+        <h3>هوية التطبيق</h3>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>اسم التطبيق</span><input class="control" id="setting-title" type="text"></label>
+          <label class="field"><span>اسم السجل بالمفرد</span><input class="control" id="setting-singular" type="text"></label>
+          <label class="field"><span>اسم السجلات بالجمع</span><input class="control" id="setting-plural" type="text"></label>
+          <label class="field"><span>اللون الأساسي</span><input class="control color-control" id="setting-primary-color" type="color"></label>
+          <label class="field"><span>اللغة</span><select class="control" id="setting-language"><option value="ar">العربية</option></select></label>
+        </div>
+                      <button class="button button-secondary" id="backup-button" type="button">
+                <svg aria-hidden="true" class="action-icon">
+                  <use href="#icon-backup"></use>
+                </svg>
+                إنشاء نسخة احتياطية
+              </button>
+<div class="settings-section-actions"><p class="muted-text" id="settings-save-state"></p><button class="button button-primary" id="save-settings-button" type="button">تطبيق إعدادات التطبيق</button></div>
+      </section>
+
+      <section class="settings-section" data-settings-category="interface" hidden>
+        <h3>صورة الخلفية</h3>
+        <div class="workspace-background-setting">
+          <div class="workspace-background-preview-frame"><img alt="معاينة صورة الخلفية" id="setting-background-preview"></div>
+          <div class="workspace-background-controls">
+            <div class="workspace-background-gallery" id="setting-background-gallery" aria-label="الصور المتاحة"></div>
+            <div class="workspace-background-inputs">
+              <label class="field" for="setting-background-image"><span>إضافة صورة جديدة</span><input accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif" class="control" id="setting-background-image" type="file"></label>
+              <p class="muted-text" id="setting-background-status">تُستخدم الصورة الافتراضية حاليًا.</p>
+              <label class="check-field"><input id="setting-background-all-pages" type="checkbox"><span>تطبيق صورة الخلفية على جميع الصفحات (عند إيقافه تظهر في الصفحة الرئيسية فقط)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="settings-subheading">سلوك مساحة العمل</h3>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>الصفحة الأولى</span><select class="control" id="setting-startup-page"><option value="home">الرئيسية</option><option value="entry">إدخال البيانات</option><option value="search">البحث</option></select></label>
+          <label class="field"><span>عدد صفوف صفحة البحث</span><select class="control" id="setting-search-page-size"><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label>
+        </div>
+
+        <h3 class="settings-subheading">عدد السجلات في صفحات العمل</h3>
+        <p class="muted-text">أدخل عددًا مستقلًا من 1 إلى 100 لكل صفحة.</p>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>الملفات الحديثة في إدخال البيانات</span><input class="control" id="setting-entry-history-limit" max="100" min="1" type="number" value="8"></label>
+          <label class="field"><span>سجلات تاريخ منشئ التصميم</span><input class="control" id="setting-builder-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ البحث</span><input class="control" id="setting-search-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ الاستيراد</span><input class="control" id="setting-import-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ التصدير</span><input class="control" id="setting-export-history-limit" max="100" min="1" type="number" value="20"></label>
+        </div>
+
+        <h3 class="settings-subheading">بطاقات التاريخ في الصفحة الرئيسية</h3>
+        <p class="muted-text">العدد الافتراضي لكل بطاقة هو 3 سجلات.</p>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>بطاقة إدخال البيانات</span><input class="control" id="setting-home-entry-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة منشئ التصميم</span><input class="control" id="setting-home-builder-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة البحث</span><input class="control" id="setting-home-search-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة الاستيراد</span><input class="control" id="setting-home-import-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة التصدير</span><input class="control" id="setting-home-export-history-limit" max="100" min="1" type="number" value="3"></label>
+        </div>
+        <label class="check-field"><input id="setting-show-entry-search" type="checkbox"><span>إظهار لوحة البحث داخل صفحة إدخال البيانات</span></label>
+        <label class="check-field"><input id="setting-draft-autosave" type="checkbox"><span>حفظ مسودة السجل محليًا تلقائيًا</span></label>
+        <label class="check-field"><input id="setting-show-explanations" type="checkbox"><span>إظهار العناوين الفرعية والشروحات المساعدة غير الضرورية</span></label>
+        <div class="settings-section-actions"><button class="button button-primary" id="save-workspace-preferences" type="button">تطبيق الواجهة وسير العمل</button></div>
+      </section>
+
+      <section class="settings-section" data-settings-category="shortcuts" hidden>
+        <div class="section-title-line"><div><h3>اختصارات لوحة المفاتيح</h3><p class="muted-text">تُلتقط المفاتيح من موضعها الفيزيائي، فلا تتغير بتغيير لغة لوحة المفاتيح، وتظهر دائمًا بالإنجليزية.</p></div></div>
+        <div class="shortcut-settings-list" id="shortcut-settings-list"></div>
+        <div class="settings-section-actions"><button class="button button-primary" id="save-shortcuts-button" type="button">تطبيق الاختصارات العامة</button></div>
+      </section>
+
+      <section class="settings-section default-app-settings" data-settings-category="default-app" data-settings-transient hidden>
+        <div class="section-title-line"><div><h3>إنشاء تطبيق افتراضي جديد</h3><p class="muted-text">ينشئ نسخة مستقلة من التطبيق الحالي في مجلد تختاره، مع إزالة البيانات التي تحددها.</p></div></div>
+        <div class="default-app-options">
+          <label class="check-field"><input id="default-app-clear-history" type="checkbox"><span>مسح سجلات العمليات وأسماء المستخدمين</span></label>
+          <label class="check-field"><input id="default-app-clear-records" type="checkbox"><span>مسح جميع السجلات والمرفقات (يمسح السجلات التاريخية أيضًا)</span></label>
+          <label class="check-field"><input id="default-app-clear-schema" type="checkbox"><span>مسح مساحة العمل والتصاميم بالكامل</span></label>
+        </div>
+        <div class="default-app-destination-row">
+          <label class="field"><span>مجلد الإنشاء</span><input class="control" id="default-app-destination" readonly type="text" placeholder="لم يُختر مجلد"></label>
+          <button class="button button-secondary" id="choose-default-app-destination" type="button">اختيار المجلد</button>
+        </div>
+        <p class="muted-text" id="default-app-status"></p>
+        <div class="settings-section-actions"><button class="button button-primary" disabled id="create-default-app" type="button">إنشاء التطبيق الجديد</button></div>
+      </section>
+    </section>
+  </div>
+  <div class="dialog-actions settings-dialog-actions"><button class="button button-secondary" id="discard-settings-changes" type="button">تجاهل التغييرات</button></div>
+</dialog>
+
+            <section class="application-page readonly-view" hidden="" id="readonly-view">
+              <div class="readonly-toolbar">
+                <div>
+                  <p class="section-kicker">عرض للقراءة فقط</p>
+                  <h2 id="readonly-title">السجل</h2>
+                </div>
+              </div>
+              <div class="readonly-content" id="readonly-content"></div>
+            </section>
+
+            <section hidden="" id="entry-view">
+              <section aria-labelledby="search-title" class="search-panel" hidden="" id="search-panel">
+                <div aria-expanded="true" class="section-heading collapsible-title-space" data-collapse-search-panel>
+                  <div class="search-title-row">
+                    <h2 id="search-title">البحث عن سجل</h2>
+                  </div>
+                  <div class="search-heading-actions">
+                    <button aria-label="اختيار حقول البحث" class="button button-secondary search-icon-button" id="choose-search-fields-button" title="اختيار حقول البحث" type="button">
+                      <svg aria-hidden="true" class="action-icon">
+                        <use href="#icon-settings"></use>
+                      </svg>
+                      <span class="visually-hidden" id="choose-search-fields-text">حقول البحث: الافتراضية</span>
+                    </button>
+                    <label class="check-field search-archive-toggle">
+                      <input id="include-archived-search" type="checkbox">
+                      <span>إظهار المؤرشفة</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="field-grid compact-grid entry-system-search-fields">
+                  <div class="field">
+                    <label for="entry-search-record-id">ID</label>
+                    <input class="control" dir="ltr" id="entry-search-record-id" type="text">
+                  </div>
+                </div>
+                <div class="builder-empty empty-state-compact search-fields-empty" hidden="" id="search-fields-empty">
+                  لا توجد حقول بحث افتراضية. اختر حقولًا لهذا البحث فقط.
+                </div>
+                <div class="search-fields" id="search-fields"></div>
+                <div class="search-actions">
+                  <button aria-label="بحث" class="button button-primary entry-search-submit" id="search-button" title="بحث" type="button">
+                    <svg aria-hidden="true" class="action-icon">
+                      <use href="#icon-search"></use>
+                    </svg>
+                    <span id="search-button-text">البحث في السجلات</span>
+                    <span aria-hidden="true" class="spinner" hidden="" id="search-spinner"></span>
+                  </button>
+                  <button class="button button-secondary entry-search-clear" id="clear-search-button" type="button">
+                    <svg aria-hidden="true" class="action-icon"><use href="#icon-clear"></use></svg>
+                    مسح سجل البحث
+                  </button>
+                </div>
+                <div class="search-results-heading">
+                  <strong>النتائج المحتملة</strong>
+                  <span hidden id="search-summary">أدخل معيارًا واحدًا أو أكثر ثم اضغط بحث.</span>
+                </div>
+                <div aria-live="polite" class="search-results" id="search-results"></div>
+                <div class="search-result-pager" hidden="" id="search-result-pager">
+                  <button aria-label="النتيجة السابقة" class="button button-secondary" id="previous-search-result" type="button">
+                    السابق
+                  </button>
+                  <span id="search-result-position"></span>
+                  <button aria-label="النتيجة التالية" class="button button-secondary" id="next-search-result" type="button">
+                    التالي
+                  </button>
+                </div>
+              </section>
+              <section class="empty-state" hidden="" id="empty-schema-panel">
+                <div aria-hidden="true" class="empty-icon">＋</div>
+                <p class="section-kicker">التطبيق فارغ وجاهز</p>
+                <h2>ابدأ بإضافة أول فئة وأول حقل</h2>
+                <p>
+                  لا توجد فئات أو حقول جاهزة. صمّم البنية التي تناسب استخدامك،
+                  ثم سيُنشأ نموذج الإدخال والبحث تلقائيًا.
+                </p>
+                <button class="button button-primary" id="open-builder-button" type="button">
+                  <svg aria-hidden="true" class="action-icon">
+                    <use href="#icon-settings"></use>
+                  </svg>
+                  فتح مصمّم التطبيق
+                </button>
+              </section>
+              <form hidden="" id="record-form" novalidate="">
+                <input id="record-code" readonly="" type="hidden">
+                <div aria-live="polite" class="section-list" id="main-sections"></div>
+                <section class="related-area" hidden="" id="unanchored-related-area">
+                  <div class="section-heading">
+                    <div>
+                      <h2>فئات إضافية</h2>
+                    </div>
+                  </div>
+                  <div class="section-list" id="unanchored-related-sections"></div>
+                </section>
+                <section class="attachment-gallery" hidden="" id="attachment-gallery">
+                  <div class="section-heading">
+                    <div>
+                      <h2>ملفات وصور السجل</h2>
+                    </div>
+                  </div>
+                  <div class="attachment-gallery-grid" id="attachment-gallery-grid"></div>
+                </section>
+              </form>
+            </section>
+            <section hidden="" id="builder-view">
+              <section class="global-definitions-panel" hidden id="global-definitions-panel">
+                <div class="builder-intro builder-summary-panel" id="global-builder-stats" tabindex="-1">
+                  <div aria-expanded="true" class="builder-summary-heading collapsible-title-space" data-collapse-builder-panel><h2>الحقول العامة</h2><p class="muted-text">ملخص مباشر للفئات والحقول العامة.</p></div>
+                  <div aria-label="إحصاءات الحقول العامة" class="builder-stats"><span><b id="global-category-count">0</b> فئة عامة</span><span><b id="global-field-count">0</b> حقل منفصل</span><span><b id="global-embedded-field-count">0</b> حقل داخل الفئات</span></div>
+                </div>
+                <section class="builder-panel" id="global-categories-panel" tabindex="-1">
+                  <div aria-expanded="true" class="panel-heading collapsible-title-space" data-collapse-builder-panel><div><h3>الفئات والحقول العامة</h3></div></div>
+                  <div class="builder-categories global-definition-list" id="global-category-list"></div>
+                </section>
+                <section class="builder-panel" id="global-fields-panel" tabindex="-1">
+                  <div aria-expanded="true" class="panel-heading collapsible-title-space" data-collapse-builder-panel><div><h3>الحقول العامة المنفصلة</h3></div></div>
+                  <div class="builder-fields global-definition-list" id="global-field-list"></div>
+                </section>
+                <section class="builder-panel builder-conditions-panel" id="global-conditions-panel" tabindex="-1">
+                  <div aria-expanded="true" class="panel-heading collapsible-title-space" data-collapse-builder-panel><div><h3>شروط الظهور</h3></div></div>
+                  <div class="condition-list" id="global-conditions"></div>
+                  <div class="builder-empty empty-state-compact" id="no-global-conditions-message">لا توجد شروط ظهور في التعريفات العامة.</div>
+                </section>
+              </section>
+              <div id="schema-builder-content">
+              <div class="builder-intro builder-summary-panel" id="builder-intro-panel" tabindex="-1">
+                <div aria-expanded="true" class="builder-summary-heading collapsible-title-space" data-collapse-builder-panel><h2 id="builder-summary-schema-name">إحصاءات التصميم</h2><p class="muted-text">ملخص مباشر لبنية التصميم الحالي وبياناته.</p></div>
+                <div aria-label="إحصاءات البنية" class="builder-stats">
+                  <span><b id="category-count">0</b> فئة</span>
+                  <span><b id="field-count">0</b> حقل</span>
+                  <span><b id="record-count">0</b> سجل محفوظ</span>
+                </div>
+              </div>
+              <section class="builder-panel" id="builder-categories-panel" tabindex="-1">
+                <div aria-expanded="true" class="panel-heading collapsible-title-space" data-collapse-builder-panel>
+                  <div>
+                    <h3>الفئات والحقول</h3>
+                    
+                  </div>
+                </div>
+                <div class="builder-categories" id="builder-categories"></div>
+                <div class="builder-empty empty-state-compact" id="no-categories-message">
+                  لا توجد فئات بعد. أضف فئة رئيسية أو متكررة للبدء.
+                </div>
+              </section>
+              <section class="builder-panel builder-conditions-panel" id="builder-conditions-panel" tabindex="-1">
+                <div aria-expanded="true" class="panel-heading collapsible-title-space" data-collapse-builder-panel><div><h3>شروط الظهور</h3></div></div>
+                <div class="condition-list" id="builder-conditions"></div>
+                <div class="builder-empty empty-state-compact" id="no-conditions-message">
+                  لا توجد شروط. كل الفئات والحقول ظاهرة دائمًا.
+                </div>
+              </section>
+              </div>
+<section class="builder-panel" id="builder-history-dialog">
+  <div class="section-title-line history-table-heading">
+    <div><h3>سجل تعديلات التصاميم</h3><p class="muted-text" id="builder-history-scope"></p></div>
+    <div class="history-heading-actions">
+      <input class="control" id="builder-history-query" type="search" aria-label="البحث في سجل التعديلات" placeholder="البحث في سجل التعديلات">
+      <button class="button button-danger-quiet" id="clear-builder-history" type="button">مسح السجل</button>
+    </div>
+  </div>
+  <div class="table-scroll"><table class="data-table"><thead><tr><th>الوقت</th><th>المستخدم</th><th>التصميم</th><th>التعديل</th><th>التفاصيل</th></tr></thead><tbody id="builder-history-dialog-list"></tbody></table></div>
+</section>
+</section>
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="add-global-category-dialog">
+  <div class="dialog-heading"><div><p class="section-kicker">إضافة إلى التصميم</p><h2>محتويات الفئة العامة</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="add-global-category-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <p class="muted-text">تُضاف الفئة وكل فئاتها الفرعية وحقولها افتراضيًا. أزل التحديد عن أي عنصر لا تريد نسخه إلى التصميم.</p>
+    <div class="tree-field-options" id="add-global-category-tree"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="confirm-add-global-category" type="button">إضافة المحدد</button><button class="button button-secondary" data-close-dialog="add-global-category-dialog" type="button">إلغاء</button></div>
+</dialog>
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="globalize-existing-dialog">
+  <div class="dialog-heading"><div><p class="section-kicker">التعريفات العامة</p><h2>إنشاء تعريف عام من عنصر موجود</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="globalize-existing-dialog" type="button">×</button></div>
+  <div class="dialog-content globalize-existing-layout">
+    <div class="secondary-segmented-tabs segmented-control" hidden id="globalize-existing-kind" role="tablist" aria-label="نوع العنصر"><button class="button button-secondary is-active" data-globalize-kind="category" type="button">فئة وشجرتها</button><button class="button button-secondary" data-globalize-kind="field" type="button">حقل</button></div>
+    <section><h3>1. اختر التصميم المصدر</h3><div class="schema-button-choice-list schema-toggle-list" id="globalize-source-schemas"></div></section>
+    <section><div class="selection-dialog-toolbar"><div><h3>2. اختر الفئات والحقول</h3><p class="muted-text">حدد الفئة كاملة، أو افتحها وحدد بعض حقولها فقط. يمكنك اختيار أكثر من فئة في العملية نفسها.</p></div><div class="compact-option-actions"><button class="button button-quiet" data-globalize-selection-action="select" type="button">تحديد الكل</button><button class="button button-quiet" data-globalize-selection-action="clear" type="button">إلغاء الكل</button></div></div><div class="tree-field-options" id="globalize-source-items"></div></section>
+    <p class="muted-text">عند اختيار فئة، تُحفظ حقولها وكل فئاتها الفرعية المتداخلة. القيم المسجلة لا تنتقل إلى التعريف العام.</p>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="confirm-globalize-existing" type="button">إنشاء وربط</button><button class="button button-secondary" id="create-globalize-existing" type="button">إنشاء فقط</button><button class="button button-secondary" data-close-dialog="globalize-existing-dialog" type="button">إلغاء</button></div>
+</dialog>
+          </div>
+          <aside aria-label="إجراءات التطبيق" class="workspace-sidebar workspace-action-sidebar" id="workspace-action-sidebar">
+            <section class="mode-action-rail entry-action-rail" id="entry-action-rail">
+              <div class="action-rail-card entry-record-panel">
+              <div class="workflow-status action-rail-status" hidden>
+                <p class="section-kicker">إجراءات السجل</p>
+                <p class="save-note" id="save-note">
+                  يمكن الحفظ في أي وقت ما لم تُعرَّف حقول مطلوبة.
+                </p>
+                <p class="draft-status" id="draft-status">
+                  لا توجد مسودة محلية.
+                </p>
+              </div>
+              <div class="action-rail-buttons" id="entry-record-actions">
+                <button class="button button-secondary" id="reset-form-button" type="button">
+                  <svg aria-hidden="true" class="action-icon"><use href="#icon-new"></use></svg>
+                  <span id="reset-button-text">سجل جديد</span>
+                </button>
+                <button class="button button-primary" id="save-record-button" type="button">
+                  <svg aria-hidden="true" class="action-icon"><use href="#icon-save"></use></svg>
+                  <span id="save-button-text">حفظ التغييرات</span>
+                  <span aria-hidden="true" class="spinner" hidden="" id="save-spinner"></span>
+                </button>
+                <button class="button button-secondary" hidden="" id="archive-record-button" type="button">
+                  <svg aria-hidden="true" class="action-icon">
+                    <use href="#icon-archive"></use>
+                  </svg>
+                  <span id="archive-button-text">أرشفة السجل</span></button><button class="button button-danger" hidden="" id="delete-record-button" type="button">
+                  <svg aria-hidden="true" class="action-icon">
+                    <use href="#icon-trash"></use>
+                  </svg>
+                  <span id="delete-button-text">حذف السجل نهائيًا</span>
+                </button>
+              </div>
+              </div>
+              <div class="action-rail-card entry-recent-panel">
+                <div aria-expanded="true" class="entry-recent-heading collapsible-title-space" id="toggle-entry-recent"><span>الملفات المفتوحة مؤخرًا</span></div>
+                <div class="entry-recent-list" id="entry-recent-records"></div>
+              </div>
+            </section>
+            <aside aria-label="إجراءات المصمّم" class="mode-action-rail builder-action-rail" hidden="" id="builder-action-rail">
+              <div class="action-rail-card builder-actions-panel">
+              <section class="builder-management-rail" id="schema-management-panel">
+                <div class="schema-management-actions">
+<button class="button button-primary" id="builder-sidebar-add-field-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-plus"></use></svg>إضافة حقل</button>
+<button class="button button-primary" id="builder-sidebar-add-category-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-plus"></use></svg>إضافة فئة</button>
+<button class="button button-primary builder-schema-save-control" id="save-schema-button" type="button">
+                <svg aria-hidden="true" class="action-icon"><use href="#icon-save"></use></svg>
+                <span id="save-schema-text">حفظ التصميم</span>
+                <span aria-hidden="true" class="spinner" hidden="" id="schema-spinner"></span>
+              </button>
+<button class="button button-secondary builder-schema-save-control" id="discard-schema-button" type="button">
+                <svg aria-hidden="true" class="action-icon"><use href="#icon-clear"></use></svg>
+                تجاهل التغييرات
+              </button>
+<button class="button button-secondary" id="rename-schema-button" type="button">إعادة التسمية</button>
+<button class="button button-secondary" id="archive-schema-button" type="button">أرشفة</button>
+<button class="button button-secondary" id="duplicate-schema-button" type="button">نسخ البنية</button>
+<button class="button button-danger-quiet" id="delete-schema-button" type="button">حذف التصميم نهائيًا</button>
+<button class="button button-primary" id="create-schema-button" type="button">تصميم جديد</button>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <label class="field archived-schema-field" hidden id="archived-schema-field"><span>التصاميم المؤرشفة</span><select class="control" id="archived-schema-select"></select></label>
+                  <button class="button button-secondary" hidden id="restore-schema-button" type="button">استعادة المؤرشف</button>
+                  <button class="button button-secondary" hidden id="create-from-archived-schema-button" type="button">إنشاء من بنية المؤرشف</button>
+                  
+                </div>
+              </section>
+              <section class="builder-global-management-rail" hidden id="builder-global-management-rail">
+                <div class="workflow-status builder-action-status builder-global-action-status">
+                  <p class="section-kicker">حالة التعريفات العامة</p>
+                  <strong id="builder-global-save-state">كل التعريفات العامة محفوظة.</strong>
+                </div>
+                
+                <button class="button button-primary" id="save-general-definitions" type="button" disabled>حفظ التغييرات</button>
+                <button class="button button-secondary" id="discard-general-definitions" type="button" disabled>تجاهل التغييرات</button>
+                <button class="button button-primary" id="globalize-existing-definition" type="button">إنشاء عام من موجود</button>
+                <button class="button button-secondary" id="new-global-category" type="button">فئة عامة جديدة</button>
+                <button class="button button-secondary" id="new-global-field" type="button">حقل عام منفصل</button>
+              </section>
+              <div hidden class="workflow-status builder-action-status builder-schema-save-control">
+                <p class="section-kicker">حالة التصميم</p>
+                <strong id="builder-save-state">
+                  لا توجد تغييرات غير محفوظة.
+                </strong>
+                <small>
+                  يُحدَّث ملف Excel مع الحفاظ على السجلات الحالية.
+                </small>
+              </div>
+              
+              
+
+              </div>
+
+            </aside>
+            <section aria-label="إجراءات الاستيراد" class="mode-action-rail exchange-action-rail" hidden id="import-action-rail">
+              <div class="action-rail-card exchange-rail-panel"><p class="section-kicker">إجراءات الاستيراد</p><button class="button button-primary" disabled id="commit-import-button" data-import-rail-action="excel" type="button">معاينة تغييرات Excel</button><button class="button button-primary" disabled hidden id="commit-portable-import" data-import-rail-action="portable" type="button">تطبيق حزمة ZIP</button><button class="button button-secondary" id="new-import-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-new"></use></svg>استيراد جديد</button><button class="button button-secondary" id="clear-import-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-clear"></use></svg>مسح النموذج</button></div>
+
+            </section>
+            <section aria-label="إجراءات التصدير" class="mode-action-rail exchange-action-rail" hidden id="export-action-rail">
+              <div class="action-rail-card exchange-rail-panel"><p class="section-kicker">إجراءات التصدير</p><button class="button button-primary" id="profile-export-button" data-export-rail-action="profile" type="button">تصدير تقرير PDF</button><button class="button button-primary" hidden id="export-button" data-export-rail-action="table" type="button">تصدير جدول Excel</button><button class="button button-primary" hidden id="portable-export-button" data-export-rail-action="portable" type="button">تصدير حزمة ZIP</button><button class="button button-secondary" id="new-export-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-new"></use></svg>تصدير جديد</button><button class="button button-secondary" id="clear-export-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-clear"></use></svg>مسح الخيارات</button><textarea hidden id="export-notes"></textarea></div>
+
+            </section>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <dialog class="editor-dialog" id="category-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">تعريف فئة</p>
+          <h2 id="category-dialog-title">إضافة فئة</h2>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="category-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <section class="sub-editor configuration-import-editor">
+          <div class="sub-editor-heading"><div><h3>استيراد فئة</h3><p>اختر فئة ثم حدد الحقول التي تريد إضافتها كنسخ مستقلة.</p></div><button class="button button-secondary" id="apply-category-import" type="button">إضافة الحقول المحددة</button></div>
+          <div class="field-grid compact-grid"><div class="field field-full"><label for="category-import-source">الفئة المصدر</label><select class="control" id="category-import-source"><option value="">اختر فئة</option></select></div></div>
+          <div class="configuration-property-grid" id="category-import-fields"></div>
+        </section>
+        <div class="field-grid compact-grid">
+          <div class="field">
+            <label for="category-label">اسم الفئة</label>
+            <input class="control" id="category-label" type="text">
+          </div>
+          <div class="field">
+            <label for="category-kind">نوع الفئة</label>
+            <select class="control" id="category-kind">
+              <option value="main">رئيسية — مرة واحدة في السجل</option>
+              <option value="repeatable">متكررة — عدة بطاقات</option>
+            </select>
+          </div>
+          <label class="field field-full"><span>هل لها فئة أم؟</span><select class="control" id="category-has-parent"><option value="no">لا</option><option value="yes">نعم</option></select></label>
+          <label class="field field-full" id="category-parent-wrapper">
+            <span>دمج ضمن فئة أم</span>
+            <select class="control" id="category-parent">
+              <option value="">بلا فئة أم</option>
+            </select>
+            <small class="field-help">
+              إذا كانت الفئة الأم متكررة، ستظهر هذه الفئة داخل كل بطاقة أم
+              وتُحفظ العلاقة بين البطاقات تلقائيًا.
+            </small>
+          </label>
+          <label class="field field-full" hidden id="category-parent-field-wrapper">
+            <span>إظهار الفئة تحت حقل من الفئة الأم</span>
+            <select class="control" id="category-parent-field"></select>
+            <small class="field-help">اختر حقلًا محددًا، أو ضع الفئة في نهاية الفئة الأم.</small>
+          </label>
+          <label class="field field-full" id="category-placement-wrapper">
+            <span>مكان الفئة الجديدة</span>
+            <select class="control" id="category-placement"></select>
+            <small class="field-help">اختر موضع الفئة بين الفئات الرئيسية؛ يختفي هذا الخيار عند اختيار فئة أم.</small>
+          </label>
+          <div class="field field-full">
+            <label for="category-description">وصف قصير</label>
+            <textarea class="control" id="category-description" rows="2"></textarea>
+          </div>
+          <div class="field-grid field-full compact-grid" hidden="" id="category-repeatable-options">
+            <div class="field">
+              <label for="category-add-label">نص زر الإضافة</label>
+              <input class="control" id="category-add-label" type="text">
+            </div>
+            <select hidden id="category-anchor"><option value=""></option></select>
+            <label class="check-field field-full">
+              <input id="category-auto-start" type="checkbox">
+              <span>ابدأ ببطاقة فارغة تلقائيًا</span>
+            </label>
+            <div class="field">
+              <label for="category-card-title-field">حقل اسم البطاقة</label>
+              <select class="control" id="category-card-title-field"><option value="">بطاقة 1، 2…</option></select>
+            </div>
+            <div class="field" id="category-card-name-prefix-wrapper">
+              <label for="category-card-name-prefix">اسم ثابت للبطاقات</label>
+              <input class="control" id="category-card-name-prefix" placeholder="مثال: my_card" type="text">
+              <small class="field-help">عند عدم اختيار حقل للاسم تظهر البطاقات: الاسم 1، الاسم 2…</small>
+            </div>
+            <div class="field">
+              <label for="category-card-sort-mode">ترتيب البطاقات</label>
+              <select class="control" id="category-card-sort-mode"><option value="manual">يدوي / ترتيب الإدخال</option><option value="title">حسب اسم البطاقة (الأبجدية العربية)</option><option value="field">حسب حقل محدد</option></select>
+            </div>
+            <div class="field" hidden id="category-card-sort-field-wrapper"><label for="category-card-sort-field">حقل الترتيب</label><select class="control" id="category-card-sort-field"></select></div>
+            <div class="field"><label for="category-card-sort-direction">اتجاه الترتيب</label><select class="control" id="category-card-sort-direction"><option value="asc">تصاعدي</option><option value="desc">تنازلي</option></select></div>
+            <label class="check-field field-full">
+              <input id="category-related-person" type="checkbox">
+              <span>تمثل بطاقات هذه الفئة أشخاصًا مرتبطين بسجلات أخرى</span>
+            </label>
+            <small class="field-help field-full">
+              يضيف خانة لإدخال ID الشخص المرتبط، ثم ينسخ الحقول التي تحددها
+              في إعداد كل حقل.
+            </small>
+          </div>
+        </div>
+        <section class="dialog-subsection condition-editor-section">
+          <div class="dialog-section-heading">
+            <div>
+              <h3>شروط ظهور الفئة</h3>
+              <p class="dialog-note">
+                تظهر الفئة عندما تتحقق إحدى مجموعات الشروط.
+              </p>
+            </div>
+            <button class="button button-secondary" id="add-category-condition-button" type="button">
+              إضافة شرط ظهور
+            </button>
+          </div>
+          <div class="target-conditions-list" id="category-conditions-list"></div>
+        </section>
+      </div>
+      <label class="check-field global-editor-connect-choice" hidden id="global-category-connect-choice"><input id="global-category-connect-active" type="checkbox"><span>ربط التعريف الجديد بالتصميم المفتوح بعد إنشائه</span></label>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="confirm-category-button" type="button">
+          حفظ الفئة
+        </button>
+        <button class="button button-secondary" data-close-dialog="category-dialog" type="button">
+          إلغاء
+        </button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog editor-dialog-wide" id="field-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">تعريف حقل</p>
+          <h2 id="field-dialog-title">إضافة حقل</h2>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="field-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <section class="sub-editor configuration-import-editor">
+          <div class="sub-editor-heading"><div><h3>استيراد إعداد من حقل آخر</h3><p>نسخة محلية مستقلة ما لم تربطها صراحةً بتعريف عام.</p></div><button class="button button-secondary" id="apply-field-configuration-import" type="button">تطبيق المحدد</button></div>
+          <div class="field-grid compact-grid"><label class="field field-full"><span>الحقل المصدر</span><select class="control" id="field-configuration-source"><option value="">اختر حقلًا</option></select></label></div>
+          <div class="configuration-property-grid" id="field-configuration-properties">
+            <label class="check-field"><input checked data-import-field-property="label" type="checkbox"><span>الاسم والوصف</span></label>
+            <label class="check-field"><input checked data-import-field-property="type" type="checkbox"><span>النوع</span></label>
+            <label class="check-field"><input checked data-import-field-property="options" type="checkbox"><span>قيم القوائم</span></label>
+            <label class="check-field"><input checked data-import-field-property="behavior" type="checkbox"><span>المطلوب والبحث والعرض</span></label>
+            <label class="check-field"><input checked data-import-field-property="validation" type="checkbox"><span>التحقق والرقم والملف</span></label>
+            <label class="check-field"><input data-import-field-property="conditions" type="checkbox"><span>شروط الظهور (مع مراجعة المصادر)</span></label>
+          </div>
+        </section>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>الفئة</span><select class="control" id="field-category-name" aria-describedby="field-category-help"></select></label>
+          <label class="field"><span>موضع الحقل — بعد الحقل</span><select class="control" id="field-after"></select></label>
+          <p id="field-category-help" class="muted-text field-full">اختر الفئة ثم موضع الحقل داخلها. يُحفظ التغيير عند حفظ التصميم.</p>
+          <label class="check-field field-full"><input id="field-start-new-line" type="checkbox"><span>يبدأ من يمين سطر جديد — دون تغيير ترتيب الحقول</span></label>
+          <div class="field">
+            <label for="field-label">اسم الحقل</label>
+            <input class="control" id="field-label" type="text">
+          </div>
+          <div class="field">
+            <label for="field-type">نوع الحقل</label>
+            <select class="control" id="field-type">
+              <option value="text">نص</option>
+              <option value="spacer">مساحة فارغة — بلا اسم أو قيمة</option>
+              <option value="number">رقم</option>
+              <option value="select">قائمة</option>
+              <option value="checkbox">مربع اختيار واحد</option>
+              <option value="date">تاريخ</option>
+              <option value="file">ملف أو مرفق</option>
+              <option value="system_record_code">معرّف السجل — للعرض فقط</option>
+              <option value="user_name">اسم المستخدم الحالي — تعبئة تلقائية</option>
+            </select>
+          </div>
+          <div class="field" hidden id="field-text-mode-wrapper"><label for="field-text-mode">طول النص</label><select class="control" id="field-text-mode"><option value="short">قصير</option><option value="long">طويل</option></select></div>
+          <div class="field" hidden id="field-list-mode-wrapper"><label for="field-list-mode">قيم القائمة</label><select class="control" id="field-list-mode"><option value="custom">قيم مخصصة</option><option value="yes_no">نعم / لا</option></select></div>
+          <div class="field-grid field-full compact-grid" hidden id="field-date-mode-wrapper">
+            <label class="field"><span>طريقة التاريخ</span><select class="control" id="field-date-mode"><option value="manual_gregorian">يدوي — ميلادي</option><option value="manual_hijri">يدوي — هجري</option><option value="manual_persian">يدوي — هجري شمسي</option><option value="automatic_created">تلقائي عند الإنشاء</option><option value="automatic_saved">تلقائي عند حفظ أي تعديل</option><option value="automatic_checkbox">تلقائي عند آخر تحديد لمربع</option></select></label>
+            <label class="field" hidden id="field-date-trigger-wrapper"><span>مربع الاختيار المتحكم</span><select class="control" id="field-date-trigger"></select></label>
+          </div>
+          <div class="field">
+            <label for="field-placeholder">نص مساعد داخل الحقل</label>
+            <input class="control" id="field-placeholder" type="text">
+          </div>
+          <div class="field">
+            <label for="field-width">عرض الحقل</label>
+            <select class="control" id="field-width">
+              <option value="1">1 من 6</option>
+              <option value="2">2 من 6</option>
+              <option value="3">3 من 6</option>
+              <option value="4">4 من 6</option>
+              <option value="5">5 من 6</option>
+              <option value="full">سطر كامل</option>
+            </select>
+          </div>
+          <div class="field-grid field-full compact-grid" hidden id="field-checkbox-meanings">
+            <label class="field"><span>معنى التحديد (صحيح)</span><input class="control" id="field-checkbox-true-label" maxlength="80" placeholder="نعم"></label>
+            <label class="field"><span>معنى عدم التحديد (خطأ)</span><input class="control" id="field-checkbox-false-label" maxlength="80" placeholder="لا"></label>
+          </div>
+          <div class="field field-full" hidden="" id="field-options-wrapper">
+            <label for="field-options">الخيارات — خيار في كل سطر</label>
+            <textarea class="control" id="field-options" rows="5"></textarea>
+          </div>
+          <label class="check-field">
+            <input id="field-required" type="checkbox">
+            <span>حقل مطلوب</span>
+          </label>
+          <label class="check-field" id="field-unique-wrapper">
+            <input id="field-unique" type="checkbox">
+            <span>يجب أن تكون قيمته فريدة</span>
+          </label>
+          <label class="check-field" id="field-searchable-wrapper">
+            <input id="field-searchable" type="checkbox">
+            <span>استخدامه افتراضيًا في لوحة البحث</span>
+          </label>
+          <div class="field" hidden="" id="field-search-match-wrapper">
+            <label for="field-search-match">طريقة المطابقة</label>
+            <select class="control" id="field-search-match">
+              <option value="contains">يحتوي على النص</option>
+              <option value="exact">مطابقة تامة</option>
+            </select>
+          </div>
+          <label class="check-field" id="field-result-wrapper">
+            <input id="field-show-result" type="checkbox">
+            <span>إظهاره في بطاقة نتيجة البحث</span>
+          </label>
+          <label class="check-field" id="field-title-wrapper">
+            <input id="field-result-title" type="checkbox">
+            <span>استخدامه في عنوان بطاقة النتيجة</span>
+          </label>
+          <label class="check-field" hidden id="field-user-editable-wrapper"><input checked id="field-user-editable" type="checkbox"><span>يمكن تعديل اسم المستخدم بعد إنشاء السجل</span></label>
+          <div class="field" hidden id="field-user-value-mode-wrapper">
+            <label for="field-user-value-mode">وقت تحديث اسم المستخدم</label>
+            <select class="control" id="field-user-value-mode">
+              <option value="created_by">عند إنشاء السجل فقط</option>
+              <option value="current_on_save">المستخدم الذي حفظ آخر تعديل لسجل موجود</option>
+              <option value="current_on_checkbox">عند آخر تحديد لمربع اختيار</option>
+            </select>
+          </div>
+          <div class="field" hidden id="field-user-trigger-wrapper"><label for="field-user-trigger">مربع الاختيار المتحكم</label><select class="control" id="field-user-trigger"></select></div>
+          <label class="check-field field-full" hidden id="field-unique-card-checkbox-wrapper"><input id="field-unique-card-checkbox" type="checkbox"><span>السماح بتحديد هذا المربع في بطاقة واحدة فقط من الفئة المتكررة</span></label>
+        </div>
+        <section class="sub-editor" hidden="" id="related-person-field-editor">
+          <div class="sub-editor-heading">
+            <div>
+              <h3>النسخ من سجل الشخص المرتبط</h3>
+              <p>
+                اختر حقلًا رئيسيًا من سجل الشخص ليملأ هذا الحقل تلقائيًا بعد
+                إدخال ID.
+              </p>
+            </div>
+          </div>
+          <div class="field" id="related-person-source-checkbox-wrapper">
+            <label for="related-person-source-checkbox">1. مصدر البيانات</label>
+            <select class="control" id="related-person-source-checkbox"></select>
+          </div>
+          <div class="field">
+            <label for="related-person-source-field">2. الحقل المطلوب نسخه</label>
+            <select class="control" id="related-person-source-field">
+              <option value="">لا تنسخ قيمة تلقائيًا</option>
+            </select>
+          </div>
+        </section>
+        <section class="sub-editor" id="field-auto-update-editor">
+          <div class="sub-editor-heading"><div><h3>تحديث القيمة تلقائيًا</h3><p>غيّر قيمة هذا الحقل عند تحقق شرط في حقل آخر.</p></div></div>
+          <div class="field-grid compact-grid">
+            <div class="field"><label for="field-auto-source">الحقل المتحكم</label><select class="control" id="field-auto-source"><option value="">بدون تحديث تلقائي</option></select></div>
+            <div class="field"><label for="field-auto-operator">الشرط</label><select class="control" id="field-auto-operator"></select></div>
+            <div class="field" id="field-auto-value-wrapper"><label for="field-auto-value">القيمة المطلوبة</label><input class="control" id="field-auto-value" type="text"></div>
+            <div class="field"><label for="field-auto-action">القيمة الجديدة</label><select class="control" id="field-auto-action"><option value="fixed">قيمة ثابتة</option><option value="current_user">اسم المستخدم الحالي</option><option value="copy_source">نسخ قيمة الحقل المتحكم</option><option value="clear">مسح القيمة</option></select></div>
+            <div class="field" id="field-auto-result-wrapper"><label for="field-auto-result">القيمة الثابتة</label><input class="control" id="field-auto-result" type="text"></div>
+          </div>
+        </section>
+        <section class="sub-editor" hidden="" id="option-filter-editor">
+          <div class="sub-editor-heading">
+            <div>
+              <h3>تصفية الخيارات حسب حقل آخر</h3>
+              <p>لاختيار القيم المتاحة في هذه القائمة وفق قيمة حقل متحكم.</p>
+            </div>
+          </div>
+          <div class="field-grid compact-grid">
+            <div class="field field-full">
+              <label for="option-filter-source">الحقل المتحكم</label><select class="control" id="option-filter-source">
+                <option value="">بدون تصفية</option>
+              </select>
+            </div>
+            <div class="field field-full option-filter-matrix" id="option-filter-matrix"></div>
+          </div>
+        </section>
+        <section class="sub-editor" hidden="" id="number-behavior-editor">
+          <div class="sub-editor-heading">
+            <div>
+              <h3>سلوك الرقم</h3>
+              <p>اختر العرض والتخزين المناسبين للرقم أو المعرّف الرقمي.</p>
+            </div>
+          </div>
+          <label class="check-field">
+            <input id="number-format-thousands" type="checkbox">
+            <span>إظهار فواصل الآلاف، مثل 5,623,423,423</span>
+          </label>
+          <label class="check-field">
+            <input id="number-preserve-leading-zeros" type="checkbox">
+            <span>حفظ الأصفار في البداية، مثل 000123</span>
+          </label>
+          <div class="field field-full">
+            <span class="field-label">الرموز الإضافية المسموحة</span>
+            <div class="number-special-options" dir="ltr">
+              <label class="check-field"><input data-number-special="/" type="checkbox"><span>/</span></label>
+              <label class="check-field"><input data-number-special="-" type="checkbox"><span>-</span></label>
+              <label class="check-field"><input data-number-special="_" type="checkbox"><span>_</span></label>
+              <label class="check-field"><input data-number-special="$" type="checkbox"><span>$</span></label>
+              <label class="check-field"><input data-number-special="%" type="checkbox"><span>%</span></label>
+              <label class="check-field"><input data-number-special="*" type="checkbox"><span>*</span></label>
+            </div>
+          </div>
+          <p class="muted-text" id="number-storage-note"></p>
+        </section>
+
+        <section class="sub-editor" id="field-validation-editor">
+          <div class="sub-editor-heading">
+            <div>
+              <h3>قيود التحقق</h3>
+              <p>قيود بسيطة تُفحص في الواجهة وفي الخادم.</p>
+            </div>
+          </div>
+          <div class="field-grid compact-grid" hidden="" id="text-validation-fields">
+            <div class="field">
+              <label for="validation-min-length">أقل عدد أحرف</label><input class="control" id="validation-min-length" min="0" type="number">
+            </div>
+            <div class="field">
+              <label for="validation-max-length">أكبر عدد أحرف</label><input class="control" id="validation-max-length" min="0" type="number">
+            </div>
+            <div class="field field-full">
+              <label for="validation-pattern">نمط Regex اختياري</label><input class="control" dir="ltr" id="validation-pattern" type="text">
+            </div>
+          </div>
+          <div class="field-grid compact-grid" hidden="" id="number-validation-fields">
+            <div class="field">
+              <label for="validation-min-number">أقل قيمة</label><input class="control" id="validation-min-number" step="any" type="number">
+            </div>
+            <div class="field">
+              <label for="validation-max-number">أكبر قيمة</label><input class="control" id="validation-max-number" step="any" type="number">
+            </div>
+            <label class="check-field"><input id="validation-integer-only" type="checkbox"><span>عدد صحيح فقط</span></label>
+          </div>
+          <div class="field-grid compact-grid" hidden="" id="date-validation-fields">
+            <div class="field">
+              <label for="validation-min-date">أقدم تاريخ</label><input class="control" dir="ltr" id="validation-min-date" placeholder="YYYY-MM-DD" type="text">
+            </div>
+            <div class="field">
+              <label for="validation-max-date">أحدث تاريخ</label><input class="control" dir="ltr" id="validation-max-date" placeholder="YYYY-MM-DD" type="text">
+            </div>
+            <div class="field">
+              <label for="validation-compare-field">مقارنة مع حقل</label><select class="control" id="validation-compare-field">
+                <option value="">بدون مقارنة</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="validation-compare-operator">العلاقة</label><select class="control" id="validation-compare-operator">
+                <option value="after">بعد</option>
+                <option value="before">قبل</option>
+                <option value="on_or_after">في أو بعد</option>
+                <option value="on_or_before">في أو قبل</option>
+              </select>
+            </div>
+          </div>
+        </section>
+        <section class="sub-editor" hidden="" id="file-naming-editor">
+          <label class="check-field profile-image-option" id="file-profile-image-wrapper">
+            <input id="file-profile-image" type="checkbox">
+            <span>
+              عرض هذا المرفق كصورة شخصية في يسار فئة المعلومات الرئيسية
+            </span>
+          </label>
+          <div class="sub-editor-heading">
+            <div>
+              <h3>تسمية الملفات</h3>
+              <p>
+                يحفظ الامتداد الأصلي والبايتات كما هي، ويضيف عدادًا عند التكرار.
+              </p>
+            </div>
+            <select class="control compact-control" id="file-naming-mode">
+              <option value="original">الاحتفاظ باسم الملف الأصلي</option>
+              <option value="template">إنشاء الاسم من حقول السجل</option>
+            </select>
+          </div>
+          <div hidden="" id="file-template-editor">
+            <div class="template-add-row">
+              <div class="field">
+                <label for="file-part-prefix">النص قبل قيمة الحقل</label>
+                <input class="control" id="file-part-prefix" maxlength="30" placeholder="مثال: وثيقة-" type="text">
+              </div>
+              <div class="field">
+                <label for="file-part-field">الحقل المستخدم</label>
+                <select class="control" id="file-part-field"></select>
+              </div>
+              <div class="field">
+                <label for="file-part-suffix">النص بعد قيمة الحقل</label>
+                <input class="control" id="file-part-suffix" maxlength="30" placeholder="مثال: -شهادة" type="text">
+              </div>
+              <button class="button button-secondary" id="add-file-part-button" type="button">
+                <svg aria-hidden="true" class="action-icon">
+                  <use href="#icon-plus"></use>
+                </svg>
+                إضافة جزء
+              </button>
+            </div>
+            <div class="file-parts-list" id="file-parts-list"></div>
+          </div>
+        </section>
+        <section class="dialog-subsection condition-editor-section">
+          <div class="dialog-section-heading">
+            <div>
+              <h3>شروط ظهور الحقل</h3>
+              <p class="dialog-note">
+                تظهر قيمة الحقل عندما تتحقق إحدى مجموعات الشروط.
+              </p>
+            </div>
+            <button class="button button-secondary" id="add-field-condition-button" type="button">
+              إضافة شرط ظهور
+            </button>
+          </div>
+          <div class="target-conditions-list" id="field-conditions-list"></div>
+        </section>
+      </div>
+      <label class="check-field global-editor-connect-choice" hidden id="global-field-connect-choice"><input id="global-field-connect-active" type="checkbox"><span>ربط التعريف الجديد بالتصميم المفتوح بعد إنشائه</span></label>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="confirm-field-button" type="button">
+          حفظ الحقل
+        </button>
+        <button class="button button-secondary" data-close-dialog="field-dialog" type="button">
+          إلغاء
+        </button>
+      </div>
+</dialog>
+
+<dialog class="editor-dialog" id="field-category-dialog">
+  <div class="dialog-heading"><div><p class="section-kicker">المصمّم</p><h2>اختر فئة الحقل</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="field-category-dialog" type="button">×</button></div>
+  <div class="dialog-content"><label class="field"><span>الفئة</span><select class="control" id="new-field-category"></select></label><label class="field"><span>موضع الحقل — بعد الحقل</span><select class="control" id="new-field-after"></select></label></div>
+  <div class="dialog-actions"><button class="button button-primary" id="confirm-new-field-category" type="button">متابعة إلى الحقل</button><button class="button button-secondary" data-close-dialog="field-category-dialog" type="button">إلغاء</button></div>
+</dialog>
+    <dialog class="editor-dialog" id="condition-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">شرط ظهور</p>
+          <h2 id="condition-dialog-title">إضافة شرط</h2>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="condition-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <div class="dialog-grid">
+          <div class="field field-full">
+            <span>العنصر الذي سيتحكم الشرط في ظهوره</span>
+            <strong class="condition-target-label" id="condition-target-label"></strong>
+          </div>
+          <label class="field field-full">
+            <span>الحقل المتحكم</span>
+            <select class="control" id="condition-source"></select>
+          </label>
+          <label class="field">
+            <span>العملية</span>
+            <select class="control" id="condition-operator"></select>
+          </label>
+          <label class="field">
+            <span>مجموعة الشروط</span>
+            <select class="control" id="condition-group"></select>
+          </label>
+          <label class="check-field field-full condition-negate-control">
+            <input id="condition-negate" type="checkbox">
+            <span>عكس نتيجة هذا الشرط — NOT</span>
+          </label>
+          <div class="field field-full" id="condition-value-wrapper">
+            <span>القيمة</span>
+            <div id="condition-value-control"></div>
+          </div>
+          <p class="dialog-note field-full">
+            جميع الشروط داخل المجموعة نفسها مرتبطة بـ AND، والمجموعات المختلفة
+            مرتبطة بـ OR.
+          </p>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="confirm-condition-button" type="button">
+          حفظ الشرط
+        </button>
+        <button class="button button-secondary" data-close-dialog="condition-dialog" type="button">
+          إلغاء
+        </button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="search-fields-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">بحث مؤقت</p>
+          <h2>اختيار حقول البحث</h2>
+          <p class="muted-text">هذا الاختيار يخص جلسة التشغيل الحالية ولا يغيّر الإعداد الافتراضي.</p>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="search-fields-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <div class="selection-dialog-toolbar search-field-picker-tools">
+          <strong>الفئات والحقول</strong>
+          <div class="compact-option-actions">
+            <button class="button button-quiet" id="select-all-search-fields-button" type="button">تحديد الكل</button>
+            <button class="button button-quiet" id="clear-all-search-fields-button" type="button">إلغاء الكل</button>
+          </div>
+        </div>
+        <div class="search-field-options" id="search-field-options"></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="apply-search-fields-button" type="button">
+          تطبيق لهذه الجلسة
+        </button>
+        <button class="button button-secondary" id="reset-search-fields-button" type="button">
+          العودة إلى الافتراضية
+        </button>
+        <button class="button button-secondary" data-close-dialog="search-fields-dialog" type="button">
+          إلغاء
+        </button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog editor-dialog-wide selection-tree-dialog search-configuration-dialog" id="full-search-filter-dialog">
+  <div class="dialog-heading"><div><h2 id="search-filter-dialog-title">اختيار المرشحات</h2><p class="muted-text">كل عنصر محدد سيظهر كحقل حر في صفحة البحث.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="full-search-filter-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <div class="selection-dialog-toolbar full-search-option-heading"><strong>المرشحات المتاحة</strong><div class="compact-option-actions"><button class="button button-quiet" data-full-search-option-action="select" data-full-search-option-target="filters" type="button">تحديد الكل</button><button class="button button-quiet" data-full-search-option-action="clear" data-full-search-option-target="filters" type="button">إلغاء الكل</button></div></div>
+    <div class="search-field-options tree-field-options" id="full-search-filter-options"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-full-search-filters-button" type="button">تطبيق المرشحات</button><button class="button button-secondary" id="reset-full-search-filters-button" type="button">الافتراضي</button><button class="button button-secondary" data-close-dialog="full-search-filter-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog search-configuration-dialog" id="full-search-fields-dialog">
+  <div class="dialog-heading"><div><h2 id="search-fields-dialog-title">اختيار حقول النتائج</h2><p class="muted-text">تظهر الحقول المختارة في جدول أو بطاقات النتائج.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="full-search-fields-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <div class="selection-dialog-toolbar full-search-option-heading"><strong>الحقول المتاحة</strong><div class="compact-option-actions"><button class="button button-quiet" data-full-search-option-action="select" data-full-search-option-target="columns" type="button">تحديد الكل</button><button class="button button-quiet" data-full-search-option-action="clear" data-full-search-option-target="columns" type="button">إلغاء الكل</button></div></div>
+    <div class="search-field-options tree-field-options" id="full-search-column-options"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-full-search-fields-button" type="button">تطبيق الحقول</button><button class="button button-secondary" id="reset-full-search-fields-button" type="button">الافتراضي</button><button class="button button-secondary" data-close-dialog="full-search-fields-dialog" type="button">إلغاء</button></div>
+</dialog>
+    <dialog class="editor-dialog unsaved-record-dialog" id="unsaved-record-dialog">
+        <div class="dialog-heading">
+          <div>
+            <p class="section-kicker">تغييرات غير محفوظة</p>
+            <h2>احفظ السجل قبل المتابعة</h2>
+          </div>
+        </div>
+        <div class="dialog-content">
+          <p>
+            توجد بيانات أُدخلت أو عُدّلت في السجل الحالي. الانتقال الآن قد يفقدها.
+          </p>
+        </div>
+        <div class="dialog-actions three-way-actions">
+          <button class="button button-primary" id="unsaved-save-button" type="button">حفظ ثم متابعة</button>
+          <button class="button button-danger" id="unsaved-discard-button" type="button">تجاهل والمتابعة</button>
+          <button class="button button-secondary" id="unsaved-stay-button" type="button">البقاء هنا</button>
+        </div>
+    </dialog>
+    <dialog class="editor-dialog" id="close-confirm-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">إغلاق البرنامج</p><h2>هل تريد إغلاق SchemaCraft؟</h2></div></div>
+      <div class="dialog-content"><p id="close-confirm-message">سيتم إغلاق جميع نوافذ البرنامج.</p></div>
+      <div class="dialog-actions">
+        <button class="button button-danger" id="close-confirm-accept" type="button">نعم، إغلاق البرنامج</button>
+        <button class="button button-secondary" id="close-confirm-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-confirm-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">تأكيد الإجراء</p><h2 id="action-confirm-title">هل تريد المتابعة؟</h2></div></div>
+      <div class="dialog-content"><p id="action-confirm-message"></p></div>
+      <div class="dialog-actions">
+        <button class="button button-danger" id="action-confirm-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-confirm-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-selection-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">اختيار</p><h2 id="action-selection-title">اختر القيمة</h2></div></div>
+      <div class="dialog-content">
+        <p class="muted-text" hidden id="action-selection-message"></p>
+        <label class="field"><span id="action-selection-label">الاختيار</span><select class="control" id="action-selection-control"></select></label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="action-selection-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-selection-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-input-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">إدخال</p><h2 id="action-input-title">أدخل القيمة</h2></div></div>
+      <div class="dialog-content">
+        <p class="muted-text" hidden id="action-input-message"></p>
+        <label class="field"><span id="action-input-label">القيمة</span><input class="control" id="action-input-control" type="text"></label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="action-input-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-input-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog editor-dialog-wide profile-link-dialog" id="profile-link-dialog">
+    <div class="dialog-heading">
+      <div>
+        <p class="section-kicker">ملف مرتبط عبر التصاميم</p>
+        <h2>إضافة شخص موجود إلى التصميم الحالي</h2>
+      </div>
+      <button aria-label="إغلاق" class="dialog-close" data-close-dialog="profile-link-dialog" type="button">×</button>
+    </div>
+    <div class="dialog-content">
+    <p class="muted-text">سيُستخدم ID نفسه. اكتب ID أولًا لعرض كل التصاميم التي تحتوي عليه، ثم اختر المصدر. الحقول العامة المشتركة تُطابق تلقائيًا ويمكن تغيير كل المطابقات يدويًا.</p>
+    <div class="field-grid compact-grid">
+      <label class="field">
+        <span>ملف المصدر الموجود</span>
+        <select class="control" id="profile-source-schema"></select>
+      </label>
+      <label class="field">
+        <span>ID الشخص</span>
+        <input class="control" dir="ltr" id="profile-source-id" maxlength="8" type="text">
+      </label>
+    </div>
+    <div class="profile-global-conflicts" hidden id="profile-global-conflicts"></div>
+    <div class="inline-dialog-actions">
+      <button class="button button-secondary" id="inspect-profile-link-button" type="button">تحميل الحقول</button>
+    </div>
+    <div class="profile-mapping-area" hidden id="profile-mapping-area">
+      <div class="profile-mapping-header">
+        <strong>قيمة المصدر</strong>
+        <strong>الحقل الهدف</strong>
+      </div>
+      <div class="profile-mapping-list" id="profile-mapping-list"></div>
+    </div>
+    <p class="muted-text" id="profile-link-status"></p>
+    </div>
+    <div class="dialog-actions">
+      <button class="button button-primary" disabled id="confirm-profile-link-button" type="button">إنشاء الملف المرتبط</button>
+      <button class="button button-secondary" data-close-dialog="profile-link-dialog" type="button">إلغاء</button>
+    </div>
+</dialog>
+
+<dialog class="editor-dialog compact-editor-dialog" id="new-profile-choice-dialog">
+    <div class="dialog-heading"><div><p class="section-kicker">سجل جديد</p><h2>هل للشخص ملف في تصميم آخر؟</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="new-profile-choice-dialog" type="button">×</button></div>
+    <div class="dialog-content">
+    <p class="muted-text">اختر ملفًا جديدًا كليًا لتوليد ID عالمي جديد، أو أعد استخدام ID شخص موجود وانقل القيم التي تختارها.</p>
+    <div class="new-profile-choice-actions">
+      <button class="button button-primary" id="create-new-identity-button" type="button">شخص جديد — توليد ID</button>
+      <button class="button button-secondary" id="reuse-existing-identity-button" type="button">له ملف في تصميم آخر</button>
+    </div>
+    </div>
+    <div class="dialog-actions"><button class="button button-quiet" data-close-dialog="new-profile-choice-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog compact-editor-dialog admin-session-dialog" id="admin-session-dialog">
+    <div class="dialog-heading"><div><p class="section-kicker">وضع الإدارة</p><h2>إدارة الجلسة</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="admin-session-dialog" type="button">×</button></div>
+    <div class="dialog-content">
+      <p class="muted-text admin-session-note">يمكنك تغيير كلمة المرور أو إنهاء صلاحيات الإدارة لهذه الجلسة.</p>
+      <div class="admin-session-actions"><button class="button button-secondary" id="badge-change-password" type="button">تغيير كلمة المرور</button><button class="button button-danger" id="badge-exit-admin" type="button">الخروج من وضع الإدارة</button></div>
+    </div>
+    <div class="dialog-actions"><button class="button button-quiet" data-close-dialog="admin-session-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+    <dialog class="editor-dialog" id="builder-auth-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">حماية المصمّم</p>
+          <h2 id="builder-auth-title">فتح المصمّم</h2>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="builder-auth-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <p class="dialog-note" id="builder-auth-note"></p>
+        <div class="field-grid compact-grid">
+          <div class="field field-full" hidden="" id="current-password-wrapper">
+            <label for="current-builder-password">كلمة المرور الحالية</label><input autocomplete="current-password" class="control" dir="ltr" id="current-builder-password" spellcheck="false" type="password">
+          </div>
+          <div class="field field-full">
+            <label for="builder-password">كلمة المرور</label><input autocomplete="current-password" class="control" dir="ltr" id="builder-password" spellcheck="false" type="password">
+          </div>
+          <div class="field field-full" hidden="" id="confirm-password-wrapper">
+            <label for="confirm-builder-password">تأكيد كلمة المرور الجديدة</label><input autocomplete="new-password" class="control" dir="ltr" id="confirm-builder-password" spellcheck="false" type="password">
+          </div>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button aria-live="polite" class="button button-primary" id="confirm-builder-auth-button" type="button">
+          <svg aria-hidden="true" class="action-icon">
+            <use href="#icon-unlock"></use></svg><span id="confirm-builder-auth-text">فتح المصمّم</span>
+          <span aria-hidden="true" class="spinner" hidden="" id="builder-auth-spinner"></span>
+        </button><button class="button button-secondary" data-close-dialog="builder-auth-dialog" type="button">
+          إلغاء</button>
+      </div>
+    </dialog>
+
+    <dialog class="editor-dialog audit-user-dialog" id="audit-user-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">هوية التدقيق</p><h2>اختر اسم المستخدم</h2></div></div>
+      <div class="dialog-content"><p class="dialog-note">يُستخدم الاسم في الحقول التلقائية وسجلات البحث والاستيراد والتصدير فقط. لا يمنح أي صلاحيات ولا يرتبط بوضع الإدارة.</p><label class="field"><span>اسم المستخدم</span><input autocomplete="off" class="control" id="audit-user-input" list="audit-user-options" maxlength="160" type="text"><datalist id="audit-user-options"></datalist></label></div>
+      <div class="dialog-actions"><button class="button button-primary" id="confirm-audit-user" type="button">متابعة</button></div>
+    </dialog>
+    <div aria-live="polite" class="toast" id="toast" popover="manual" role="status"></div>
+
+
+</body></html>

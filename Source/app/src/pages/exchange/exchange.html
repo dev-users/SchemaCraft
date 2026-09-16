@@ -1,0 +1,117 @@
+<section class="application-page exchange-view export-view" hidden id="export-view">
+  <select class="visually-hidden" id="export-table-schema"></select>
+  <select class="visually-hidden" id="export-portable-schema"></select>
+
+  <section class="workspace-panel exchange-mode-selector schema-export-mode-selector" hidden id="schema-export-mode-selector">
+    <div class="section-title-line"><div><h3>نوع تصدير التصميم</h3><p class="muted-text">التصميم محدد من الشريط العلوي؛ اختر مخرجه هنا.</p></div></div>
+    <div class="secondary-segmented-tabs exchange-mode-tabs" role="tablist" aria-label="نوع تصدير التصميم">
+      <button class="button button-secondary is-active" data-export-mode="table" title="تصدير سجلات التصميم إلى جدول Excel" type="button">جدول بيانات Excel</button>
+      <button class="button button-secondary" data-export-mode="portable" title="حزمة كاملة قابلة للنقل للتصميم المختار" type="button">حزمة تصميم ZIP</button>
+      <button class="button button-secondary" data-export-mode="advanced" title="قوالب تقارير وحقول ورسوم ودوال" type="button">تقرير متقدم</button>
+    </div>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel profile-export-workflow" data-export-panel="profile" id="profile-export-panel">
+    <div class="section-title-line"><div><h3>تقارير ملفات PDF</h3><p class="muted-text">أدخل ID واحدًا أو عدة IDs، ثم اختر الملفات والحقول. لكل ID تقرير PDF مستقل؛ تُجمع التقارير المتعددة في ZIP واحد.</p></div></div>
+    <div class="profile-export-search-row">
+      <label class="field"><span>IDs الأشخاص</span><textarea class="control" dir="ltr" id="profile-export-record-code" rows="2" placeholder="A1234567, B1234567" aria-describedby="profile-export-id-hint"></textarea><small class="muted-text" id="profile-export-id-hint">افصل بين IDs بفاصلة أو مسافة أو سطر جديد.</small></label>
+      <button class="button button-secondary" id="inspect-profile-export" type="button">البحث في كل التصاميم</button>
+    </div>
+    <section class="selection-summary-card profile-export-results-section">
+      <div class="section-title-line"><div><h4>الملفات المطابقة</h4><span class="quiet-badge" id="profile-export-result-count">لم يُجرَ بحث</span></div><button class="button button-secondary" disabled id="open-profile-info-fields" type="button">اختيار صيغة المعلومات العامة</button></div>
+      <p class="muted-text">اختر تصميمًا أو أكثر لكل ID. مربع عنوان التصميم يطبّق اختياره على الجميع؛ مربع تضمين ID يحدد دخوله في التصدير.</p>
+      <div class="table-scroll compact-profile-table-scroll"><table class="data-table compact-profile-table profile-export-matrix"><thead><tr><th>تضمين</th><th>ID</th><th>معلومات عامة</th></tr></thead><tbody id="profile-export-profile-table-body"><tr><td class="table-empty" colspan="3">أدخل IDs ثم شغّل البحث.</td></tr></tbody></table></div>
+    </section>
+    <section class="selection-summary-card profile-export-fields-section">
+      <div class="section-title-line"><div><h4>حقول التقرير</h4><p class="muted-text">يمكن تحديد فئة كاملة من الحوار.</p></div><button class="button button-secondary" disabled id="open-profile-export-fields" type="button">اختيار الحقول عبر التصاميم</button></div>
+      <div class="profile-export-field-tags" id="profile-export-field-tags"><span class="selection-chip selection-chip-empty">تظهر الحقول بعد البحث.</span></div>
+    </section>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="profile-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" disabled id="choose-profile-export-location" type="button">اختيار المكان</button></section>
+    <p class="workflow-status muted-text" id="profile-export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel" data-export-panel="table" hidden id="export-panel">
+    <div class="section-title-line"><div><h3>تصدير جدول Excel</h3><p class="muted-text" id="table-export-schema-label">التصميم المختار من الشريط العلوي.</p></div></div>
+    <section class="selection-summary-card exchange-selection-block"><div class="selection-summary-heading"><strong>المرشحات المختارة وقيمها</strong><button class="button button-secondary" id="open-export-filter-dialog" type="button">اختيار المرشحات</button></div><div class="categorized-filter-groups export-filter-values" id="export-filter-values"></div></section>
+    <section class="selection-summary-card exchange-selection-block"><div class="selection-summary-heading"><strong>الفئات والحقول المختارة</strong><button class="button button-secondary" id="open-export-fields-dialog" type="button">اختيار الحقول</button></div><div class="selection-chip-list categorized-selection-list" id="export-selected-field-summary"></div></section>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="table-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" id="choose-table-export-location" type="button">اختيار المكان</button></section>
+    <div class="export-checkbox-stack">
+      <label class="check-field"><input checked id="export-include-related" type="checkbox"><span>تضمين الفئات المتكررة في أوراق مستقلة</span></label>
+      <label class="check-field"><input id="export-include-attachments" type="checkbox"><span>إرفاق الملفات المطابقة داخل حزمة ZIP</span></label>
+    </div>
+    <p class="workflow-status muted-text" id="export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section admin-only-panel" data-export-panel="portable" hidden id="portable-export-panel">
+    <div class="section-title-line"><div><h3>حزمة تصميم محمولة</h3><p class="muted-text" id="portable-export-schema-label">التصميم مختار من الشريط العلوي.</p></div></div>
+    <p>تحتوي الحزمة على Excel والتصميم والمرفقات والتعريفات العامة والتحقق من سلامة الملفات. كل حزمة تحتوي على تصميم واحد.</p>
+    <section class="export-location-card"><div><strong>مكان الحفظ</strong><p class="muted-text" id="portable-export-location">لم يُحدّد مكان بعد.</p></div><button class="button button-secondary" id="choose-portable-export-location" type="button">اختيار المكان</button></section>
+    <p class="workflow-status muted-text" id="portable-export-status"></p>
+  </section>
+
+  <section class="workspace-panel exchange-section" data-export-panel="advanced" hidden id="advanced-export-panel" data-visual-only="true">
+    <div class="report-hero studio-page-hero"><div><span class="report-eyebrow">التقرير المتقدم</span><h3>بيانات واضحة.<br>تقارير تليق بعملك.</h3><p>صمّم مرة واحدة، وطبّق على ملفاتك، ثم راجع الأرقام وصدّر تقريرًا جاهزًا للمشاركة.</p><div class="studio-capabilities"><span>كتل مرئية</span><span>حسابات موثّقة</span><span>PDF بالعربية</span></div></div><div class="studio-page-art" aria-hidden="true"><div class="studio-art-paper"><div class="studio-art-heading"></div><div class="studio-art-line"></div><div class="studio-art-line short"></div><div class="studio-art-chart"><i></i><i></i><i></i><i></i></div><div class="studio-art-table"></div><small>SchemaCraft</small></div></div></div>
+    <div id="studio-launch-slot"></div>
+    <div class="studio-page-guide"><div><b>1 · صمّم</b><p>ابدأ بتخطيط جاهز أو اسحب كتلًا إلى الصفحة.</p></div><div><b>2 · اربط البيانات</b><p>اختر التصميم والحقول والملفات مرة واحدة.</p></div><div><b>3 · راجع وصدّر</b><p>افحص الأرقام، وثّق التعديلات، ثم احفظ PDF.</p></div></div>
+  </section>
+
+  <section class="exchange-history-panel export-history-panel">
+    <div class="workspace-panel history-table-card">
+      <div class="section-title-line history-table-heading"><div><h3>سجل التصدير</h3><p class="muted-text explanation-text">سجل موحد لتقارير PDF وجداول Excel وحزم ZIP. يُضبط عدد الصفوف من الإعدادات.</p></div><div class="history-heading-actions"><input class="control" id="export-history-search" placeholder="التاريخ أو الملف أو الملاحظات" type="search"><button class="button button-danger-quiet" id="clear-export-history" type="button">مسح السجل</button></div></div>
+      <div class="table-scroll"><table class="data-table exchange-history-table"><thead><tr><th>الوقت</th><th>المستخدم</th><th>النوع</th><th>الملف</th><th>السجلات</th><th>المكان</th><th>الملاحظات</th><th>الإجراءات</th></tr></thead><tbody id="export-history-body"></tbody></table></div><p class="muted-text" id="export-history-summary"></p>
+    </div>
+  </section>
+</section>
+
+<section class="application-page exchange-view import-view" hidden id="import-view">
+  <select class="visually-hidden" id="import-target-schema"></select>
+  <section class="workspace-panel import-workflow-head">
+    <div class="import-step-heading"><span>1</span><h3>ما نوع الملف؟</h3></div>
+    <div class="field"><span>نوع الاستيراد</span><select class="visually-hidden" id="import-type-select"><option value="excel">جدول Excel</option><option value="portable">حزمة SchemaCraft ZIP</option></select><div class="secondary-segmented-tabs segmented-control"><button class="button button-secondary is-active" data-import-mode="excel" type="button">Excel</button><button class="button button-secondary" data-import-mode="portable" type="button">SchemaCraft ZIP</button></div></div>
+  </section>
+  <section class="workspace-panel exchange-section admin-only-panel import-section" data-import-panel="excel" id="import-panel">
+    <div class="section-title-line"><h3>استيراد جدول Excel</h3></div>
+    <div class="import-stage"><div class="import-step-heading"><span>2</span><h4>اختيار الملف وفحصه</h4></div><div class="import-file-row"><div class="import-file-picker"><input accept=".xlsx" class="visually-hidden" id="import-file" type="file"><label class="button button-secondary" for="import-file" id="import-file-label">اختيار ملف</label><span id="import-file-name">لم يُختر ملف</span></div><button class="button button-secondary" id="inspect-import-button" type="button">فحص الملف</button></div></div>
+    <div class="import-stage import-mapping-stage">
+      <div class="import-step-heading"><span>3</span><h4>المطابقة اليدوية والتحديث</h4></div><p class="import-mapping-placeholder" id="import-mapping-placeholder">تظهر المطابقة هنا بعد فحص الملف.</p>
+      <div hidden id="import-mapping-area"><div class="import-summary-row"><div class="import-summary" id="import-summary"></div><button class="button button-secondary" id="ignore-all-import-fields" type="button">تجاهل كل الحقول</button></div><div class="import-inspection-problems" hidden id="import-inspection-problems"></div><div aria-hidden="true" class="import-mapping-header"><strong>عنوان العمود في الملف</strong><strong>الحقل المقابل في قاعدة البيانات</strong></div><div class="import-mapping-list" id="import-mapping-list"></div><div class="field-grid compact-grid"><label class="field"><span>عند وجود ID مسبقًا</span><select class="control" id="import-duplicate-policy"><option selected value="update">تحديث الحقول المطابقة بالقيم الجديدة</option><option value="skip">تخطي السجل</option><option value="reject">رفض السجل</option></select></label><label class="check-field"><input id="import-generate-missing-ids" type="checkbox"><span>أؤكد توليد ID جديد للصفوف ذات ID الفارغ</span></label><label class="check-field"><input id="import-clear-blanks" type="checkbox"><span>الخلايا الفارغة تمسح القيم الحالية (الافتراضي: الاحتفاظ)</span></label></div></div>
+    </div>
+    <div class="workflow-status import-result" id="import-result"></div>
+  </section>
+  <section class="workspace-panel exchange-section admin-only-panel" data-import-panel="portable" hidden id="portable-import-panel">
+    <div class="section-title-line"><h3>استيراد حزمة SchemaCraft</h3></div><div class="import-file-row"><div class="import-file-picker"><input accept=".zip" class="visually-hidden" id="portable-import-file" type="file"><label class="button button-secondary" for="portable-import-file">اختيار ZIP</label><span id="portable-import-file-name">لم يُختر ملف</span></div><button class="button button-secondary" id="inspect-portable-import" type="button">فحص الحزمة</button></div><div id="portable-import-summary"></div><label class="field"><span>عند تعارض سجل موجود</span><select class="control" id="portable-conflict-policy"><option selected value="newer">استخدام السجل الأحدث حسب تاريخ التعديل</option><option value="overwrite">إجبار الحزمة المستوردة على الاستبدال</option></select></label><p class="workflow-status muted-text" id="portable-import-status"></p>
+  </section>
+  <section class="exchange-history-panel import-history-panel">
+    <div class="workspace-panel history-table-card">
+      <div class="section-title-line history-table-heading"><div><h3>سجل الاستيراد</h3><p class="muted-text explanation-text">يُضبط عدد الصفوف من الإعدادات.</p></div><div class="history-heading-actions"><input class="control" id="import-history-search" placeholder="التاريخ أو الملف أو الملاحظات" type="search"><button class="button button-danger-quiet" id="clear-import-history" type="button">مسح السجل</button></div></div><div class="table-scroll"><table class="data-table exchange-history-table"><thead><tr><th>الوقت</th><th>المستخدم</th><th>الحالة</th><th>الملف</th><th>التصميم</th><th>أضيف</th><th>حُدّث</th><th>تُخطي</th><th>رُفض</th><th>الملاحظات</th><th>الإجراءات</th></tr></thead><tbody id="import-history-body"></tbody></table></div><p class="muted-text" id="import-history-summary"></p>
+    </div>
+  </section>
+</section>
+
+<dialog class="editor-dialog import-result-dialog" id="import-result-dialog"><div class="dialog-heading"><h2>نتيجة الاستيراد</h2></div><div class="dialog-content"><div class="import-result-summary" id="import-result-summary"></div><div class="import-result-details" id="import-result-details"></div><label class="field"><span>ملاحظات هذه العملية</span><textarea class="control" id="import-result-notes" rows="3" placeholder="اختياري"></textarea></label></div><div class="dialog-actions"><button class="button button-primary" id="finalize-import-result" type="button">إنهاء وحفظ في السجل</button></div></dialog>
+
+<dialog class="editor-dialog" id="export-notes-dialog"><div class="dialog-heading"><h2>ملاحظات عملية التصدير</h2></div><div class="dialog-content"><label class="field"><span>ملاحظات السجل (اختياري)</span><textarea class="control" id="export-notes-dialog-input" rows="4"></textarea></label></div><div class="dialog-actions"><button class="button button-primary" id="confirm-export-notes" type="button">اعتماد الملاحظات</button><button class="button button-secondary" id="cancel-export-notes" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="profile-export-options-dialog"><div class="dialog-heading"><div><h2>حقول تقرير الشخص</h2><p class="muted-text">يمكن اختيار الفئة كاملة أو تخصيص حقولها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="profile-export-options-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-profile-field-action="select" data-profile-field-target="report" type="button">تحديد الكل</button><button class="button button-quiet" data-profile-field-action="clear" data-profile-field-target="report" type="button">إلغاء الكل</button></div></div><div class="profile-export-selection tree-field-options" id="profile-export-selection"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-profile-export-fields" type="button">اعتماد الحقول</button><button class="button button-secondary" data-close-dialog="profile-export-options-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="profile-info-fields-dialog"><div class="dialog-heading"><div><h2>صيغة المعلومات العامة</h2><p class="muted-text">اختر حقولًا مختلفة لكل تصميم؛ ستظهر قيمها كسطر واحد في جدول الملفات.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="profile-info-fields-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-profile-field-action="select" data-profile-field-target="info" type="button">تحديد الكل</button><button class="button button-quiet" data-profile-field-action="clear" data-profile-field-target="info" type="button">إلغاء الكل</button></div></div><div class="profile-export-selection tree-field-options" id="profile-info-field-selection"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-profile-info-fields" type="button">اعتماد الصيغة</button><button class="button button-secondary" data-close-dialog="profile-info-fields-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="export-filter-dialog"><div class="dialog-heading"><div><h2>مرشحات سجلات Excel</h2><p class="muted-text">حدد فئة كاملة أو اختر حقولًا بعينها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="export-filter-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar export-selection-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" data-export-filter-action="select" type="button">تحديد الكل</button><button class="button button-quiet" data-export-filter-action="clear" type="button">إلغاء الكل</button></div></div><div class="export-filter-builder tree-field-options" id="export-filter-builder"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-export-filters" type="button">اعتماد المرشحات</button><button class="button button-secondary" data-close-dialog="export-filter-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog editor-dialog-wide selection-tree-dialog" id="export-fields-dialog"><div class="dialog-heading"><div><h2>الفئات وحقول أعمدة Excel</h2><p class="muted-text">حدد فئة كاملة أو خصص حقولها.</p></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="export-fields-dialog" type="button">×</button></div><div class="dialog-content"><div class="selection-dialog-toolbar export-selection-toolbar"><strong>الفئات والحقول</strong><div class="compact-option-actions"><button class="button button-quiet" id="export-select-all-categories" type="button">تحديد الكل</button><button class="button button-quiet" id="export-clear-categories" type="button">إلغاء الكل</button></div></div><div class="export-field-list tree-field-options" id="export-field-list"></div></div><div class="dialog-actions"><button class="button button-primary" id="apply-export-fields" type="button">اعتماد الحقول</button><button class="button button-secondary" data-close-dialog="export-fields-dialog" type="button">إلغاء</button></div></dialog>
+
+<dialog class="editor-dialog" id="profile-pdf-appearance-dialog">
+    <div class="dialog-heading"><h2>خيارات تقرير PDF</h2><button class="dialog-close" aria-label="إغلاق" data-close-dialog="profile-pdf-appearance-dialog" type="button">×</button></div>
+    <div class="dialog-content pdf-appearance-options">
+      <label class="check-field"><input type="checkbox" id="profile-pdf-show-image"><span>إظهار الصورة الشخصية أعلى يسار فئتها</span></label>
+      <label class="check-field"><input type="checkbox" id="profile-pdf-show-attachments"><span>إظهار المرفقات في نهاية الملف</span></label>
+      <p class="muted-text">تُعرض الصور داخل التقرير، وتُضاف صفحات مرفقات PDF كاملة في نهايته.</p>
+    </div>
+    <div class="dialog-actions"><button class="button button-primary" type="button" id="confirm-profile-pdf-appearance">متابعة التصدير</button><button class="button button-secondary" type="button" data-close-dialog="profile-pdf-appearance-dialog">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog editor-dialog-wide" id="import-review-dialog">
+  <div class="dialog-heading"><div><h2>مراجعة تغييرات الاستيراد</h2><p class="muted-text">لم تُحفظ التغييرات بعد. ألغِ اختيار الملف لاستبعاده، أو ألغِ تغيير قيمة للاحتفاظ بالقيمة السابقة. الملفات الجديدة تُعتمد كاملة.</p></div><button class="dialog-close" type="button" data-close-dialog="import-review-dialog" aria-label="إغلاق">×</button></div>
+  <div class="dialog-content"><p class="import-review-guidance">لم تُحفظ التغييرات بعد. ألغِ اختيار الملف لاستبعاده، أو ألغِ تغيير قيمة للاحتفاظ بالقيمة السابقة. تُعتمد الملفات الجديدة كاملة.</p><div class="import-review-toolbar"><input class="control" id="import-review-search" placeholder="بحث في IDs والحقول والقيم" aria-label="البحث في مراجعة الاستيراد"><button class="button button-secondary" type="button" data-import-review-bulk="all">تحديد الملفات الظاهرة</button><button class="button button-secondary" type="button" data-import-review-bulk="none">استبعاد الملفات الظاهرة</button><button class="button button-secondary" type="button" data-import-review-bulk="keep">الاحتفاظ بالقيم السابقة للملفات الظاهرة</button></div><p id="import-review-summary"></p><div id="import-review-errors" class="import-review-errors"></div><div id="import-review-entries"></div><p id="import-review-status" role="status"></p></div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-import-review" type="button">اعتماد الاختيارات وحفظ التغييرات</button><button class="button button-secondary" type="button" data-close-dialog="import-review-dialog">إلغاء دون حفظ</button></div>
+</dialog>

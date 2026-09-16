@@ -1,0 +1,17 @@
+{
+  "name": "schemacraft-workspace-tests",
+  "private": true,
+  "version": "3.0.0-alpha.53",
+  "description": "Backend and browser workflow tests for the SchemaCraft multi-page workspace.",
+  "scripts": {
+    "build:frontend": "python build_frontend.py",
+    "docs:api": "python tools/generate_api_reference.py",
+    "test": "npm run test:ui",
+    "test:python": "python -m unittest discover -s tests -p test_*.py",
+    "test:ui": "node tests/test_ui_dom.js",
+    "verify": "npm run build:frontend && npm run docs:api && npm run test:python && npm run test:ui"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
+}

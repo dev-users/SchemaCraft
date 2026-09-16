@@ -1,0 +1,29 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+
+# VS Code generated/cache files
+.vscode/browse.vc.db
+.vscode/*.db
+.vscode/ipch/
+
+# OS files
+.DS_Store
+Thumbs.db

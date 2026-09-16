@@ -1,0 +1,56 @@
+<dialog class="editor-dialog unsaved-record-dialog" id="unsaved-record-dialog">
+        <div class="dialog-heading">
+          <div>
+            <p class="section-kicker">تغييرات غير محفوظة</p>
+            <h2>احفظ السجل قبل المتابعة</h2>
+          </div>
+        </div>
+        <div class="dialog-content">
+          <p>
+            توجد بيانات أُدخلت أو عُدّلت في السجل الحالي. الانتقال الآن قد يفقدها.
+          </p>
+        </div>
+        <div class="dialog-actions three-way-actions">
+          <button class="button button-primary" id="unsaved-save-button" type="button">حفظ ثم متابعة</button>
+          <button class="button button-danger" id="unsaved-discard-button" type="button">تجاهل والمتابعة</button>
+          <button class="button button-secondary" id="unsaved-stay-button" type="button">البقاء هنا</button>
+        </div>
+    </dialog>
+    <dialog class="editor-dialog" id="close-confirm-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">إغلاق البرنامج</p><h2>هل تريد إغلاق SchemaCraft؟</h2></div></div>
+      <div class="dialog-content"><p id="close-confirm-message">سيتم إغلاق جميع نوافذ البرنامج.</p></div>
+      <div class="dialog-actions">
+        <button class="button button-danger" id="close-confirm-accept" type="button">نعم، إغلاق البرنامج</button>
+        <button class="button button-secondary" id="close-confirm-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-confirm-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">تأكيد الإجراء</p><h2 id="action-confirm-title">هل تريد المتابعة؟</h2></div></div>
+      <div class="dialog-content"><p id="action-confirm-message"></p></div>
+      <div class="dialog-actions">
+        <button class="button button-danger" id="action-confirm-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-confirm-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-selection-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">اختيار</p><h2 id="action-selection-title">اختر القيمة</h2></div></div>
+      <div class="dialog-content">
+        <p class="muted-text" hidden id="action-selection-message"></p>
+        <label class="field"><span id="action-selection-label">الاختيار</span><select class="control" id="action-selection-control"></select></label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="action-selection-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-selection-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>
+    <dialog class="editor-dialog" id="action-input-dialog">
+      <div class="dialog-heading"><div><p class="section-kicker">إدخال</p><h2 id="action-input-title">أدخل القيمة</h2></div></div>
+      <div class="dialog-content">
+        <p class="muted-text" hidden id="action-input-message"></p>
+        <label class="field"><span id="action-input-label">القيمة</span><input class="control" id="action-input-control" type="text"></label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="action-input-accept" type="button">متابعة</button>
+        <button class="button button-secondary" id="action-input-cancel" type="button">إلغاء</button>
+      </div>
+    </dialog>

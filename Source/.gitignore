@@ -1,0 +1,17 @@
+.build-env/
+.build-dist/
+.build-work/
+.build-spec/
+release/
+__pycache__/
+tests/__pycache__/
+node_modules/
+*.pyc
+.test-deps/
+.style-tools/
+.ruff_cache/
+data/
+backups/
+builder-auth.json
+developer-access.key
+startup-error.log
