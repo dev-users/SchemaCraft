@@ -1,0 +1,19 @@
+# Complete, pinned Windows build toolchain for the offline Packages wheelhouse.
+openpyxl==3.1.5
+bcrypt==4.3.0
+et-xmlfile==2.0.0
+pyinstaller==6.16.0
+altgraph==0.17.5
+packaging==26.3
+pyinstaller-hooks-contrib==2026.6
+setuptools==84.0.0
+pefile==2023.2.7
+pywin32-ctypes==0.2.3
+pillow==12.3.0
+charset-normalizer==3.4.7
+reportlab==4.4.9
+pypdf==6.10.0
+psycopg==3.3.3
+psycopg-binary==3.3.3
+tzdata==2026.5
+typing-extensions==4.15.0
