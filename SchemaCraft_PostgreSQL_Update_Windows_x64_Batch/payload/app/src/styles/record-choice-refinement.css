@@ -1,0 +1,39 @@
+/* Opt-in data sources; compact repeated-card forms, without changing unrelated pages. */
+.record-choice-source{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end;}
+.record-choice-source .field{min-width:0;}
+.record-choice-option{display:flex!important;flex-direction:column;align-items:stretch;text-align:right!important;gap:2px;white-space:normal!important;}
+.record-choice-option strong,.record-choice-option small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
+.record-choice-option small{font-size:.76rem;color:var(--muted-color,#526477);font-weight:400;}
+.record-choice-empty{padding:8px 10px;white-space:normal;font-size:.85rem;}
+.finance-row-dialog .editable-list-option{min-height:32px!important;padding:6px 10px!important;margin:0!important;box-sizing:border-box;}
+.finance-row-dialog .record-choice-option{min-height:47px!important;}
+.finance-row-dialog .four-choice-menu{padding:2px!important;overscroll-behavior:contain;}
+.finance-row-dialog>.finance-row-body{padding:12px 16px;}
+.finance-row-dialog .field-grid{gap:10px 12px;}
+.finance-row-dialog [data-field-wrapper]{padding-block:2px;}
+.finance-row-dialog .field{gap:4px;}
+.finance-row-dialog input.control:not([type=checkbox]):not([type=radio]),
+.finance-row-dialog select.control{min-height:34px!important;height:34px!important;padding:5px 9px!important;font-size:.9rem;}
+.finance-row-dialog textarea.control{min-height:64px;padding:7px 9px;font-size:.9rem;}
+.finance-row-dialog .entry-control-surface{min-height:34px;}
+.finance-row-dialog .profile-link-entry{padding:8px 10px;margin-bottom:10px;gap:8px;}
+.finance-row-dialog>.dialog-heading{padding:12px 16px;}
+.finance-row-dialog>.dialog-actions{padding:9px 16px;}
+/* Keep the hidden attribute for validation/collection; reserve visual geometry only. */
+#record-form [data-field-wrapper][hidden].field-space-reserved{display:block!important;visibility:hidden!important;pointer-events:none!important;}
+#record-form [data-field-wrapper].field-space-reserved *{visibility:hidden!important;pointer-events:none!important;}
+#main-sections [data-tab-add-for]{align-self:stretch;flex:0 0 34px!important;width:34px!important;min-width:34px!important;padding:6px!important;margin:0!important;border:0!important;border-radius:0 8px 0 0!important;background:var(--surface-color,#fff)!important;box-shadow:none!important;}
+#main-sections [data-tab-add-for][hidden]{display:none!important;}
+.incoming-transactions{margin-block:16px;}
+.incoming-transactions .finance-config-body{padding:8px;}
+.numeric-constant-input{direction:ltr;text-align:right;font-variant-numeric:tabular-nums;}
+@media(max-width:740px){.record-choice-source{grid-template-columns:1fr auto;}.record-choice-source>.field{grid-column:1;}.record-choice-source>.button{grid-column:2;grid-row:1/4;}}
+/* Row-dialog choice menus float above the modal instead of changing its scroll geometry. */
+.finance-row-dialog{overflow:visible!important;}
+.finance-row-dialog>.dialog-content,.finance-row-dialog .finance-row-body{overflow:auto;}
+.finance-row-dialog .field-rules-contained-menu{position:fixed!important;max-width:calc(100vw - 16px);box-shadow:0 10px 28px rgba(15,23,42,.18);}
+.finance-row-dialog .field-rules-contained-menu.four-choice-menu{overscroll-behavior:contain;scrollbar-gutter:auto;}
+/* Root repeated-category add control: clean square icon aligned with the active tab. */
+#main-sections [data-tab-add-for]{height:34px!important;align-self:center!important;border:1px solid var(--border-color,var(--border))!important;border-radius:8px!important;background:var(--surface-color,#fff)!important;color:var(--primary-color,var(--primary))!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;overflow:hidden;}
+#main-sections [data-tab-add-for] .action-icon{width:18px!important;height:18px!important;margin:0!important;transform:none!important;}
+#main-sections [data-tab-add-for][hidden]{display:none!important;}

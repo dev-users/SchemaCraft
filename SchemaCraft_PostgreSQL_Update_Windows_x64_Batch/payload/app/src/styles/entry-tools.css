@@ -1,0 +1,83 @@
+/* Scoped utility dialogs; no changes to record fields or navigation styles. */
+#entry-tools-panel { flex:0 0 auto; order:99; }
+#entry-tools-heading { cursor:pointer; margin:0; padding:0 0 .65rem; }
+#entry-tools-heading[aria-expanded="false"] { padding-bottom:0; }
+#entry-tools-heading:focus-visible { outline:2px solid var(--primary); outline-offset:4px; }
+#entry-tools-buttons { display:grid; gap:8px; }
+#entry-tools-buttons[hidden] { display:none; }
+#entry-tools-buttons > button { justify-content:flex-start; text-align:start; white-space:normal; width:100%; }
+.entry-tool-dialog .dialog-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.entry-tool-dialog .dialog-heading > h2 { margin:0; text-align:start; }
+.entry-tool-heading-actions { display:flex; gap:6px; align-items:center; }
+.entry-tool-content { display:flex; flex-direction:column; gap:14px; min-height:0; overflow:auto; }
+.entry-tool-content > * { flex-shrink:0; }
+.entry-tool-dialog .field { min-width:0; }
+.entry-tool-dialog .dialog-actions { flex-shrink:0; flex-wrap:wrap; }
+#entry-calendar-dialog { width:min(1120px,95vw); max-height:92dvh; }
+.entry-calendar-toolbar { display:flex; flex-wrap:wrap; align-items:end; gap:12px; }
+.entry-calendar-toolbar > .field { flex:0 1 170px; }
+.entry-calendar-navigation { display:flex; flex:1; justify-content:center; align-items:center; gap:8px; }
+#entry-calendar-month { white-space:nowrap; min-width:125px; text-align:center; }
+.entry-calendar-navigation .workflow-icon-only { font-size:23px; }
+.entry-calendar-layout { display:grid; grid-template-columns:minmax(280px,1.05fr) minmax(280px,1fr); gap:18px; }
+.entry-calendar-grid-panel { align-self:start; border:1px solid var(--border,#d4dfeb); border-radius:12px; overflow:hidden; padding:12px; background:var(--surface,#fff); }
+.entry-calendar-weekdays,.entry-calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
+.entry-calendar-weekdays { margin-bottom:8px; text-align:center; font-size:.75rem; color:var(--muted,#5f7185); }
+.entry-calendar-day { font:inherit; color:var(--text,#162d43); background:transparent; border:1px solid transparent; border-radius:9px; min-width:0; min-height:58px; padding:5px 2px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; }
+.entry-calendar-day:hover { background:color-mix(in srgb,var(--primary,#1c5a93) 8%,var(--surface,#fff)); }
+.entry-calendar-day.is-today { border-color:var(--primary,#1c5a93); font-weight:700; }
+.entry-calendar-day.is-selected { background:var(--primary,#1c5a93); color:var(--on-primary,#fff); }
+.entry-calendar-day:focus-visible { outline:2px solid var(--primary,#1c5a93); outline-offset:1px; }
+.entry-calendar-day-badge { border-radius:9px; min-width:19px; padding:0 4px; line-height:17px; font-size:10px; background:color-mix(in srgb,#d05227 12%,var(--surface,#fff)); color:#9a391c; }
+.entry-calendar-legend { font-size:.77rem; margin:12px 0 0; }
+.entry-tool-current { margin:0; }
+.entry-calendar-agenda-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.entry-calendar-agenda-heading h3 { margin:0; font-size:1rem; }
+#entry-calendar-alerts { display:flex; flex-direction:column; gap:10px; }
+.entry-calendar-agenda { min-width:0; }
+.entry-calendar-alert { --calendar-alert-color:var(--primary,#205e9d); display:flex; align-items:center; gap:10px; padding:12px; border:1px solid color-mix(in srgb,var(--calendar-alert-color) 50%,var(--border,#d6e1eb)); border-inline-start:3px solid var(--calendar-alert-color); border-radius:9px; background:color-mix(in srgb,var(--calendar-alert-color) 5%,var(--surface,#fff)); }
+.entry-calendar-alert[data-notice="danger"] { --calendar-alert-color:#bf3e43; }
+.entry-calendar-alert[data-notice="warning"] { --calendar-alert-color:#b06e15; }
+.entry-calendar-alert-copy { display:flex; flex-direction:column; flex:1; min-width:0; gap:3px; white-space:pre-wrap; overflow-wrap:anywhere; }
+.entry-calendar-alert-copy strong { color:var(--calendar-alert-color); }
+.entry-calendar-alert-copy p { margin:3px 0 0; font-size:.85rem; }
+.entry-calendar-due { font-size:.75rem; direction:ltr; text-align:start; }
+.entry-calendar-empty { border:1px dashed var(--border,#d6e1eb); border-radius:10px; padding:24px 12px; color:var(--muted,#61748a); }
+.entry-calendar-layout[aria-busy="true"] { opacity:.7; }
+.entry-tool-error { color:#b4323b; background:color-mix(in srgb,#d53245 6%,var(--surface,#fff)); padding:10px; border-radius:8px; margin:0; }
+.entry-tool-warning { color:#8a5c09; font-size:.8rem; }
+#entry-converter-dialog,#entry-average-dialog { width:min(600px,94vw); }
+.entry-converter-inputs { display:grid; grid-template-columns:2fr 1fr 1fr; gap:12px; }
+.entry-tool-result { border:1px solid var(--border,#d5e1ed); background:color-mix(in srgb,var(--primary,#1a5794) 5%,var(--surface,#fff)); border-radius:12px; padding:16px; display:flex; align-items:center; flex-direction:column; gap:8px; text-align:center; overflow-wrap:anywhere; }
+.entry-tool-result > strong,.entry-tool-result > output { font-size:1.8rem; font-weight:700; max-width:100%; user-select:text; }
+.entry-tool-result > span { color:var(--muted,#61748a); font-size:.86rem; }
+#entry-calculator-dialog { width:min(440px,94vw); }
+.entry-calc-expression { font-size:1.1rem; text-align:left; }
+.entry-calculator-keys { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+.entry-calculator-keys .button { min-width:0; padding:10px 3px; min-height:44px; font-size:1.1rem; justify-content:center; }
+.entry-average-values { resize:vertical; text-align:left; min-height:120px; }
+.entry-average-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; font-size:.85rem; width:100%; }
+.entry-average-stats > span { display:flex; justify-content:space-between; gap:5px; }
+.entry-tool-copy-buffer { position:fixed; opacity:0; width:1px; height:1px; }
+.entry-tool-dialog [hidden] { display:none !important; }
+@media(max-width:740px) { .entry-calendar-layout { grid-template-columns:1fr; } .entry-calendar-toolbar { align-items:center; } .entry-calendar-navigation { order:3; flex-basis:100%; } .entry-calendar-day { min-height:46px; } .entry-calendar-weekdays { font-size:.72rem; } }
+@media(min-width:741px) { .entry-calendar-agenda { max-height:min(55dvh,560px); overflow:auto; padding-inline:2px; } }
+
+/* Grade average: local dialog-only refinement. */
+#entry-average-dialog { width:min(720px,94vw); }
+.entry-grade-toolbar { display:flex;align-items:center;justify-content:space-between;gap:14px; }
+.entry-grade-toolbar p { flex:1;margin:0;font-size:.87rem;line-height:1.7; }
+.entry-grade-toolbar button { flex:0 0 auto; }
+.entry-grade-table-wrap { max-height:38dvh;overflow:auto;border:1px solid var(--border,#d5e1ed);border-radius:10px; }
+#entry-average-dialog .entry-grade-table { width:100%;min-width:0;table-layout:fixed;border-collapse:separate;border-spacing:0;margin:0; }
+#entry-average-dialog .entry-grade-table th,#entry-average-dialog .entry-grade-table td { padding:8px;text-align:start;white-space:normal;vertical-align:middle; }
+#entry-average-dialog .entry-grade-table th:first-child { width:52px;text-align:center; }
+#entry-average-dialog .entry-grade-table th:last-child { width:58px; }
+#entry-average-dialog .entry-grade-table thead th { position:sticky;top:0;z-index:1;background:var(--surface-muted,#f1f6fb);font-size:.8rem; }
+#entry-average-dialog .entry-grade-table .control { width:100%;min-width:0;text-align:left; }
+.entry-grade-target { display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:10px; }
+.entry-grade-target .control { width:120px; }
+.entry-grade-note { font-size:.8rem;margin:0; }
+.entry-grade-equation { font-size:.9rem; }
+#entry-average-dialog [aria-invalid="true"] { border-color:#b4323b; }
+@media(max-width:520px){ .entry-grade-toolbar {flex-wrap:wrap;} .entry-grade-toolbar p{flex-basis:100%;} .entry-average-stats{grid-template-columns:1fr;} #entry-average-dialog .entry-grade-table th:first-child{width:38px;} #entry-average-dialog .entry-grade-table th:last-child{width:50px;} }

@@ -1,0 +1,61 @@
+/* Shared with the login screen. Both languages use the existing RTL layout. */
+.language-switch {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+  width: min(100%, 232px);
+  margin: 5px auto 0;
+  padding: 4px;
+  border: 1px solid var(--border, #dbe4f0);
+  border-radius: 12px;
+  background: var(--surface-soft, #f5f8fc);
+}
+.language-switch .language-option {
+  flex: 1 1 0;
+  min-height: 36px;
+  padding: 6px 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted, #68758a);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+.language-switch .language-option.is-active,
+.language-switch .language-option[aria-checked="true"] {
+  background: var(--surface, #fff);
+  color: var(--primary, #3367d6);
+  border-color: var(--border, #dbe4f0);
+  box-shadow: 0 1px 3px rgb(23 32 51 / 7%);
+}
+.language-switch .language-option:focus-visible {
+  outline: 2px solid var(--primary, #3367d6);
+  outline-offset: 2px;
+}
+.language-switch .language-option:disabled { opacity: .55; cursor: wait; }
+.localized-name-slot { min-width: 0; margin-block: 8px; }
+.localized-names-editor {
+  border: 1px solid var(--border, #dbe4f0);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--surface-soft, #f5f8fc);
+}
+.localized-names-editor > summary {
+  cursor: pointer;
+  color: var(--text, #172033);
+  font-weight: 650;
+  line-height: 1.6;
+}
+.localized-names-editor[open] > summary { margin-bottom: 12px; }
+.localized-names-toggle { margin-block: 8px; }
+.localized-names-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+.localized-names-columns[hidden] { display: none; }
+.localized-names-language { min-width: 0; margin: 0; padding: 12px; border: 1px solid var(--border, #dbe4f0); border-radius: 10px; }
+.localized-names-language legend { padding-inline: 6px; font-weight: 650; }
+.localized-names-language .field + .field { margin-top: 12px; }
+.localized-names-language .control { min-width: 0; width: 100%; }
+.localized-option-row + .localized-option-row { margin-top: 18px; }
+.localized-option-row h3 { margin: 0 0 8px; font-size: 1rem; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .localized-names-columns { grid-template-columns: 1fr; } }

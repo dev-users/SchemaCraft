@@ -1,0 +1,467 @@
+/* Scope compact settings to Builder editors. Entry fields, tables, and custom
+   schema layouts keep their original dimensions and behavior. */
+.compact-builder-dialog { width: min(1120px, 96vw); max-height: 94vh; }
+.compact-builder-dialog > .dialog-content { padding: 14px 18px; gap: 14px; }
+.compact-builder-dialog > .dialog-content > .compact-config-panel,
+.compact-builder-dialog > .dialog-content > .condition-editor-section,
+.compact-builder-dialog > .dialog-content > .definition-alerts-panel {
+  margin: 0; padding: 12px 14px; border: 1px solid var(--border-color, #d4dfeb);
+  border-radius: 12px; background: var(--surface, #fff);
+}
+.compact-builder-dialog .dialog-section-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:right; flex-wrap:wrap; margin:0 0 12px; }
+.compact-builder-dialog .dialog-section-heading h3 { margin:0; font-size:1rem; line-height:1.4; text-align:right; }
+.compact-heading-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.compact-settings-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 20px; align-items:start; }
+.compact-settings-grid > .field,
+.compact-detail-content .field:not(.field-grid) { display:grid; grid-template-columns:minmax(95px, .8fr) minmax(0,1.35fr); gap:8px; align-items:center; min-width:0; margin:0; }
+.compact-settings-grid > .field.field-full { grid-column:auto; }
+.compact-settings-grid .field > label,
+.compact-settings-grid .field > span,
+.compact-detail-content .field > label,
+.compact-detail-content .field > span { margin:0; text-align:right; font-size:.88rem; line-height:1.55; }
+.compact-settings-grid .field > small,
+.compact-detail-content .field > small { grid-column:1/-1; margin:0; font-size:.78rem; }
+.compact-builder-dialog .control,
+.compact-detail-dialog .control { min-width:0; width:100%; min-height:34px; padding:6px 9px; font-size:.87rem; }
+.compact-builder-dialog textarea.control,
+.compact-detail-dialog textarea.control { height:auto; min-height:58px; }
+.compact-default-controls { display:grid; gap:6px; min-width:0; }
+.compact-flags-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 20px; align-items:center; }
+.compact-flags-grid .check-field { margin:0; padding:3px 0; min-height:28px; display:flex; gap:8px; align-items:center; justify-content:flex-start; }
+.compact-flags-grid .check-field span { text-align:right; font-size:.88rem; line-height:1.5; }
+.compact-flags-grid input[type="checkbox"],.compact-heading-actions input[type="checkbox"] { flex:0 0 auto; }
+.compact-flag-row { display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0; }
+.compact-flag-row > .check-field { flex:1; }
+.compact-flag-row .workflow-icon-only { flex:0 0 32px; width:32px!important; height:32px!important; min-height:32px!important; min-width:32px!important; padding:6px!important; }
+.compact-builder-dialog .compact-heading-actions .button { min-height:34px; font-size:.85rem; padding:6px 10px; }
+.compact-builder-dialog .compact-heading-actions .check-field { margin:0; font-size:.8rem; }
+.compact-detail-dialog { width:min(1040px,94vw); max-height:90vh; }
+.compact-detail-dialog:not([open]) { display:none!important; }
+.compact-detail-dialog > .dialog-content { padding:16px 18px; gap:12px; min-height:0; overflow:auto; }
+.compact-detail-dialog > .dialog-heading { flex-shrink:0; }
+.compact-detail-dialog > .dialog-actions { flex-shrink:0; }
+.compact-detail-dialog > .dialog-content > .sub-editor { margin:0; padding:12px; }
+.compact-detail-dialog .field-grid.compact-grid,
+.compact-detail-dialog .finance-config-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 16px; }
+.compact-detail-dialog .field-grid > .field-full { grid-column:1/-1; }
+.compact-detail-dialog .sub-editor-heading { margin-bottom:10px; gap:12px; }
+.compact-detail-dialog .sub-editor-heading p { margin:4px 0 0; font-size:.8rem; }
+.compact-detail-dialog .localized-names-editor > summary,
+.compact-detail-dialog .configuration-import-editor > .sub-editor-heading h3 { display:none; }
+.compact-detail-dialog .finance-config-body > .check-field { margin:4px 0; }
+#compact-number-extra { display:grid; gap:10px; }
+#compact-number-precision-slot > .field { max-width:460px; }
+#compact-preserve-space { max-width:330px; }
+.compact-empty-alerts { border:1px dashed var(--border-color,#d4dfeb); border-radius:10px; padding:14px 16px; margin:0; text-align:center; color:var(--text-muted,#65768c); }
+#compact-type-rule-extras { display:grid; gap:8px; }
+#compact-field-lookup-content > #related-person-field-editor { margin-top:10px; }
+.compact-builder-dialog [hidden],.compact-detail-dialog [hidden] { display:none!important; }
+@media(max-width:760px) {
+  .compact-settings-grid,.compact-flags-grid,.compact-detail-dialog .field-grid.compact-grid,.compact-detail-dialog .finance-config-grid { grid-template-columns:minmax(0,1fr); }
+  .compact-builder-dialog > .dialog-content { padding:10px; }
+  .compact-settings-grid > .field,.compact-detail-content .field:not(.field-grid) { grid-template-columns:minmax(90px, .65fr) minmax(0,1fr); }
+  .compact-builder-dialog .dialog-section-heading { gap:8px; }
+  .compact-heading-actions { gap:6px; }
+}
+
+.compact-builder-dialog > .dialog-content > section + section { margin-top:12px; }
+.compact-flags-grid > .check-field,.compact-flags-grid .compact-flag-row > .check-field { background:transparent; border:0; box-shadow:none; border-radius:0; }
+.compact-flags-grid > .field-full { grid-column:auto; }
+/* Keep compact panels distinct even under older dialog reset selectors. */
+#field-dialog.compact-builder-dialog > .dialog-content > section + section,
+#category-dialog.compact-builder-dialog > .dialog-content > section + section { margin-top:12px!important; }
+.compact-settings-grid > .field > :is(label,span),
+.compact-detail-content .field > :is(label,span) { font-weight:600; }
+#compact-field-auto-content > .sub-editor > .sub-editor-heading h3,
+#compact-field-validation-content > .sub-editor > .sub-editor-heading h3 { display:none; }
+
+/* Refinement 28 — stable overview slots and consistent nested editor rhythm.
+   All rules are confined to Builder dialogs; Entry and authored report layouts
+   keep their dimensions. A two-column grid falls back to one on small windows. */
+.compact-builder-dialog, .compact-detail-dialog { --compact-gap:10px; }
+#compact-field-type-content { display:flex;flex-direction:column;gap:12px; }
+#compact-field-type-content > * { flex:0 0 auto; }
+#compact-field-placeholder { padding:8px 4px 10px; margin:0; width:100%; }
+.compact-detail-content .field:not(.field-grid), .compact-settings-grid > .field { grid-template-columns:minmax(90px,.72fr) minmax(0,1.65fr);gap:6px; }
+#compact-field-placeholder { grid-template-columns:minmax(120px,.36fr) minmax(0,1fr); }
+.compact-detail-dialog .control:focus-visible, .compact-builder-dialog .control:focus-visible { outline-offset:2px; }
+#field-label:disabled { opacity:.6; background:var(--surface-soft,#f4f7fa); }
+.compact-builder-dialog .compact-span-all, .compact-detail-dialog .compact-span-all { grid-column:1/-1!important; }
+.compact-description-row { display:flex!important;flex-direction:column;align-items:stretch!important;gap:6px!important; }
+#category-description { width:100%;min-height:54px;resize:vertical; }
+.compact-reserved-field-slot { min-width:0;min-height:34px; }
+.compact-reserved-field-slot > .field { display:grid;grid-template-columns:minmax(90px,.72fr) minmax(0,1.65fr);gap:6px;align-items:center;margin:0; }
+.compact-reserved-field-slot > .field > small { grid-column:1/-1; }
+.compact-reserved-field-slot.is-reserved { visibility:hidden;pointer-events:none; }
+.compact-builder-dialog .check-field, .compact-detail-dialog .check-field, .compact-option-names-dialog .check-field {
+  display:flex;align-items:center;justify-content:flex-start;gap:8px;margin:0;padding:4px 0;
+  min-height:34px;border:0!important;border-radius:0;box-shadow:none!important;background:transparent!important;
+  font-size:.88rem;font-weight:400;line-height:1.5;min-width:0;
+}
+.compact-builder-dialog .check-field > span,.compact-detail-dialog .check-field > span { font-size:.88rem!important;font-weight:400!important;line-height:1.5;text-align:right; }
+.compact-builder-dialog .check-field input[type=checkbox],.compact-detail-dialog .check-field input[type=checkbox] { width:16px;height:16px;min-height:16px;margin:0;flex:0 0 16px; }
+.compact-detail-dialog .compact-number-grid { gap:10px 16px; }
+#compact-number-extra,#compact-number-exact-slot,#compact-number-precision-slot,#compact-number-separator-slot,#compact-number-separator-slot > .compact-settings-grid { display:contents; }
+#compact-number-precision-slot > .field { max-width:none; }
+#compact-user-settings { align-items:center; }
+#compact-field-option-filter-row { padding:2px 0 6px; }
+#option-filter-editor { padding:0!important;margin:0!important;border:0!important; }
+#compact-field-option-filter-content .field-full:has(#option-filter-source) { grid-column:auto; }
+#option-filter-matrix { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px; }
+#option-filter-matrix > .dialog-note { grid-column:1/-1;margin:0; }
+#option-filter-matrix .option-filter-row { display:grid;grid-template-columns:minmax(65px,.65fr) minmax(0,1.5fr);gap:6px;align-items:center;margin:0; }
+#option-filter-matrix textarea { min-height:68px; }
+.compact-detail-dialog .finance-config-panel { margin:0;border-radius:10px;padding:0; }
+.compact-detail-dialog .finance-config-panel > summary { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;min-height:40px; }
+.compact-detail-dialog .finance-config-panel > summary .finance-config-title { min-width:0; }
+.compact-detail-dialog .finance-config-actions,.compact-detail-dialog .finance-list-heading { display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap; }
+.compact-detail-dialog .finance-config-actions { margin-inline-start:auto;justify-content:flex-end; }
+.compact-detail-dialog .finance-config-body { display:flex;flex-direction:column;gap:10px;padding:10px 12px;margin:0; }
+.compact-detail-dialog .finance-config-body > * { margin-top:0;margin-bottom:0;flex-shrink:0; }
+.compact-detail-dialog .finance-config-grid,.compact-detail-dialog .finance-operand-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;align-items:center; }
+.compact-detail-dialog .finance-table-columns { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px; }
+.compact-detail-dialog .finance-rule-card { padding:10px;margin:0 0 10px;display:grid;gap:10px; }
+.compact-detail-dialog .finance-source-list { display:grid;gap:10px; }
+.compact-detail-dialog .finance-condition-heading { display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px; }
+.compact-detail-dialog .finance-condition-heading > .field { max-width:70%; }
+.compact-detail-dialog .finance-condition-row { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:center; }
+.compact-detail-dialog .finance-condition-row .workflow-icon-only { justify-self:end; }
+.compact-detail-dialog .finance-rule-list { display:grid;gap:8px; }
+.compact-detail-dialog .record-choice-source { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px; }
+.compact-detail-dialog .localized-names-columns { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }
+.compact-detail-dialog .localized-names-language { min-width:0;padding:10px; }
+.compact-detail-dialog .localized-names-language .field { margin-bottom:10px;grid-template-columns:minmax(65px,.55fr) minmax(0,1.4fr); }
+.compact-default-controls { min-width:0; }
+.compact-default-date { display:flex;gap:4px;align-items:center; }
+.compact-default-date > .control { flex:1;min-width:0; }
+.compact-default-date .workflow-icon-only { flex:0 0 30px;width:30px!important;min-width:30px!important;height:32px!important;min-height:32px!important;padding:5px!important; }
+.compact-default-date .is-active { background:var(--surface-soft,#eef5fb);border-color:var(--primary-color,#276694); }
+.compact-option-names-dialog { width:min(820px,94vw); }
+.compact-option-names-table { table-layout:fixed;width:100%; }
+.compact-option-names-table th,.compact-option-names-table td { width:50%;padding:9px;white-space:normal;text-align:right; }
+.compact-option-names-table input { width:100%;min-width:0;min-height:36px; }
+@media(max-width:760px){
+  .compact-detail-dialog .finance-operand-grid,.compact-detail-dialog .finance-config-grid,.compact-detail-dialog .finance-table-columns,.compact-detail-dialog .record-choice-source,#option-filter-matrix,.compact-detail-dialog .localized-names-columns { grid-template-columns:minmax(0,1fr); }
+  .compact-detail-content .field:not(.field-grid),.compact-settings-grid > .field { grid-template-columns:minmax(90px,.65fr) minmax(0,1fr); }
+  .compact-reserved-field-slot.is-reserved { min-height:34px; }
+}
+/* Keep the hidden parent-position control's exact footprint, including its
+   help line, while excluding it from interaction and accessibility. */
+.compact-reserved-field-slot.is-reserved > #category-parent-field-wrapper[hidden] { display:grid!important;visibility:hidden!important;pointer-events:none; }
+#compact-field-default.compact-default-unavailable { visibility:hidden;pointer-events:none;min-height:34px; }
+.compact-detail-dialog .template-add-row { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px; }
+.compact-associated-dialog .field { display:grid;grid-template-columns:minmax(90px,.72fr) minmax(0,1.65fr);gap:6px;align-items:center;min-width:0;margin:0; }
+.compact-associated-dialog .finance-config-panel > summary { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px; }
+.compact-associated-dialog .finance-config-actions { display:flex;gap:6px;margin-inline-start:auto; }
+.compact-associated-dialog .finance-config-grid,.compact-associated-dialog .profile-link-map-row,.compact-associated-dialog .delivery-map-row { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px; }
+.compact-associated-dialog .check-field { display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:400;padding:4px 0;margin:0;min-height:34px;background:transparent!important;box-shadow:none!important;border:0!important; }
+.compact-associated-dialog .check-field span { font-size:.88rem;font-weight:400; }
+.compact-associated-dialog .check-field input[type=checkbox] { width:16px;height:16px;flex:0 0 16px; }
+.compact-associated-dialog .control { min-width:0;min-height:34px;font-size:.87rem; }
+@media(max-width:760px){.compact-detail-dialog .template-add-row,.compact-associated-dialog .finance-config-grid,.compact-associated-dialog .profile-link-map-row,.compact-associated-dialog .delivery-map-row { grid-template-columns:minmax(0,1fr); }}
+
+/* Refinement 29 — explicit deletion scope, selected-source composition and
+   compact type-specific controls. All visual rules remain in Builder only. */
+.compact-detail-dialog .composition-heading { display:flex;align-items:center;justify-content:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px; }
+.compact-detail-dialog .composition-heading h3 { margin:0; }
+.compact-detail-dialog #composition-sources { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;max-height:none;overflow:visible;border:0;padding:0; }
+.compact-detail-dialog .composition-selected-token { display:inline-flex;gap:8px;align-items:center;max-width:100%; }
+.compact-detail-dialog .composition-selected-token span { overflow-wrap:anywhere; }
+.compact-detail-dialog #composition-editor > .field { display:flex;flex-direction:column;align-items:stretch;gap:8px; }
+.compact-detail-dialog #composition-template { width:100%;min-height:80px; }
+.compact-detail-dialog .compact-type-heading-actions { display:flex;gap:12px;align-items:center;min-width:0;flex-wrap:wrap; }
+.compact-detail-dialog .compact-type-heading-actions h2 { margin:0; }
+.compact-detail-dialog #field-option-languages-wrapper { width:auto;max-width:100%;margin:0;padding:0; }
+.compact-detail-dialog #field-option-languages-wrapper:not([hidden]) { display:block; }
+.compact-detail-dialog .compact-list-flags:not([hidden]) { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;align-items:center; }
+.compact-detail-dialog #compact-list-flags > #compact-type-rule-extras { display:contents; }
+.compact-detail-dialog #compact-field-option-filter-row { padding:0; }
+.compact-detail-dialog #compact-number-symbols { display:flex!important;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:wrap; }
+.compact-detail-dialog #compact-number-symbols > .field-label { flex:0 0 auto; }
+.compact-detail-dialog #compact-number-symbols .number-special-options { display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-start;margin:0;padding:0; }
+.compact-detail-dialog #compact-number-symbols .check-field { min-height:30px; }
+.compact-detail-dialog #number-storage-note { margin:0; }
+/* Real full-height sibling rail: click scope follows the surrounding border. */
+.compact-detail-dialog .finance-item-box { display:grid!important;grid-template-columns:minmax(0,1fr) 36px;direction:rtl;gap:0!important;padding:0!important;margin:0!important;border:1px solid var(--border-color,#d6e2ed);border-radius:9px;overflow:visible; }
+.compact-detail-dialog .finance-item-content { display:flex;flex-direction:column;gap:10px;min-width:0;padding:10px; }
+.compact-detail-dialog .finance-item-box > .finance-delete-rail { grid-column:2;grid-row:1;align-self:stretch!important;justify-self:stretch!important;width:36px!important;min-width:36px!important;max-width:none!important;height:auto!important;min-height:36px!important;padding:7px!important;margin:0!important;border-radius:8px 0 0 8px!important;box-shadow:none; }
+.compact-detail-dialog .finance-item-box > .finance-delete-rail .action-icon { width:16px;height:16px;flex:0 0 16px; }
+.compact-detail-dialog .finance-source-list { display:grid;gap:10px; }
+.compact-detail-dialog .finance-condition-row .finance-item-content { padding:7px; }
+.compact-detail-dialog .finance-condition-fields { display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr) minmax(0,1fr);align-items:center;gap:8px;min-width:0; }
+.compact-detail-dialog .finance-condition-values { display:flex;gap:6px;min-width:0; }
+.compact-detail-dialog .finance-condition-values > .control { flex:1 1 0;min-width:0;width:0; }
+.compact-detail-dialog .finance-condition-fields > .control { min-width:0;width:100%; }
+.compact-detail-dialog .finance-format-head { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:10px 16px; }
+.compact-detail-dialog .finance-format-head .field { margin:0; }
+.compact-detail-dialog .finance-condition-heading { margin:0 0 8px; }
+.compact-detail-dialog .finance-config-actions > .finance-match-control { max-width:290px;min-width:0;grid-template-columns:auto minmax(100px,1fr); }
+.compact-detail-dialog .finance-config-actions > .finance-match-control > span { white-space:nowrap; }
+.compact-detail-dialog .finance-condition-heading > .finance-match-control { max-width:75%; }
+/* One filename composition field, with each removable token owning its prefix
+   and suffix. No stored parts or bytes are changed by presentation. */
+.compact-detail-dialog .filename-add-action { display:flex;align-items:center;justify-content:flex-start;min-height:34px; }
+.compact-detail-dialog .filename-add-action > button { margin:0; }
+.compact-detail-dialog .filename-composition-field { display:flex!important;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px;padding:10px;min-height:48px;border:1px solid var(--border-color,#d6e2ed);border-radius:8px;background:var(--surface,#fff); }
+.compact-detail-dialog .filename-part { display:inline-flex;align-items:center;gap:2px;max-width:100%; }
+.compact-detail-dialog .filename-literal { white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext; }
+.compact-detail-dialog .filename-part-token { display:inline-flex;align-items:center;gap:4px;padding:2px 5px;border:1px solid var(--border-color,#d6e2ed);border-radius:6px;background:var(--surface-soft,#f3f7fb);min-width:0; }
+.compact-detail-dialog .filename-part-token > span { unicode-bidi:isolate;overflow-wrap:anywhere; }
+.compact-detail-dialog .filename-part-token .filename-part-remove,
+.compact-detail-dialog .filename-part-order > button { width:24px!important;height:26px!important;min-width:24px!important;min-height:26px!important;padding:3px!important;border:0!important;box-shadow:none!important; }
+.compact-detail-dialog .filename-part-order { display:inline-flex;opacity:0;transition:opacity .1s; }
+.compact-detail-dialog .filename-part:hover .filename-part-order,.compact-detail-dialog .filename-part:focus-within .filename-part-order { opacity:1; }
+.compact-detail-dialog .filename-part-order .action-icon { width:14px;height:14px; }
+.compact-builder-dialog .compact-description-row { display:grid!important;grid-template-columns:minmax(90px,130px) minmax(0,1fr);align-items:center!important;gap:6px!important; }
+.compact-builder-dialog #category-description { width:100%;height:34px!important;min-height:34px!important;max-height:34px;resize:none;overflow-y:auto; }
+.compact-detail-dialog #compact-repeatable-display { display:contents; }
+.compact-detail-dialog .compact-repeatable-sort-row { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;grid-column:1/-1; }
+@media(max-width:760px){
+  .compact-detail-dialog .compact-list-flags:not([hidden]),.compact-detail-dialog .finance-format-head,.compact-detail-dialog .compact-repeatable-sort-row { grid-template-columns:minmax(0,1fr); }
+  .compact-detail-dialog .compact-type-heading-actions { gap:8px; }
+  .compact-detail-dialog .finance-config-actions > .finance-match-control { max-width:100%; }
+}
+@media(max-width:600px){
+  .compact-detail-dialog .finance-condition-fields { grid-template-columns:minmax(0,1fr); }
+  .compact-detail-dialog .filename-part { flex-wrap:wrap; }
+  .compact-detail-dialog .filename-part-order { opacity:1; }
+}
+.compact-detail-dialog #file-naming-editor > .sub-editor-heading > div { flex:0 0 auto; }
+.compact-detail-dialog #file-naming-editor > .sub-editor-heading h3 { white-space:nowrap;margin:0; }
+.compact-detail-dialog .filename-part { position:relative; }
+.compact-detail-dialog .filename-part-order { position:absolute;bottom:calc(100% + 2px);left:0;pointer-events:none;border:1px solid var(--border-color,#d6e2ed);border-radius:6px;background:var(--surface,#fff);z-index:1; }
+.compact-detail-dialog .filename-part:hover .filename-part-order,.compact-detail-dialog .filename-part:focus-within .filename-part-order { pointer-events:auto; }
+@media(max-width:600px){.compact-detail-dialog .filename-part-order { opacity:0; }.compact-detail-dialog .filename-part:focus-within .filename-part-order { opacity:1; }}
+.compact-detail-dialog #finance-view-columns,.compact-detail-dialog #finance-view-totals { display:grid;gap:10px; }
+
+/* Refinement 30: named composition tokens, nested condition groups, compact
+   alert/appearance authoring. Scope intentionally excludes Data Entry. */
+.compact-detail-dialog #composition-editor > .field { display:block; }
+.compact-detail-dialog #composition-template[hidden] { display:none!important; }
+.compact-detail-dialog #composition-sources.composition-format-field {
+  display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-height:64px;
+  margin:8px 0 0;padding:10px;border:1px solid var(--border);border-radius:9px;
+  background:var(--surface);max-width:100%;overflow:visible;
+}
+.compact-detail-dialog .composition-name-token {
+  display:inline-flex;align-items:center;gap:6px;padding:5px 8px;
+  border:1px solid var(--border);border-radius:7px;background:var(--surface-soft);
+  max-width:100%;min-height:34px;white-space:normal;user-select:none;
+}
+.compact-detail-dialog .composition-name-token > span { overflow-wrap:anywhere; }
+.compact-detail-dialog .composition-name-token .workflow-icon-only {
+  width:24px!important;height:24px!important;min-width:24px!important;min-height:24px!important;padding:3px!important;flex:0 0 24px;
+}
+.compact-detail-dialog .composition-literal {
+  min-width:7ch;max-width:100%;min-height:34px;resize:vertical;overflow-y:auto;
+  border-color:transparent;border-bottom:1px dashed var(--border);background:transparent;padding:5px;
+  font-size:inherit;line-height:1.4;flex:0 1 auto;white-space:pre-wrap;
+}
+.compact-detail-dialog .composition-literal:focus { border-color:var(--primary);background:var(--surface); }
+:is(.compact-builder-dialog,.compact-detail-dialog,.builder-rule-dialog) .builder-conditions-box {
+  display:block;border:1px solid var(--border);border-radius:9px;background:var(--surface-soft);
+  padding:10px;margin-block:10px;min-width:0;
+}
+:is(.compact-builder-dialog,.compact-detail-dialog,.builder-rule-dialog) .builder-conditions-heading {
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 10px;
+}
+.builder-conditions-heading > :is(h3,h4) { font-size:.88rem;font-weight:700;margin:0;text-align:right; }
+.builder-conditions-heading > button,.builder-conditions-heading > .compact-heading-actions { margin-inline-start:auto; }
+.builder-conditions-heading .finance-match-control { margin:0;max-width:70%; }
+.builder-conditions-heading .compact-heading-actions { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
+.builder-rule-dialog { width:min(940px,calc(100vw - 32px));max-width:940px; }
+.builder-rule-dialog > .dialog-content { display:flex;flex-direction:column;gap:12px; }
+.builder-rule-dialog > .dialog-content > * { flex-shrink:0; }
+.builder-rule-dialog .builder-two-columns { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;align-items:center; }
+.builder-rule-dialog .field {
+  display:grid;grid-template-columns:minmax(85px,.8fr) minmax(0,1.5fr);align-items:center;gap:6px;margin:0;min-width:0;
+}
+.builder-rule-dialog .field > span { font-size:.88rem;font-weight:600;text-align:right;overflow-wrap:anywhere; }
+.builder-rule-dialog .control { min-width:0;width:100%;min-height:34px;font-size:.88rem; }
+.builder-rule-dialog .check-field {
+  display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:4px 0;margin:0;min-height:34px;
+  background:transparent!important;border:0!important;border-radius:0;box-shadow:none;font-size:.88rem;font-weight:400;
+}
+.builder-rule-dialog .check-field > span { font-size:.88rem!important;font-weight:400!important;text-align:right; }
+.builder-rule-dialog .check-field input[type=checkbox] { width:16px;height:16px;min-height:16px;margin:0;flex:0 0 16px; }
+.builder-rule-dialog .field-full { grid-column:1/-1; }
+.builder-rule-dialog .compact-flag-row { display:flex;align-items:center;gap:8px; }
+.builder-rule-dialog .compact-flag-row .workflow-icon-only { flex:0 0 32px;width:32px!important;height:32px!important;min-height:32px!important;min-width:32px!important;padding:5px!important; }
+#alert-extra-settings { margin:0; }
+#alert-rule-dialog .alert-extra-display { margin:0; }
+#alert-rule-dialog .alert-primary-condition { align-items:start; }
+#alert-rule-dialog #alert-rule-value-slot { display:contents; }
+#alert-rule-dialog #alert-rule-value-slot > :is(p,small) { grid-column:1/-1;margin:0; }
+#alert-rule-dialog #alert-calendar-note,#alert-rule-dialog #alert-repeat-note { margin-block:8px;font-size:.8rem; }
+#alert-rule-dialog .alert-match-mode { margin-block:10px;grid-template-columns:minmax(0,1fr) minmax(160px,.7fr); }
+#alert-rule-dialog .alert-extra-row { display:grid;grid-template-columns:minmax(0,1fr) 34px;padding:0;gap:0;align-items:stretch;background:var(--surface); }
+#alert-rule-dialog .alert-clause-body { padding:10px;min-width:0; }
+#alert-rule-dialog .alert-clause-delete { width:34px!important;height:100%!important;min-height:38px!important;min-width:34px!important;border-radius:8px 0 0 8px;padding:5px!important; }
+#alert-rule-dialog .alert-message-panel textarea { width:100%;min-height:64px;resize:vertical; }
+#condition-dialog .dialog-content > .field-full { width:100%; }
+#condition-dialog #condition-value-wrapper { grid-column:auto; }
+#condition-dialog #condition-comparison-mode { display:contents; }
+#condition-dialog #condition-comparison-mode[hidden] { display:none!important; }
+#condition-dialog #condition-value-control > .control { width:100%; }
+#condition-dialog .condition-negate-control { grid-column:auto; }
+#condition-dialog .dialog-note { margin:0;font-size:.8rem; }
+.builder-rule-dialog .builder-visual-dropdown { position:relative;min-width:0; }
+.builder-rule-dialog .builder-visual-dropdown > summary {
+  display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;
+  border:1px solid var(--border);border-radius:7px;padding:6px 9px;background:var(--surface);height:36px;
+}
+.builder-visual-dropdown > summary::-webkit-details-marker { display:none; }
+.builder-visual-dropdown > summary > .action-icon { width:16px;height:16px; }
+.builder-rule-dialog #alert-icon-selected { display:flex;align-items:center; }
+.builder-rule-dialog #alert-icon-selected > svg { position:static;transform:none;width:22px;height:22px; }
+.builder-rule-dialog .alert-color-sample { display:block;width:42px;height:19px;border:1px solid var(--border);border-radius:4px; }
+.builder-visual-dropdown > :is(.builder-palette-popover,.alert-rule-icon-choices) {
+  position:absolute;z-index:20;inset-inline-end:0;top:calc(100% + 4px);min-width:214px;
+  padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--surface);box-shadow:0 8px 24px #0002;
+}
+.builder-visual-dropdown:not([open]) > :is(.builder-palette-popover,.alert-rule-icon-choices) { display:none!important; }
+.builder-rule-dialog #alert-rule-icons { display:grid;grid-template-columns:repeat(5,34px);gap:7px; }
+.builder-rule-dialog .alert-rule-icon-option { width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:5px!important; }
+.builder-rule-dialog .alert-rule-icon-option .alert-notice-icon { position:static;transform:none;width:22px;height:22px; }
+.alert-color-presets { display:grid;grid-template-columns:repeat(5,30px);gap:9px; }
+.builder-rule-dialog .alert-color-preset { width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important;border:2px solid transparent;border-radius:6px;padding:0!important;cursor:pointer; }
+.builder-rule-dialog .alert-color-preset.is-selected { outline:2px solid var(--text);outline-offset:2px; }
+.builder-rule-dialog .alert-custom-color { margin-top:12px;grid-template-columns:minmax(0,1fr) 64px; }
+.builder-alert-language-dialog { width:min(900px,calc(100vw - 32px)); }
+#alert-rule-language .localized-names-columns { gap:12px; }
+#alert-rule-language .localized-names-language .field { display:flex;flex-direction:column;align-items:stretch;gap:6px; }
+#alert-rule-language textarea { min-height:76px;resize:vertical; }
+.builder-rule-dialog [hidden] { display:none!important; }
+@media(max-width:680px) {
+ .builder-rule-dialog .builder-two-columns { grid-template-columns:minmax(0,1fr); }
+ .builder-rule-dialog .field-full { grid-column:auto; }
+ .builder-rule-dialog .alert-clause-body { gap:8px; }
+ #alert-rule-language .localized-names-columns { grid-template-columns:minmax(0,1fr); }
+ .builder-rule-dialog .alert-match-mode { grid-template-columns:minmax(0,1fr); }
+}
+#alert-rule-dialog.builder-rule-dialog, #condition-dialog.builder-rule-dialog { width:min(940px,calc(100vw - 32px));max-width:940px; }
+#alert-rule-dialog .alert-extra-display { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:10px 16px; }
+#alert-rule-dialog #alert-icon-selected .alert-notice-icon { stroke:currentColor;fill:none; }
+.builder-visual-dropdown.opens-up > :is(.builder-palette-popover,.alert-rule-icon-choices) { top:auto;bottom:calc(100% + 4px); }
+@media(max-width:680px){#alert-rule-dialog .alert-extra-display {grid-template-columns:minmax(0,1fr);}}
+
+/* Single-condition editor: its target is the field/category already being edited. */
+#condition-dialog.appearance-condition-dialog {
+  width:min(1040px,calc(100vw - 32px));max-width:1040px;
+}
+#condition-dialog .appearance-condition-heading {
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+#condition-dialog .appearance-condition-heading > h2 {margin:0;flex:0 0 auto;}
+#condition-dialog .appearance-heading-controls {
+  display:flex;align-items:center;justify-content:flex-end;gap:16px;flex:1 1 auto;min-width:0;
+}
+#condition-dialog .appearance-group-control {
+  display:flex;align-items:center;gap:8px;min-width:0;flex:0 1 290px;
+}
+#condition-dialog .appearance-group-control > span {white-space:nowrap;}
+#condition-dialog .appearance-group-control select {width:auto;min-width:0;flex:1;}
+#condition-dialog .appearance-compare-toggle {
+  display:flex;align-items:center;gap:7px;margin:0;padding:0;background:transparent;
+  border:0;box-shadow:none;min-height:36px;flex:0 1 auto;
+}
+#condition-dialog .appearance-compare-toggle input {width:16px;height:16px;min-height:16px;margin:0;flex:0 0 16px;}
+#condition-dialog .appearance-compare-toggle > span {font-size:.85rem;font-weight:500;}
+#condition-dialog .appearance-condition-row {
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.7fr) minmax(0,1fr);
+  gap:12px;align-items:start;
+}
+#condition-dialog .appearance-condition-row > .field {
+  display:flex;flex-direction:column;align-items:stretch;gap:7px;min-width:0;grid-column:auto;
+}
+#condition-dialog .appearance-condition-row > .field > span {text-align:right;}
+#condition-dialog .appearance-condition-row .control {width:100%;min-width:0;}
+#condition-dialog .appearance-condition-row .calendar-control {display:flex;gap:4px;min-width:0;}
+#condition-dialog .appearance-condition-row .calendar-control select {flex:1;min-width:0;}
+#condition-dialog #condition-value-control {min-height:36px;min-width:0;}
+#condition-dialog #condition-group-help {margin-block:14px 0;font-size:.8rem;}
+#condition-dialog .dialog-content {padding:18px 20px;}
+@media(max-width:700px) {
+ #condition-dialog .appearance-heading-controls {flex-basis:100%;flex-wrap:wrap;justify-content:flex-start;gap:8px 14px;}
+ #condition-dialog .appearance-group-control {flex:1 1 230px;}
+}
+@media(max-width:460px) {
+ #condition-dialog .appearance-condition-row {grid-template-columns:minmax(0,1fr);}
+ #condition-dialog .dialog-content {padding:14px;}
+}
+#condition-dialog.appearance-condition-dialog { grid-template-columns:minmax(0,1fr); }
+#condition-dialog.appearance-condition-dialog > :is(.dialog-heading,.dialog-content,.dialog-actions) { min-width:0;max-width:100%; }
+
+/* Builder flow refinement: inline condition labels and a single owner heading. */
+#condition-dialog .appearance-condition-row {
+  grid-template-columns: minmax(0,1.35fr) minmax(0,1fr) minmax(0,1.2fr);
+  align-items:center;
+  gap:12px;
+}
+#condition-dialog .appearance-condition-row > .field {
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  margin:0;
+  min-width:0;
+}
+#condition-dialog .appearance-condition-row > .field > span {
+  white-space:nowrap;
+  margin:0;
+  text-align:right;
+  font-size:.85rem;
+  line-height:1.5;
+}
+#condition-dialog #condition-value-control {
+  display:flex;
+  align-items:center;
+  width:100%;
+  min-width:0;
+}
+#condition-dialog #condition-value-control > :is(input,select,textarea,.calendar-control) {
+  flex:1 1 auto;
+  min-width:0;
+  width:100%;
+}
+#condition-dialog .appearance-condition-row .calendar-control select {padding-inline:3px;}
+:is(#field-appearance-panel,#category-appearance-panel).appearance-owner-panel > .dialog-section-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px 12px;
+  margin-bottom:10px;
+}
+:is(#field-appearance-panel,#category-appearance-panel).appearance-owner-panel > .dialog-section-heading > h3 {
+  margin:0;
+  flex:0 0 auto;
+  text-align:right;
+}
+#field-appearance-panel #compact-appearance-actions {
+  display:flex;
+  flex:0 1 auto;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  margin-inline-start:auto;
+  gap:8px 12px;
+}
+#field-appearance-panel #compact-preserve-space .check-field {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin:0;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+#category-appearance-panel > .dialog-section-heading > button {margin-inline-start:auto;}
+@media(max-width:780px) {
+  #condition-dialog .appearance-condition-row {grid-template-columns:minmax(0,1fr);}
+  #condition-dialog .appearance-condition-row > .field {grid-template-columns:minmax(100px,30%) minmax(0,1fr);}
+}
+@media(max-width:460px) {
+  #condition-dialog .appearance-condition-row > .field {grid-template-columns:minmax(84px,34%) minmax(0,1fr);gap:6px;}
+  #condition-dialog .appearance-condition-row > .field > span {white-space:normal;}
+}

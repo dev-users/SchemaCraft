@@ -1,0 +1,114 @@
+{
+  "format_version": 1,
+  "product": "CPython",
+  "version": "3.13.16",
+  "platform": "windows-x86_64",
+  "sources": [
+    {
+      "url": "https://www.python.org/ftp/python/3.13.16/python-3.13.16-embed-amd64.zip",
+      "sha256": "97dae5274cc54867065e8d5a3226e48c35017ed332a0fdb0e27d5b5821961297",
+      "verification": "Compared with SHA-256 published by python.org release page"
+    },
+    {
+      "url": "https://www.python.org/ftp/python/3.13.16/amd64/tcltk.msi",
+      "sha256": "968fc0acb37c42439ae4cf96181ee2e8148a89a22707414d980f7a2a84c2e67b",
+      "verification": "Downloaded from python.org over HTTPS; archive hash recorded; publisher signature not independently verified on Linux"
+    }
+  ],
+  "python_packages": [
+    {
+      "file": "typing_extensions-4.15.0-py3-none-any.whl",
+      "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"
+    },
+    {
+      "file": "pypdf-6.10.0-py3-none-any.whl",
+      "sha256": "90005e959e1596c6e6c84c8b0ad383285b3e17011751cedd17f2ce8fcdfc86de"
+    },
+    {
+      "file": "psycopg_binary-3.3.3-cp313-cp313-win_amd64.whl",
+      "sha256": "74eae563166ebf74e8d950ff359be037b85723d99ca83f57d9b244a871d6c13b"
+    },
+    {
+      "file": "et_xmlfile-2.0.0-py3-none-any.whl",
+      "sha256": "7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa"
+    },
+    {
+      "file": "reportlab-4.4.9-py3-none-any.whl",
+      "sha256": "268a95f094f8671026f0680113f5b696c4cc813cd6b210ee61c8e3047aba6eed"
+    },
+    {
+      "file": "charset_normalizer-3.4.7-py3-none-any.whl",
+      "sha256": "fb97d5fafe9a8f1b73a032fb5fc64a2cbdab94df0e71220937a4147333d42cdf"
+    },
+    {
+      "file": "pillow-12.3.0-cp313-cp313-win_amd64.whl",
+      "sha256": "1cca606cd25738df4ed873d5ad46bbdb3d83b5cbca291f6b4ff13a4df6b0bbe8"
+    },
+    {
+      "file": "bcrypt-4.3.0-cp39-abi3-win_amd64.whl",
+      "sha256": "e53e074b120f2877a35cc6c736b8eb161377caae8925c17688bd46ba56daaa5b"
+    },
+    {
+      "file": "psycopg-3.3.3-py3-none-any.whl",
+      "sha256": "f96525a72bcfade6584ab17e89de415ff360748c766f0106959144dcbb38c698"
+    },
+    {
+      "file": "openpyxl-3.1.5-py2.py3-none-any.whl",
+      "sha256": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2"
+    }
+  ],
+  "native_windows_validation": false,
+  "notes": [
+    "Tcl/Tk extracted from CPython MSI using exact MSI directory mappings.",
+    "Application-local embedded Python; no machine-wide installation.",
+    "python313._pth includes the installation root via ../.., private Lib/site-packages, and import site.",
+    "sitecustomize.py points TCL_LIBRARY and TK_LIBRARY to the private bundled Tcl/Tk tree.",
+    "Static PE import scan: all dependencies bundled or standard Windows system libraries; see pe-dependencies.json."
+  ],
+  "updater_gui_wheels": [
+    {
+      "filename": "arabic_reshaper-3.0.0-py3-none-any.whl",
+      "sha256": "3f71d5034bb694204a239a6f1ebcf323ac3c5b059de02259235e2016a1a5e2dc",
+      "source": "https://pypi.org/",
+      "license_location": "Bundled distribution .dist-info directory; pure Python sources included"
+    },
+    {
+      "filename": "python_bidi-0.4.2-py2.py3-none-any.whl",
+      "sha256": "50eef6f6a0bbdd685f9e8c207f3c9050f5b578d0a46e37c76a9c4baea2cc2e13",
+      "source": "https://pypi.org/",
+      "license_location": "Bundled distribution .dist-info directory; pure Python sources included"
+    },
+    {
+      "filename": "six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "source": "https://pypi.org/",
+      "license_location": "Bundled distribution .dist-info directory; pure Python sources included"
+    }
+  ],
+  "launchers": [
+    {
+      "file": "SchemaCraft.exe",
+      "sha256": "5ca150cb779e032a3e44393f1d61dffc254941e39f30644a7308dcdea0f685fa",
+      "architecture": "AMD64 PE",
+      "imports": [
+        "KERNEL32.dll",
+        "USER32.dll"
+      ],
+      "build_type": "SchemaCraft source-based launcher for bundled private CPython, built with clang/lld without C runtime",
+      "native_windows_execution_verified": false,
+      "frozen_single_file_application": false
+    },
+    {
+      "file": "UPDATE.exe",
+      "sha256": "ab309d2f65e1b2755eee85934f534f4b34b4787db363715a63dfd9604d839a11",
+      "architecture": "AMD64 PE",
+      "imports": [
+        "KERNEL32.dll",
+        "USER32.dll"
+      ],
+      "build_type": "SchemaCraft source-based launcher for bundled private CPython, built with clang/lld without C runtime",
+      "native_windows_execution_verified": false,
+      "frozen_single_file_application": false
+    }
+  ]
+}

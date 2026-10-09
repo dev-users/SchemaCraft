@@ -1,0 +1,123 @@
+<dialog class="editor-dialog editor-dialog-wide settings-dialog" hidden id="settings-view">
+  <div class="dialog-heading">
+    <div><p class="section-kicker">تخصيص مساحة العمل</p><h2>الإعدادات</h2></div>
+    <button aria-label="إغلاق" class="dialog-close" data-close-dialog="settings-view" type="button">×</button>
+  </div>
+  <div class="dialog-content settings-dialog-content">
+    <section class="workspace-panel settings-sheet">
+      <nav aria-label="أقسام الإعدادات" class="settings-category-tabs">
+        <button aria-selected="true" class="settings-category-tab is-active" data-settings-category-tab="application" type="button">التطبيق</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="interface" type="button">الواجهة وسير العمل</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="shortcuts" type="button">الاختصارات</button>
+        <button aria-selected="false" class="settings-category-tab" data-settings-category-tab="default-app" type="button">تطبيق افتراضي جديد</button>
+      </nav>
+
+      <section class="settings-section" data-settings-category="application">
+        <h3>هوية التطبيق</h3>
+        <div class="field-grid compact-grid">
+          <div class="localized-name-slot field-full" id="app-language-editor"></div>
+          <label class="field"><span>اسم التطبيق</span><input class="control" id="setting-title" type="text"></label>
+          <label class="field"><span>اسم السجل بالمفرد</span><input class="control" id="setting-singular" type="text"></label>
+          <label class="field"><span>اسم السجلات بالجمع</span><input class="control" id="setting-plural" type="text"></label>
+          <label class="field"><span>اللون الأساسي</span><input class="control color-control" id="setting-primary-color" type="color"></label>
+          <label class="field"><span>اللغة</span><select class="control" id="setting-language"><option value="ar">عربي</option><option value="fa">فارسی</option></select></label>
+        </div>
+        <section class="ui-text-admin-setting" id="ui-text-admin-setting">
+          <h3>نصوص الواجهة</h3>
+          <button class="button button-secondary" id="edit-ui-text-button" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-edit"></use></svg><span>تعديل نصوص الواجهة</span></button>
+        </section>
+                      <button class="button button-secondary" id="backup-button" type="button">
+                <svg aria-hidden="true" class="action-icon">
+                  <use href="#icon-backup"></use>
+                </svg>
+                إنشاء نسخة احتياطية
+              </button>
+        <section id="storage-migration-setting" data-settings-transient hidden>
+          <h3>تخزين البيانات</h3>
+          <p id="storage-backend-status" role="status"></p>
+          <div class="settings-action-buttons">
+            <button class="button button-secondary" id="storage-verify" type="button">التحقق من بيانات Excel قبل الترحيل</button>
+            <button class="button button-primary" id="storage-migrate" type="button" disabled>ترحيل البيانات إلى PostgreSQL</button>
+            <button class="button button-secondary" id="storage-report-download" type="button" hidden>حفظ تقرير التحقق</button>
+          </div>
+          <pre id="storage-migration-report" class="muted-text" aria-live="polite" style="white-space:pre-wrap;max-height:18rem;overflow:auto"></pre>
+        </section>
+      </section>
+
+      <section class="settings-section" data-settings-category="interface" hidden>
+        <h3>صورة الخلفية</h3>
+        <div class="workspace-background-setting">
+          <div class="workspace-background-preview-frame"><img alt="معاينة صورة الخلفية" id="setting-background-preview"></div>
+          <div class="workspace-background-controls">
+            <div class="workspace-background-gallery" id="setting-background-gallery" aria-label="الصور المتاحة"></div>
+            <div class="workspace-background-inputs">
+              <label class="field" for="setting-background-image"><span>إضافة صورة جديدة</span><input accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif" class="control" id="setting-background-image" type="file"></label>
+              <p class="muted-text" id="setting-background-status">تُستخدم الصورة الافتراضية حاليًا.</p>
+              <label class="check-field"><input id="setting-background-all-pages" type="checkbox"><span>تطبيق صورة الخلفية على جميع الصفحات (عند إيقافه تظهر في الصفحة الرئيسية فقط)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="settings-subheading">سلوك مساحة العمل</h3>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>الصفحة الأولى</span><select class="control" id="setting-startup-page"><option value="home">الرئيسية</option><option value="entry">إدخال البيانات</option><option value="search">البحث</option></select></label>
+          <label class="field"><span>عدد صفوف صفحة البحث</span><select class="control" id="setting-search-page-size"><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label>
+          <label class="field"><span>متصفح التطبيق</span><select class="control" id="setting-application-browser"><option value="auto">تلقائي</option><option value="chrome">Google Chrome</option><option value="edge">Microsoft Edge</option><option value="chromium">Chromium</option></select></label>
+        </div>
+        <p class="muted-text">يُطبّق اختيار المتصفح عند تشغيل التطبيق في المرة القادمة.</p>
+
+        <h3 class="settings-subheading">عدد السجلات في صفحات العمل</h3>
+        <p class="muted-text">أدخل عددًا مستقلًا من 1 إلى 100 لكل صفحة.</p>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>الملفات الحديثة في إدخال البيانات</span><input class="control" id="setting-entry-history-limit" max="100" min="1" type="number" value="8"></label>
+          <label class="field"><span>سجلات تاريخ منشئ التصميم</span><input class="control" id="setting-builder-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ البحث</span><input class="control" id="setting-search-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ الاستيراد</span><input class="control" id="setting-import-history-limit" max="100" min="1" type="number" value="20"></label>
+          <label class="field"><span>سجلات تاريخ التصدير</span><input class="control" id="setting-export-history-limit" max="100" min="1" type="number" value="20"></label>
+        </div>
+
+        <h3 class="settings-subheading">بطاقات التاريخ في الصفحة الرئيسية</h3>
+        <p class="muted-text">العدد الافتراضي لكل بطاقة هو 3 سجلات.</p>
+        <div class="field-grid compact-grid">
+          <label class="field"><span>بطاقة إدخال البيانات</span><input class="control" id="setting-home-entry-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة منشئ التصميم</span><input class="control" id="setting-home-builder-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة البحث</span><input class="control" id="setting-home-search-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة الاستيراد</span><input class="control" id="setting-home-import-history-limit" max="100" min="1" type="number" value="3"></label>
+          <label class="field"><span>بطاقة التصدير</span><input class="control" id="setting-home-export-history-limit" max="100" min="1" type="number" value="3"></label>
+        </div>
+        <label class="check-field"><input id="setting-show-entry-search" type="checkbox"><span>إظهار لوحة البحث داخل صفحة إدخال البيانات</span></label>
+        <label class="check-field"><input id="setting-draft-autosave" type="checkbox"><span>حفظ مسودة السجل محليًا تلقائيًا</span></label>
+        <label class="check-field"><input id="setting-show-explanations" type="checkbox"><span>إظهار العناوين الفرعية والشروحات المساعدة غير الضرورية</span></label>
+      </section>
+
+      <section class="settings-section" data-settings-category="shortcuts" hidden>
+        <div class="section-title-line"><div><h3>اختصارات لوحة المفاتيح</h3><p class="muted-text">تُلتقط المفاتيح من موضعها الفيزيائي، فلا تتغير بتغيير لغة لوحة المفاتيح، وتظهر دائمًا بالإنجليزية.</p></div></div>
+        <div class="shortcut-settings-list" id="shortcut-settings-list"></div>
+      </section>
+
+      <section class="settings-section default-app-settings" data-settings-category="default-app" data-settings-transient hidden>
+        <div class="section-title-line"><div><h3>إنشاء تطبيق افتراضي جديد</h3><p class="muted-text">ينشئ نسخة مستقلة من التطبيق الحالي في مجلد تختاره، مع إزالة البيانات التي تحددها.</p></div></div>
+        <div class="default-app-options">
+          <label class="check-field"><input id="default-app-clear-history" type="checkbox"><span>مسح سجلات العمليات وأسماء المستخدمين</span></label>
+          <label class="check-field"><input id="default-app-clear-records" type="checkbox"><span>مسح جميع السجلات والمرفقات (يمسح السجلات التاريخية أيضًا)</span></label>
+          <label class="check-field"><input id="default-app-clear-schema" type="checkbox"><span>مسح مساحة العمل والتصاميم بالكامل</span></label>
+        </div>
+        <div class="default-app-destination-row">
+          <label class="field"><span>مجلد الإنشاء</span><input class="control" id="default-app-destination" readonly type="text" placeholder="لم يُختر مجلد"></label>
+          <button class="button button-secondary" id="choose-default-app-destination" type="button">اختيار المجلد</button>
+        </div>
+        <p class="muted-text" id="default-app-status"></p>
+      </section>
+    </section>
+  </div>
+  <div class="dialog-actions settings-dialog-actions">
+    <p class="muted-text settings-action-status" id="settings-save-state"></p>
+    <div class="settings-action-buttons">
+      <button class="button button-primary" data-settings-footer-action="application" id="save-settings-button" type="button">تطبيق التغييرات</button>
+      <button class="button button-primary" data-settings-footer-action="interface" hidden id="save-workspace-preferences" type="button">تطبيق التغييرات</button>
+      <button class="button button-primary" data-settings-footer-action="shortcuts" hidden id="save-shortcuts-button" type="button">تطبيق التغييرات</button>
+      <button class="button button-primary" data-settings-footer-action="default-app" disabled hidden id="create-default-app" type="button">إنشاء التطبيق الجديد</button>
+      <button class="button button-secondary" id="discard-settings-changes" type="button">تجاهل التغييرات</button>
+    </div>
+  </div>
+</dialog>

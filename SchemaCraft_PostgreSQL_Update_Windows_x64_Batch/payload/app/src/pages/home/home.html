@@ -1,0 +1,68 @@
+<section class="application-page home-view" hidden id="home-view">
+  <div aria-label="لوحة صفحات التطبيق" class="home-dashboard home-grid-6x6" id="home-navigation">
+    <section aria-labelledby="home-data-workspace-title" class="home-dashboard-card home-page-module home-tabbed-workspace home-data-card" data-card-kind="data" data-grid-x="1" data-grid-w="6">
+      <header class="home-card-heading home-unified-card-heading">
+        <h3 class="home-card-title-link" data-home-destination="entry" id="home-data-workspace-title">إدخال البيانات</h3>
+      </header>
+      <div class="home-card-content home-page-module-content" id="home-data-content">
+        <div class="home-statistics-row home-data-statistics-row" id="home-data-general-tags"></div>
+        <div class="home-schema-browser main-category-tab-workspace">
+          <nav aria-label="تصاميم البيانات" class="home-schema-browser-tabs" id="home-data-schema-tabs" role="tablist"></nav>
+          <div class="home-schema-data-list home-schema-browser-panels" id="recent-records"></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="home-builder-workspace-title" class="home-dashboard-card home-page-module home-tabbed-workspace home-builder-card admin-dashboard-card" data-admin-dashboard="builder" data-card-kind="builder" data-grid-x="1" data-grid-w="6">
+      <header class="home-card-heading home-unified-card-heading">
+        <h3 class="home-card-title-link" data-home-destination="builder" id="home-builder-workspace-title">بناء التصاميم</h3>
+      </header>
+      <div class="home-card-content home-page-module-content" id="home-builder-content">
+        <div class="home-statistics-row home-builder-statistics-row" id="home-builder-general-tags"></div>
+        <div class="home-schema-browser home-builder-schema-browser main-category-tab-workspace">
+          <nav aria-label="تصاميم المصمّم" class="home-schema-browser-tabs" id="home-builder-schema-tabs" role="tablist"></nav>
+          <div class="home-builder-schema-list home-schema-browser-panels" id="home-builder-schemas"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card" data-card-kind="table" data-grid-x="1" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link" data-home-destination="search">البحث في السجلات</h3></header>
+      <div class="home-card-content" id="home-search-content"><div class="home-dashboard-list" id="home-recent-searches"></div></div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card admin-dashboard-card" data-admin-dashboard="import" data-card-kind="table" data-grid-x="3" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link admin-dashboard-action" data-home-destination="import">استيراد البيانات</h3></header>
+      <div class="home-card-content" id="home-import-content"><div class="home-dashboard-list" id="home-recent-imports"></div></div>
+    </section>
+
+    <section class="home-dashboard-card home-table-card admin-dashboard-card" data-admin-dashboard="export" data-card-kind="table" data-grid-x="5" data-grid-w="2">
+      <header class="home-card-heading home-unified-card-heading"><h3 class="home-card-title-link admin-dashboard-action" data-home-destination="export">تصدير البيانات</h3></header>
+      <div class="home-card-content" id="home-export-content"><div class="home-dashboard-list" id="recent-exports"></div></div>
+    </section>
+  </div>
+</section>
+
+<dialog class="editor-dialog home-chart-dialog" id="home-chart-dialog">
+  <div class="dialog-heading"><div><h2>إعداد الرسم البياني</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="home-chart-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <p class="dialog-note" id="home-chart-dialog-schema"></p>
+    <div class="home-chart-dialog-fields">
+      <label class="field"><span>نوع الرسم</span><select class="control" id="home-chart-type"><option value="bar">شريط النسبة</option><option value="gauge">مخطط دائري</option></select></label>
+      <label class="field"><span id="home-chart-source-label">الحقل</span><select class="control" id="home-chart-field"></select></label>
+    </div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="apply-home-chart" type="button">تطبيق الرسم</button><button class="button button-secondary" data-close-dialog="home-chart-dialog" type="button">إلغاء</button></div>
+</dialog>
+
+<dialog class="editor-dialog home-custom-stat-dialog" id="home-custom-stat-dialog">
+  <div class="dialog-heading"><div><h2>إحصاء بيانات مخصص</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="home-custom-stat-dialog" type="button">×</button></div>
+  <div class="dialog-content">
+    <div class="home-custom-stat-fields">
+      <label class="field"><span>اسم الإحصاء</span><input class="control" id="home-custom-stat-label" maxlength="80" type="text"></label>
+      <label class="field"><span>طريقة الحساب</span><select class="control" id="home-custom-stat-calculation"><option value="filled">السجلات التي تحتوي قيمة</option><option value="checked">السجلات المحددة</option><option value="distinct">القيم المختلفة</option></select></label>
+    </div>
+    <div class="home-custom-stat-schema-fields" id="home-custom-stat-schema-fields"></div>
+  </div>
+  <div class="dialog-actions"><button class="button button-primary" id="save-home-custom-stat" type="button">حفظ الإحصاء</button><button class="button button-danger-quiet" hidden id="delete-home-custom-stat" type="button">حذف الإحصاء</button><button class="button button-secondary" data-close-dialog="home-custom-stat-dialog" type="button">إلغاء</button></div>
+</dialog>

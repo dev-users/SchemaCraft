@@ -1,0 +1,63 @@
+/* Header scope is navigation, not an in-page ribbon. */
+#header-schema-navigation {
+  background: var(--header-blue); border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+#header-schema-navigation :is(.schema-tabs, .page-schema-tabs, .search-scope-strip) {
+  background: transparent !important; border-radius: 0 !important;
+  clip-path: none !important; min-height: 46px; padding: 5px 8px !important;
+  gap: 4px !important; align-items: center; width: 100%;
+}
+#header-schema-navigation .schema-tab {
+  color: var(--primary-contrast) !important; background: transparent !important;
+  min-height: 36px !important; padding: 8px 18px !important;
+  border-radius: 8px !important; font-weight: 500; max-width: 260px;
+}
+#header-schema-navigation .schema-tab:is(.is-active, [aria-selected="true"], [aria-current="page"]) {
+  color: var(--header-blue) !important; background: #fff !important;
+  font-weight: 700; box-shadow: 0 1px 4px rgb(0 0 0 / 12%) !important;
+}
+#header-schema-navigation .schema-tab:hover:not(.is-active):not([aria-selected="true"]) { background: rgb(255 255 255 / 12%) !important; }
+#header-schema-navigation .schema-tab::before, #header-schema-navigation .schema-tab::after { display: none !important; }
+#header-schema-navigation .schema-tab:focus-visible { outline: 2px solid white !important; outline-offset: -2px; }
+#header-schema-navigation :is(.schema-tab-divider, .search-scope-divider) { display: block; }
+/* Explicit headings survive no-explanations mode; one keyboard toggle each. */
+#import-view .workflow-collapse-heading, #full-search-view .workflow-collapse-heading {
+  display: flex; align-items: center; gap: 10px; min-height: 38px;
+}
+:is(#import-view,#full-search-view) .workflow-collapse-heading::before {
+  content: ''; width: 7px; height: 7px; border: solid currentColor;
+  border-width: 0 0 2px 2px; transform: rotate(-45deg); flex: 0 0 auto;
+  transition: transform .15s ease; opacity: .65;
+}
+:is(#import-view,#full-search-view) .workflow-panel-collapsed > .workflow-collapse-heading::before { transform: rotate(45deg); }
+:is(#import-view,#full-search-view) .workflow-collapse-heading > h3 { margin-inline-end: auto; }
+.attachment-import-setup { display: grid; gap: 14px; min-width: 0; }
+.attachment-template-fields { display: flex; flex-wrap: wrap; gap: 8px; }
+.attachment-template-fields > button { font-size: .86rem; max-width: 100%; white-space: normal; }
+#attachment-import-template { width: 100%; }
+#attachment-import-review, #attachment-import-review[open] { width: min(1150px, calc(100vw - 32px)); max-width: 1150px; }
+#attachment-import-review .table-scroll { scrollbar-gutter: auto; overflow-x: auto !important; }
+.attachment-review-dialog .dialog-content { min-height: 0; overflow: auto; }
+.attachment-review-table { min-width: 750px; width: 100%; table-layout: fixed; }
+#attachment-import-review .attachment-review-table :is(th,td) { vertical-align: top; white-space: normal; overflow-wrap: anywhere; }
+.attachment-review-table :is(th,td):nth-child(1) { width: 23%; }
+.attachment-review-table :is(th,td):nth-child(2) { width: 14%; }
+.attachment-review-table :is(th,td):nth-child(3) { width: 32%; }
+.attachment-review-table :is(th,td):nth-child(4) { width: 9%; }
+.attachment-review-table :is(th,td):nth-child(5) { width: 22%; }
+.attachment-review-file strong, .attachment-review-folder { display: block; overflow-wrap: anywhere; }
+.attachment-review-folder { margin-block-start: 6px; font-size: .8em; font-weight: 400; opacity: .75; }
+.attachment-review-table td:first-child { max-width: 250px; overflow-wrap: anywhere; }
+.attachment-review-target { display: grid; gap: 8px; min-width: 0; max-width: 350px; }
+.attachment-review-target select { max-width: 100%; }
+.attachment-review-status { max-width: 220px; overflow-wrap: anywhere; }
+.attachment-row-skipped { opacity: .55; }
+.attachment-row-done td { background: color-mix(in srgb, var(--primary-soft) 45%, var(--surface)); }
+.attachment-profile-results, .attachment-pending-results { display: grid; gap: 9px; }
+.attachment-profile-results > button, .attachment-pending-results > button { white-space: normal; text-align: start; justify-content: flex-start; overflow-wrap: anywhere; }
+.gallery-card.gallery-unassigned { border: 1px solid #d63b4d !important; background: #fff4f5 !important; color: #ae2035 !important; }
+.gallery-card.gallery-unassigned :is(strong,span,.gallery-file-icon) { color: #ae2035 !important; }
+.gallery-card.gallery-unassigned .gallery-file-icon { background: #ffe9ec !important; }
+.attachment-save-reminder { color: #ae2035; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .workflow-collapse-heading::before { transition: none !important; } }

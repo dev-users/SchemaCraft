@@ -1,0 +1,300 @@
+<dialog aria-labelledby="field-dialog-title" class="editor-dialog editor-dialog-wide compact-builder-dialog" id="field-dialog">
+<div class="dialog-heading">
+<div>
+<p class="section-kicker">تعريف حقل</p>
+<h2 id="field-dialog-title">إضافة حقل</h2>
+</div>
+<button aria-label="إغلاق" class="dialog-close" data-close-dialog="field-dialog" type="button">
+          ×
+        </button>
+</div>
+<div class="dialog-content"><section class="dialog-subsection compact-config-panel" id="field-basic-panel"><div class="dialog-section-heading"><h3>معلومات الحقل الأساسية</h3><div class="compact-heading-actions"><button class="button button-secondary" data-compact-open="compact-field-import" type="button">استيراد إعداد من حقل آخر</button><button class="button button-secondary" data-compact-open="compact-field-type" id="compact-field-type-button" type="button">إعدادات خاصة بالنوع</button></div></div><div class="compact-settings-grid" id="field-basic-panel-body"><label class="field"><span>الفئة الأم</span><select aria-describedby="field-category-help" class="control" id="field-category-name"></select></label><label class="field"><span>موضع الحقل — بعد</span><select class="control" id="field-after"></select></label><div class="field">
+<label for="field-label">اسم الحقل</label>
+<input class="control" id="field-label" type="text"/>
+</div><div class="field">
+<label for="field-type">نوع الحقل</label>
+<select class="control" id="field-type">
+<option value="text">نص</option>
+<option value="spacer">مساحة فارغة — بلا اسم أو قيمة</option>
+<option value="composed_text">نص مركب — من قيم حقول أخرى</option>
+<option value="current_budget">الرصيد الحالي — دخل ناقص مصروف</option>
+<option value="calculation">حقل حساب — عمليات وتجميع بشروط</option>
+<option value="number">رقم</option>
+<option value="select">قائمة</option>
+<option value="checkbox">مربع اختيار واحد</option>
+<option value="date">تاريخ</option>
+<option value="file">ملف أو مرفق</option>
+<option value="system_record_code">معرّف السجل — للعرض فقط</option>
+<option value="user_name">اسم المستخدم الحالي — تعبئة تلقائية</option>
+</select>
+</div><div class="field compact-default-cell" id="compact-field-default"></div><div class="field">
+<label for="field-width">عرض الحقل</label>
+<select class="control" id="field-width">
+<option value="1">1 من 6</option>
+<option value="2">2 من 6</option>
+<option value="3">3 من 6</option>
+<option value="4">4 من 6</option>
+<option value="5">5 من 6</option>
+<option value="full">سطر كامل</option>
+</select>
+</div></div></section><section class="dialog-subsection compact-config-panel" id="field-flags-panel"><div class="dialog-section-heading"><h3>إعدادات الحقل</h3><div class="compact-heading-actions"></div></div><div class="compact-flags-grid" id="field-flags-panel-body"><label class="check-field">
+<input id="field-required" type="checkbox"/>
+<span>حقل مطلوب</span>
+</label><label class="check-field" id="field-unique-wrapper">
+<input id="field-unique" type="checkbox"/>
+<span>يجب أن تكون قيمته فريدة</span>
+</label><label class="check-field field-full"><input id="field-start-new-line" type="checkbox"/><span>يبدأ من يمين سطر جديد — دون تغيير ترتيب الحقول</span></label><label class="check-field" id="field-result-wrapper">
+<input id="field-show-result" type="checkbox"/>
+<span>إظهاره في بطاقة نتيجة البحث</span>
+</label><label class="check-field" id="field-title-wrapper">
+<input id="field-result-title" type="checkbox"/>
+<span>استخدامه في عنوان بطاقة النتيجة</span>
+</label><label class="check-field" id="field-searchable-wrapper">
+<input id="field-searchable" type="checkbox"/>
+<span>استخدامه افتراضيًا في لوحة البحث</span>
+</label><div class="compact-flag-row" id="compact-field-auto-row"><label class="check-field"><input data-compact-gate="field-auto" id="compact-field-auto-enabled" type="checkbox"/><span>تحديث القيمة تلقائيًا</span></label><button aria-label="تحديث القيمة تلقائيًا" class="button button-secondary workflow-icon-only" data-compact-edit="field-auto" title="تحديث القيمة تلقائيًا" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div><div class="compact-flag-row" id="compact-field-validation-row"><label class="check-field"><input data-compact-gate="field-validation" id="compact-field-validation-enabled" type="checkbox"/><span>قيود التحقق</span></label><button aria-label="قيود التحقق" class="button button-secondary workflow-icon-only" data-compact-edit="field-validation" title="قيود التحقق" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div><div class="compact-flag-row" id="compact-field-lookup-row"><label class="check-field"><input data-compact-gate="field-lookup" id="compact-field-lookup-enabled" type="checkbox"/><span>نسخ قيمة من سجل في هذا التصميم أو غيره</span></label><button aria-label="نسخ قيمة من سجل في هذا التصميم أو غيره" class="button button-secondary workflow-icon-only" data-compact-edit="field-lookup" title="نسخ قيمة من سجل في هذا التصميم أو غيره" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div><div class="compact-flag-row" id="compact-field-records-row"><label class="check-field"><input data-compact-gate="field-records" id="compact-field-records-enabled" type="checkbox"/><span>اعتماد مصدر خيارات من حقول سجلات تصميم</span></label><button aria-label="اعتماد مصدر خيارات من حقول سجلات تصميم" class="button button-secondary workflow-icon-only" data-compact-edit="field-records" title="اعتماد مصدر خيارات من حقول سجلات تصميم" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div><div class="compact-flag-row" id="compact-field-language-row"><label class="check-field"><input data-compact-gate="field-language" id="compact-field-language-enabled" type="checkbox"/><span>استخدام نصوص مختلفة للعربية والفارسية</span></label><button aria-label="استخدام نصوص مختلفة للعربية والفارسية" class="button button-secondary workflow-icon-only" data-compact-edit="field-language" title="استخدام نصوص مختلفة للعربية والفارسية" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div></div></section><section class="dialog-subsection condition-editor-section appearance-owner-panel" id="field-appearance-panel">
+  <div class="dialog-section-heading">
+    <h3>شروط ظهور الحقل</h3>
+    <div class="compact-heading-actions" id="compact-appearance-actions">
+      <div id="compact-preserve-space"></div>
+      <button class="button button-secondary" id="add-field-condition-button" type="button">إضافة شرط ظهور</button>
+    </div>
+  </div>
+  <div class="target-conditions-list" id="field-conditions-list"></div>
+</section><section class="dialog-subsection definition-alerts-panel" id="field-alerts-panel">
+<div class="dialog-section-heading"><h3>التنبيهات</h3><button class="button button-secondary" id="field-add-alert" type="button">إضافة تنبيه</button></div>
+<div class="alert-rule-list" id="field-alerts-list"></div>
+</section><div hidden="" id="compact-field-parking"><div class="finance-definition-editor" id="finance-field-editor"></div></div><p class="muted-text field-full" hidden="" id="field-category-help">اختر الفئة ثم موضع الحقل داخلها. يُحفظ التغيير عند حفظ التصميم.</p></div>
+<label class="check-field global-editor-connect-choice" hidden="" id="global-field-connect-choice"><input id="global-field-connect-active" type="checkbox"/><span>ربط التعريف الجديد بالتصميم المفتوح بعد إنشائه</span></label>
+<div class="dialog-actions">
+<button class="button button-primary" id="confirm-field-button" type="button">
+          حفظ الحقل
+        </button>
+<button class="button button-secondary" data-close-dialog="field-dialog" type="button">
+          إلغاء
+        </button>
+</div>
+<dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-import">
+<div class="dialog-heading"><h2 id="compact-field-import-title">استيراد إعداد من حقل آخر</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-import" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-import-content"><section class="sub-editor configuration-import-editor">
+<div class="sub-editor-heading"><div><h3>استيراد إعداد من حقل آخر</h3><p>نسخة محلية مستقلة ما لم تربطها صراحةً بتعريف عام.</p></div><button class="button button-secondary" id="apply-field-configuration-import" type="button">تطبيق المحدد</button></div>
+<div class="field-grid compact-grid"><label class="field field-full"><span>الحقل المصدر</span><select class="control" id="field-configuration-source"><option value="">اختر حقلًا</option></select></label></div>
+<div class="configuration-property-grid" id="field-configuration-properties">
+<label class="check-field"><input checked="" data-import-field-property="label" type="checkbox"/><span>الاسم والوصف</span></label>
+<label class="check-field"><input checked="" data-import-field-property="type" type="checkbox"/><span>النوع</span></label>
+<label class="check-field"><input checked="" data-import-field-property="options" type="checkbox"/><span>قيم القوائم</span></label>
+<label class="check-field"><input checked="" data-import-field-property="behavior" type="checkbox"/><span>المطلوب والبحث والعرض</span></label>
+<label class="check-field"><input checked="" data-import-field-property="validation" type="checkbox"/><span>التحقق والرقم والملف</span></label>
+<label class="check-field"><input data-import-field-property="conditions" type="checkbox"/><span>شروط الظهور (مع مراجعة المصادر)</span></label>
+</div>
+</section></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-import" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-import" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-type">
+<div class="dialog-heading"><div class="compact-type-heading-actions"><h2 id="compact-field-type-title">إعدادات خاصة بالنوع</h2><div class="field field-full" hidden="" id="field-option-languages-wrapper"><button class="button button-secondary" id="field-option-languages" type="button">أسماء خيارات القائمة حسب اللغة</button></div></div><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-type" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-type-content"><div class="field compact-detail-placeholder" id="compact-field-placeholder">
+<label for="field-placeholder">نص مساعد داخل الحقل</label>
+<input class="control" id="field-placeholder" type="text"/>
+</div><div class="compact-list-flags" id="compact-list-flags"><div class="compact-flag-row" id="compact-field-option-filter-row"><label class="check-field"><input data-compact-gate="field-option-filter" id="compact-field-option-filter-enabled" type="checkbox"/><span>تصفية الخيارات حسب حقل آخر</span></label><button aria-label="إعدادات تصفية الخيارات" class="button button-secondary workflow-icon-only" data-compact-edit="field-option-filter" hidden="" title="إعدادات تصفية الخيارات" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div><div class="compact-type-rule-extras" id="compact-type-rule-extras"></div></div><section class="sub-editor field-full" hidden="" id="composition-editor">
+<div class="composition-heading"><h3>تركيب قيمة النص</h3><button class="button button-secondary" id="composition-choose-fields" type="button">اختيار الحقول</button></div>
+<div class="composition-sources" id="composition-sources"></div>
+<label class="field"><span>صيغة النص المركب</span><textarea class="control" data-user-content="" dir="auto" id="composition-template" maxlength="4000" rows="3"></textarea></label>
+<strong>معاينة باستخدام أسماء المصادر</strong><output class="composition-preview" data-user-content="" dir="auto" id="composition-preview"></output>
+</section><div class="field" hidden="" id="field-text-mode-wrapper"><label for="field-text-mode">طول النص</label><select class="control" id="field-text-mode"><option value="short">قصير</option><option value="long">طويل</option></select></div><div class="field" hidden="" id="field-list-mode-wrapper"><label for="field-list-mode">قيم القائمة</label><select class="control" id="field-list-mode"><option value="custom">قيم مخصصة</option><option value="yes_no">نعم / لا</option></select></div><div class="field-grid field-full compact-grid" hidden="" id="field-date-mode-wrapper">
+<label class="field"><span>طريقة التاريخ</span><select class="control" id="field-date-mode"><option value="manual_gregorian">يدوي — ميلادي</option><option value="manual_hijri">يدوي — هجري</option><option value="manual_persian">يدوي — هجري شمسي</option><option value="automatic_created">تلقائي عند الإنشاء</option><option value="automatic_saved">تلقائي عند حفظ أي تعديل</option><option value="automatic_checkbox">تلقائي عند آخر تحديد لمربع</option></select></label>
+<label class="field" hidden="" id="field-date-trigger-wrapper"><span>مربع الاختيار المتحكم</span><select class="control" id="field-date-trigger"></select></label>
+</div><div class="field-grid field-full compact-grid" hidden="" id="field-checkbox-meanings">
+<label class="field"><span>معنى التحديد (صحيح)</span><input class="control" id="field-checkbox-true-label" maxlength="80" placeholder="نعم"/></label>
+<label class="field"><span>معنى عدم التحديد (خطأ)</span><input class="control" id="field-checkbox-false-label" maxlength="80" placeholder="لا"/></label>
+</div><div class="field field-full" hidden="" id="field-options-wrapper">
+<label for="field-options">الخيارات — خيار في كل سطر</label>
+<textarea class="control" id="field-options" rows="5"></textarea>
+</div><div class="compact-settings-grid" id="compact-user-settings"><label class="check-field" hidden="" id="field-user-editable-wrapper"><input checked="" id="field-user-editable" type="checkbox"/><span>يمكن تعديل اسم المستخدم بعد إنشاء السجل</span></label><div class="field" hidden="" id="field-user-value-mode-wrapper">
+<label for="field-user-value-mode">وقت تحديث اسم المستخدم</label>
+<select class="control" id="field-user-value-mode">
+<option value="created_by">عند إنشاء السجل فقط</option>
+<option value="current_on_save">المستخدم الذي حفظ آخر تعديل لسجل موجود</option>
+<option value="current_on_checkbox">عند آخر تحديد لمربع اختيار</option>
+</select>
+</div><div class="field" hidden="" id="field-user-trigger-wrapper"><label for="field-user-trigger">مربع الاختيار المتحكم</label><select class="control" id="field-user-trigger"></select></div></div><label class="check-field field-full" hidden="" id="field-unique-card-checkbox-wrapper"><input id="field-unique-card-checkbox" type="checkbox"/><span>السماح بتحديد هذا المربع في بطاقة واحدة فقط من الفئة المتكررة</span></label><section class="sub-editor" hidden="" id="number-behavior-editor">
+<div class="sub-editor-heading">
+<div>
+<h3>سلوك الرقم</h3>
+</div>
+</div>
+<div class="compact-settings-grid compact-number-grid" id="compact-number-grid"><label class="check-field">
+<input id="number-format-thousands" type="checkbox"/>
+<span>إظهار فواصل الآلاف، مثل 5,623,423,423</span>
+</label><label class="check-field">
+<input id="number-preserve-leading-zeros" type="checkbox"/>
+<span>حفظ الأصفار في البداية، مثل 000123</span>
+</label><p class="muted-text compact-span-all" id="number-storage-note"></p><label class="check-field"><input id="validation-integer-only" type="checkbox"/><span>عدد صحيح فقط</span></label><div class="compact-number-extra" id="compact-number-extra"><div id="compact-number-exact-slot"></div><div id="compact-number-precision-slot"></div><div id="compact-number-separator-slot"></div></div><div class="field field-full compact-span-all" id="compact-number-symbols">
+<span class="field-label">الرموز الإضافية المسموحة</span>
+<div class="number-special-options" dir="ltr">
+<label class="check-field"><input data-number-special="/" type="checkbox"/><span>/</span></label>
+<label class="check-field"><input data-number-special="-" type="checkbox"/><span>-</span></label>
+<label class="check-field"><input data-number-special="_" type="checkbox"/><span>_</span></label>
+<label class="check-field"><input data-number-special="$" type="checkbox"/><span>$</span></label>
+<label class="check-field"><input data-number-special="%" type="checkbox"/><span>%</span></label>
+<label class="check-field"><input data-number-special="*" type="checkbox"/><span>*</span></label>
+</div>
+</div></div></section><section class="sub-editor" hidden="" id="file-naming-editor">
+<label class="check-field profile-image-option" id="file-profile-image-wrapper">
+<input id="file-profile-image" type="checkbox"/>
+<span>
+              عرض هذا المرفق كصورة شخصية في يسار فئة المعلومات الرئيسية
+            </span>
+</label>
+<div class="sub-editor-heading">
+<div>
+<h3>تسمية الملفات</h3>
+</div>
+<select class="control compact-control" id="file-naming-mode">
+<option value="original">الاحتفاظ باسم الملف الأصلي</option>
+<option value="template">إنشاء الاسم من حقول السجل</option>
+</select>
+</div>
+<div hidden="" id="file-template-editor">
+<div class="template-add-row">
+<div class="field">
+<label for="file-part-prefix">النص قبل قيمة الحقل</label>
+<input class="control" id="file-part-prefix" maxlength="30" placeholder="مثال: وثيقة-" type="text"/>
+</div>
+<div class="field">
+<label for="file-part-field">الحقل المستخدم</label>
+<select class="control" id="file-part-field"></select>
+</div>
+<div class="field">
+<label for="file-part-suffix">النص بعد قيمة الحقل</label>
+<input class="control" id="file-part-suffix" maxlength="30" placeholder="مثال: -شهادة" type="text"/>
+</div><div class="filename-add-action"><button class="button button-secondary" id="add-file-part-button" type="button">
+<svg aria-hidden="true" class="action-icon">
+<use href="#icon-plus"></use>
+</svg>
+                إضافة جزء
+              </button></div>
+</div>
+<div aria-label="صيغة اسم الملف" class="file-parts-list filename-composition-field" id="file-parts-list" role="group"></div>
+</div>
+</section><div id="compact-finance-type"></div></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-type" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-type" type="button">إلغاء</button></div>
+<dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-option-filter"><div class="dialog-heading"><h2 id="compact-field-option-filter-title">تصفية الخيارات حسب حقل آخر</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-option-filter" type="button">×</button></div><div class="dialog-content compact-detail-content" id="compact-field-option-filter-content"><section class="sub-editor" hidden="" id="option-filter-editor">
+<div class="field-grid compact-grid">
+<div class="field field-full">
+<label for="option-filter-source">الحقل المتحكم</label><select class="control" id="option-filter-source">
+<option value="">بدون تصفية</option>
+</select>
+</div>
+<div class="field field-full option-filter-matrix" id="option-filter-matrix"></div>
+</div>
+</section></div><div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-option-filter" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-option-filter" type="button">إلغاء</button></div></dialog></dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-search">
+<div class="dialog-heading"><h2 id="compact-field-search-title">إعدادات لوحة البحث</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-search" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-search-content"><div class="field" hidden="" id="field-search-match-wrapper">
+<label for="field-search-match">طريقة المطابقة</label>
+<select class="control" id="field-search-match">
+<option value="contains">يحتوي على النص</option>
+<option value="exact">مطابقة تامة</option>
+</select>
+</div></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-search" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-search" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-auto">
+<div class="dialog-heading"><h2 id="compact-field-auto-title">تحديث القيمة تلقائيًا</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-auto" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-auto-content"><section class="sub-editor" id="field-auto-update-editor">
+<div class="sub-editor-heading"><div><h3>تحديث القيمة تلقائيًا</h3><p>غيّر قيمة هذا الحقل عند تحقق شرط في حقل آخر.</p></div></div>
+<div class="field-grid compact-grid">
+<div class="field"><label for="field-auto-source">الحقل المتحكم</label><select class="control" id="field-auto-source"><option value="">بدون تحديث تلقائي</option></select></div>
+<div class="field"><label for="field-auto-operator">الشرط</label><select class="control" id="field-auto-operator"></select></div>
+<div class="field" id="field-auto-value-wrapper"><label for="field-auto-value">القيمة المطلوبة</label><input class="control" id="field-auto-value" type="text"/></div>
+<div class="field"><label for="field-auto-action">القيمة الجديدة</label><select class="control" id="field-auto-action"><option value="fixed">قيمة ثابتة</option><option value="current_user">اسم المستخدم الحالي</option><option value="copy_source">نسخ قيمة الحقل المتحكم</option><option value="clear">مسح القيمة</option></select></div>
+<div class="field" id="field-auto-result-wrapper"><label for="field-auto-result">القيمة الثابتة</label><input class="control" id="field-auto-result" type="text"/></div>
+</div>
+</section></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-auto" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-auto" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-validation">
+<div class="dialog-heading"><h2 id="compact-field-validation-title">قيود التحقق</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-validation" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-validation-content"><section class="sub-editor" id="field-validation-editor">
+<div class="sub-editor-heading">
+<div>
+<h3>قيود التحقق</h3>
+<p>قيود بسيطة تُفحص في الواجهة وفي الخادم.</p>
+</div>
+</div>
+<div class="field-grid compact-grid" hidden="" id="text-validation-fields">
+<div class="field">
+<label for="validation-min-length">أقل عدد أحرف</label><input class="control" id="validation-min-length" min="0" type="number"/>
+</div>
+<div class="field">
+<label for="validation-max-length">أكبر عدد أحرف</label><input class="control" id="validation-max-length" min="0" type="number"/>
+</div>
+<div class="field field-full">
+<label for="validation-pattern">نمط Regex اختياري</label><input class="control" dir="ltr" id="validation-pattern" type="text"/>
+</div>
+</div>
+<div class="field-grid compact-grid" hidden="" id="number-validation-fields">
+<div class="field">
+<label for="validation-min-number">أقل قيمة</label><input class="control" id="validation-min-number" step="any" type="number"/>
+</div>
+<div class="field">
+<label for="validation-max-number">أكبر قيمة</label><input class="control" id="validation-max-number" step="any" type="number"/>
+</div>
+</div>
+<div class="field-grid compact-grid" hidden="" id="date-validation-fields">
+<div class="field">
+<label for="validation-min-date">أقدم تاريخ</label><input class="control" dir="ltr" id="validation-min-date" placeholder="YYYY-MM-DD" type="text"/>
+</div>
+<div class="field">
+<label for="validation-max-date">أحدث تاريخ</label><input class="control" dir="ltr" id="validation-max-date" placeholder="YYYY-MM-DD" type="text"/>
+</div>
+<div class="field">
+<label for="validation-compare-field">مقارنة مع حقل</label><select class="control" id="validation-compare-field">
+<option value="">بدون مقارنة</option>
+</select>
+</div>
+<div class="field">
+<label for="validation-compare-operator">العلاقة</label><select class="control" id="validation-compare-operator">
+<option value="after">بعد</option>
+<option value="before">قبل</option>
+<option value="on_or_after">في أو بعد</option>
+<option value="on_or_before">في أو قبل</option>
+</select>
+</div>
+</div>
+</section></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-validation" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-validation" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-lookup">
+<div class="dialog-heading"><h2 id="compact-field-lookup-title">نسخ قيمة من سجل في هذا التصميم أو غيره</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-lookup" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-lookup-content"><section class="sub-editor" hidden="" id="related-person-field-editor">
+<div class="sub-editor-heading">
+<div>
+<h3>النسخ من سجل الشخص المرتبط</h3>
+<p>
+                اختر حقلًا رئيسيًا من سجل الشخص ليملأ هذا الحقل تلقائيًا بعد
+                إدخال ID.
+              </p>
+</div>
+</div>
+<div class="field" id="related-person-source-checkbox-wrapper">
+<label for="related-person-source-checkbox">1. مصدر البيانات</label>
+<select class="control" id="related-person-source-checkbox"></select>
+</div>
+<div class="field">
+<label for="related-person-source-field">2. الحقل المطلوب نسخه</label>
+<select class="control" id="related-person-source-field">
+<option value="">لا تنسخ قيمة تلقائيًا</option>
+</select>
+</div>
+</section><div id="compact-finance-lookup"></div></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-lookup" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-lookup" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-records">
+<div class="dialog-heading"><h2 id="compact-field-records-title">مصدر الخيارات والمطابقة</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-records" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-records-content"><div id="compact-record-options"></div></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-records" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-records" type="button">إلغاء</button></div>
+</dialog><dialog class="editor-dialog editor-dialog-wide compact-detail-dialog" id="compact-field-language">
+<div class="dialog-heading"><h2 id="compact-field-language-title">استخدام نصوص مختلفة للعربية والفارسية</h2><button aria-label="إغلاق" class="dialog-close" data-compact-cancel="compact-field-language" type="button">×</button></div>
+<div class="dialog-content compact-detail-content" id="compact-field-language-content"><div class="localized-name-slot" id="field-language-editor"></div></div>
+<div class="dialog-actions"><button class="button button-primary" data-compact-apply="compact-field-language" type="button">حفظ الإعدادات</button><button class="button button-secondary" data-compact-cancel="compact-field-language" type="button">إلغاء</button></div>
+</dialog></dialog>
+<dialog class="editor-dialog" id="field-category-dialog">
+<div class="dialog-heading"><div><p class="section-kicker">المصمّم</p><h2>اختر فئة الحقل</h2></div><button aria-label="إغلاق" class="dialog-close" data-close-dialog="field-category-dialog" type="button">×</button></div>
+<div class="dialog-content"><label class="field"><span>الفئة</span><select class="control" id="new-field-category"></select></label><label class="field"><span>موضع الحقل — بعد الحقل</span><select class="control" id="new-field-after"></select></label></div>
+<div class="dialog-actions"><button class="button button-primary" id="confirm-new-field-category" type="button">متابعة إلى الحقل</button><button class="button button-secondary" data-close-dialog="field-category-dialog" type="button">إلغاء</button></div>
+</dialog>

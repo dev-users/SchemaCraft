@@ -1,0 +1,105 @@
+<dialog class="editor-dialog builder-rule-dialog" id="alert-rule-dialog">
+<div class="dialog-heading"><h2>إعداد التنبيه</h2><button aria-label="إغلاق" class="dialog-close" data-close-dialog="alert-rule-dialog" type="button">×</button></div>
+<div class="dialog-content">
+<section class="builder-two-columns alert-basics">
+<label class="field"><span>اسم التنبيه</span><input autocomplete="off" class="control" id="alert-rule-name" maxlength="160"/></label>
+<label class="check-field"><input checked="" id="alert-rule-enabled" type="checkbox"/><span>تفعيل التنبيه</span></label>
+<div class="field-full alert-message-panel"><div class="builder-conditions-heading"><label for="alert-rule-message">رسالة التنبيه</label><button class="button button-secondary" id="alert-rule-message-fields" type="button">إدراج قيم حقول السجل</button></div><textarea class="control" id="alert-rule-message" maxlength="2000" placeholder="رسالة تظهر على بطاقة التنبيه — اختياري" rows="2"></textarea></div>
+</section>
+<section class="builder-conditions-box" id="alert-extra-settings">
+<div class="builder-conditions-heading"><h3>الشروط</h3><button class="button button-secondary" id="alert-condition-add" type="button">إضافة شرط</button></div>
+<div class="builder-two-columns alert-primary-condition">
+<label class="field"><span>شرط التنبيه</span><select class="control" id="alert-rule-operator"></select></label>
+<div class="alert-rule-value-grid" id="alert-rule-value-slot"></div>
+</div>
+<p class="muted-text" hidden="" id="alert-calendar-note">تُقارن التواريخ بيوم الجهاز المحلي. التحويل الهجري حسابي وقد يختلف عن الرؤية المحلية.</p>
+<p class="muted-text" hidden="" id="alert-repeat-note">يُحسب عدد البطاقات لكل سجل؛ وللفئة التابعة يُحسب لكل بطاقة أم بصورة مستقلة.</p>
+<label class="field alert-match-mode"><span>الجمع بين الشرط الأساسي والشروط الإضافية</span><select class="control" id="alert-condition-mode"><option value="all">كل الشروط — و</option><option value="any">أي شرط — أو</option></select></label>
+<div class="alert-extra-conditions" id="alert-extra-conditions"></div>
+</section>
+<section class="builder-two-columns alert-extra-display">
+<div class="field"><span id="alert-rule-color-label">لون التنبيه</span><details class="builder-visual-dropdown" id="alert-color-dropdown"><summary aria-label="اختيار لون التنبيه" class="control" id="alert-color-trigger"><span class="alert-color-sample"></span><svg aria-hidden="true" class="action-icon"><use href="#icon-down"></use></svg></summary><div class="builder-palette-popover"><div aria-label="ألوان مقترحة" class="alert-color-presets" id="alert-color-presets" role="radiogroup"></div><label class="field alert-custom-color"><span>لون مخصص</span><input class="control" id="alert-rule-color" type="color" value="#286ba3"/></label></div></details></div>
+<div class="field alert-rule-icon-field"><span id="alert-rule-icon-label">أيقونة التنبيه</span><details class="builder-visual-dropdown" id="alert-icon-dropdown"><summary aria-label="اختيار أيقونة التنبيه" class="control" id="alert-icon-trigger"><span id="alert-icon-selected"></span><svg aria-hidden="true" class="action-icon"><use href="#icon-down"></use></svg></summary><div aria-labelledby="alert-rule-icon-label" class="alert-rule-icon-choices" id="alert-rule-icons" role="radiogroup"></div></details></div>
+<label class="check-field"><input checked="" id="alert-rule-auto-color" type="checkbox"/><span>لون تلقائي حسب النوع</span></label>
+<label class="check-field"><input id="alert-rule-hide-cause" type="checkbox"/><span>إخفاء اسم الحقل وقيمته عند وجود رسالة توضيحية</span></label>
+<div class="compact-flag-row field-full"><label class="check-field"><input id="alert-rule-language-enabled" type="checkbox"/><span>استخدام نصوص مختلفة للعربية والفارسية</span></label><button aria-label="أسماء ونصوص حسب اللغة" class="button button-secondary workflow-icon-only" hidden="" id="alert-rule-language-open" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-settings"></use></svg></button></div>
+</section>
+<p class="message-error" id="alert-rule-error" role="alert"></p>
+</div>
+<div class="dialog-actions"><button class="button button-primary" id="alert-rule-save" type="button">حفظ التنبيه في المسودة</button><button class="button button-secondary" data-close-dialog="alert-rule-dialog" type="button">إلغاء</button></div>
+</dialog>
+<dialog class="editor-dialog compact-detail-dialog builder-alert-language-dialog" id="alert-rule-language-dialog">
+<div class="dialog-heading"><h2>أسماء ونصوص حسب اللغة</h2><button aria-label="إغلاق" class="dialog-close" id="alert-language-close" type="button">×</button></div>
+<div class="dialog-content compact-detail-content"><div class="localized-name-slot" id="alert-rule-language"></div></div>
+<div class="dialog-actions"><button class="button button-primary" id="alert-language-save" type="button">حفظ الأسماء</button><button class="button button-secondary" id="alert-language-cancel" type="button">إلغاء</button></div>
+</dialog>
+<dialog class="editor-dialog editor-dialog-wide" id="alerts-dialog">
+<div class="dialog-heading"><h2>التنبيهات</h2><div class="alerts-heading-actions"><span aria-live="polite" id="alerts-status" role="status"></span><button aria-label="تحديث التنبيهات" class="button button-secondary workflow-icon-only" id="alerts-refresh" title="تحديث التنبيهات" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-refresh"></use></svg></button><button aria-label="إغلاق" class="dialog-close" data-close-dialog="alerts-dialog" type="button">×</button></div></div>
+<div class="dialog-content alerts-dialog-body">
+<section aria-label="البحث والترتيب والترشيح" class="alerts-configuration">
+<div class="alerts-configuration-row">
+<input aria-label="بحث في التنبيهات" class="control" id="alerts-query" placeholder="بحث في التنبيهات" type="search"/><button aria-expanded="true" aria-label="طي المجموعات" class="button button-secondary workflow-icon-only" id="alerts-toggle-groups" title="طي المجموعات" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-collapse"></use></svg></button>
+<details class="alerts-menu" id="alerts-sort-menu"><summary aria-label="ترتيب التنبيهات" class="button button-secondary workflow-icon-only" title="ترتيب التنبيهات"><svg aria-hidden="true" class="action-icon"><use href="#icon-sort"></use></svg></summary><div class="alerts-menu-body">
+<label class="field"><span>الترتيب</span><select class="control" id="alerts-sort"><option value="type">حسب النوع</option><option value="edited">حسب آخر تعديل</option><option value="profile">حسب السجل</option><option value="due">حسب تاريخ الاستحقاق</option><option value="name">حسب اسم التنبيه</option><option value="group_count">حسب عدد تنبيهات المجموعة</option></select></label>
+<label class="field"><span>اتجاه الترتيب</span><select class="control" id="alerts-direction"><option value="asc">تصاعدي</option><option value="desc">تنازلي</option></select></label>
+</div></details>
+<details class="alerts-menu" id="alerts-group-menu"><summary aria-label="تجميع التنبيهات" class="button button-secondary workflow-icon-only" title="تجميع التنبيهات"><svg aria-hidden="true" class="action-icon"><use href="#icon-group"></use></svg></summary><div class="alerts-menu-body">
+<label class="field"><span>التجميع</span><select class="control" id="alerts-group-by"><option value="rule">حسب اسم التنبيه</option><option value="type">حسب النوع</option><option value="profile">حسب السجل</option><option value="edited_day">حسب يوم آخر تعديل</option><option value="due_day">حسب يوم الاستحقاق</option><option value="none">دون تجميع</option></select></label>
+</div></details>
+<button aria-label="اختيار مرشحات التنبيهات" class="button button-secondary workflow-icon-only" id="alerts-filters-open" title="اختيار مرشحات التنبيهات" type="button"><svg aria-hidden="true" class="action-icon"><use href="#icon-tune"></use></svg></button>
+</div>
+<details class="alerts-applied-filters" hidden="" id="alerts-applied-filters" open=""><summary><span>المرشحات المطبقة</span><span class="quiet-badge" id="alerts-filter-count"></span></summary><div class="selection-chip-list" id="alerts-filter-chips"></div></details>
+</section>
+<div class="alerts-scroll-content"><p class="message message-error" hidden="" id="alerts-issues" role="status"></p><div class="alert-live-groups" id="alerts-groups"></div></div>
+</div>
+</dialog>
+<dialog class="editor-dialog editor-dialog-wide" id="alerts-filters-dialog">
+<div class="dialog-heading"><h2>مرشحات التنبيهات</h2><button aria-label="إغلاق" class="dialog-close" data-close-dialog="alerts-filters-dialog" type="button">×</button></div>
+<div class="dialog-content"><div class="alerts-filter-grid">
+<label class="field"><span>التصميم</span><select class="control" id="alerts-schema-filter"><option value="">كل التصاميم</option></select></label>
+<label class="field"><span>اسم التنبيه</span><select class="control" id="alerts-rule-filter"><option value="">الكل</option></select></label>
+<label class="field"><span>اسم الحقل أو الفئة</span><select class="control" id="alerts-field-filter"><option value="">الكل</option></select></label>
+<label class="field"><span>السجل — الاسم أو المعرّف</span><input class="control" id="alerts-profile-filter" maxlength="500" type="search"/></label>
+<label class="field"><span>النوع</span><select class="control" id="alerts-type-filter"><option value="">كل الأنواع</option></select></label>
+<label class="field"><span>شرط التنبيه</span><select class="control" id="alerts-operator-filter"><option value="">كل الشروط</option></select></label>
+<label class="field"><span>التثبيت</span><select class="control" id="alerts-pin-filter"><option value="">الكل</option><option value="yes">مثبتة فقط</option><option value="no">غير مثبتة فقط</option></select></label>
+<label class="field"><span>رسالة توضيحية</span><select class="control" id="alerts-message-filter"><option value="">الكل</option><option value="yes">توجد رسالة</option><option value="no">دون رسالة</option></select></label>
+<label class="field"><span>آخر تعديل من</span><input class="control" id="alerts-from" type="date"/></label>
+<label class="field"><span>آخر تعديل إلى</span><input class="control" id="alerts-to" type="date"/></label>
+<label class="field"><span>تاريخ الاستحقاق من</span><input class="control" id="alerts-due-from" type="date"/></label>
+<label class="field"><span>تاريخ الاستحقاق إلى</span><input class="control" id="alerts-due-to" type="date"/></label>
+</div><p class="message-error" id="alerts-filter-error" role="alert"></p></div>
+<div class="dialog-actions"><button class="button button-primary" id="alerts-filters-apply" type="button">تطبيق المرشحات</button><button class="button button-danger-quiet" id="alerts-filters-clear" type="button">مسح الترشيح</button><button class="button button-secondary" data-close-dialog="alerts-filters-dialog" type="button">إلغاء</button></div>
+</dialog>
+<dialog class="editor-dialog editor-dialog-wide" id="alerts-layout-dialog">
+<div class="dialog-heading"><h2>تصميم بطاقات التنبيهات</h2><button aria-label="إغلاق" class="dialog-close" data-close-dialog="alerts-layout-dialog" type="button">×</button></div>
+<div class="dialog-content alert-designer-v2">
+<p class="muted-text alert-design-shared-note">هذا التصميم مشترك لجميع التصاميم. نص رسالة كل تنبيه يُعدّل من إعداد التنبيه نفسه.</p>
+<div class="alert-designer-controls">
+<details class="workspace-panel designer-section" id="alerts-design-content" open="">
+<summary class="section-title-line"><h3>محتوى البطاقة وترتيبه</h3></summary>
+<div class="designer-section-body">
+<div class="alerts-content-order" id="alerts-content-order"></div>
+<div class="alert-layout-options" id="alerts-layout-options"></div>
+<div class="field"><span id="alerts-content-format-label">صيغة نص التنبيه</span><div aria-labelledby="alerts-content-format-label" class="alert-content-format" id="alerts-content-format" role="group"></div><textarea aria-hidden="true" hidden="" id="alerts-message-template" readonly="" tabindex="-1"></textarea></div>
+<p class="muted-text">العناصر ثابتة هنا. عدّل الفواصل والمسافات والأسطر بين العناصر فقط؛ تغيير ترتيبها يتم بالأسهم في القائمة.</p>
+<div class="alerts-text-tokens" id="alerts-text-tokens"></div>
+
+</div>
+</details><details class="workspace-panel designer-section" id="alerts-design-profile" open=""><summary class="section-title-line"><h3>طريقة عرض السجل</h3></summary><div class="designer-section-body">
+<label class="field"><span>التصميم</span><select class="control" id="alerts-layout-schema"></select></label>
+<label class="field"><span>صيغة عرض السجل</span><textarea class="control" id="alerts-profile-template" maxlength="2000" placeholder="{الاسم} — {معرّف السجل}" rows="3"></textarea></label>
+<button class="button button-secondary" id="alerts-layout-fields" type="button">اختيار حقول السجل</button>
+<p class="muted-text">رتّب أسماء الحقول داخل الأقواس وأضف الفواصل أو الأسطر. ترك القالب فارغًا يستخدم عنوان السجل الحالي. معرّف السجل الظاهر قابل للنسخ.</p>
+</div></details>
+<details class="workspace-panel designer-section" id="alerts-design-style" open="">
+<summary class="section-title-line"><h3>النص والتخطيط</h3></summary>
+<div class="designer-section-body"><label class="check-field"><input id="alerts-compact" type="checkbox"/><span>بطاقات مدمجة</span></label><div class="alerts-designer-options" id="alerts-designer-options"></div></div>
+</details>
+</div>
+<section class="workspace-panel alert-designer-preview"><div class="section-title-line"><h3>معاينة أنواع التنبيهات بالحجم الفعلي</h3></div><div id="alerts-layout-preview"></div></section>
+<p class="message-error" id="alerts-layout-error" role="alert"></p>
+</div>
+<div class="dialog-actions"><button class="button button-primary" id="alerts-layout-save" type="button">حفظ التصميم</button><button class="button button-secondary" data-close-dialog="alerts-layout-dialog" type="button">إلغاء</button></div>
+</dialog>
+

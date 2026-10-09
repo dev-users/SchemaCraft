@@ -1,0 +1,33 @@
+<dialog class="editor-dialog" id="builder-auth-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">حماية المصمّم</p>
+          <h2 id="builder-auth-title">فتح المصمّم</h2>
+        </div>
+        <button aria-label="إغلاق" class="dialog-close" data-close-dialog="builder-auth-dialog" type="button">
+          ×
+        </button>
+      </div>
+      <div class="dialog-content">
+        <p class="dialog-note" id="builder-auth-note"></p>
+        <div class="field-grid compact-grid">
+          <div class="field field-full" hidden="" id="current-password-wrapper">
+            <label for="current-builder-password">كلمة المرور الحالية</label><input autocomplete="current-password" class="control" dir="ltr" id="current-builder-password" spellcheck="false" type="password">
+          </div>
+          <div class="field field-full">
+            <label for="builder-password">كلمة المرور</label><input autocomplete="current-password" class="control" dir="ltr" id="builder-password" spellcheck="false" type="password">
+          </div>
+          <div class="field field-full" hidden="" id="confirm-password-wrapper">
+            <label for="confirm-builder-password">تأكيد كلمة المرور الجديدة</label><input autocomplete="new-password" class="control" dir="ltr" id="confirm-builder-password" spellcheck="false" type="password">
+          </div>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button aria-live="polite" class="button button-primary" id="confirm-builder-auth-button" type="button">
+          <svg aria-hidden="true" class="action-icon">
+            <use href="#icon-unlock"></use></svg><span id="confirm-builder-auth-text">فتح المصمّم</span>
+          <span aria-hidden="true" class="spinner" hidden="" id="builder-auth-spinner"></span>
+        </button><button class="button button-secondary" data-close-dialog="builder-auth-dialog" type="button">
+          إلغاء</button>
+      </div>
+    </dialog>
