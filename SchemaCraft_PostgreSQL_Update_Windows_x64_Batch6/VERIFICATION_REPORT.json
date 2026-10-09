@@ -1,0 +1,116 @@
+{
+  "format_version": 1,
+  "status": "passed",
+  "release": "Batch6",
+  "release_date": "2026-10-10",
+  "synthetic_data_only": true,
+  "company_data_accessed": false,
+  "packages": {
+    "Linux": {
+      "manifest_sha256": "f19c0d979a604e6ada4bb6b3726067f830c39033dc1e149ced86f9b644080a47",
+      "executable_sha256": "ede818b2a01cec09f270509b3214a0bcb7d14b7b7b8d1e757afd4bd05966c4a9",
+      "updater_sha256": {
+        "engine.py": "d701c180ba4a22c5742cfb76d65dcdb9eb0cce03ac7bb23fecc161ec5f310433",
+        "UPDATER_GUI.py": "be47c75a7d68defe7bdc796a2a34571a776992eab2faa374e6fafcf4e845ef26",
+        "startup_self_test.py": "49c585f1e1e723383d11bad598592912851037ad6ec8cccec0c7149e039a6e13",
+        "startup_support.py": "a212e80e5a57a6abe9aaf0eb0dc088a4d6e0b29a37bee3a6cf8abdbb9dc30e5f",
+        "updater_launcher.py": "5ac40bca0b94daae2a455deaa3c7afd0c58debce5607be05b3ade318467165e0",
+        "schemacraft_update_lock.py": "8fa5560ca2dcbc996ca7fea44c2b62b5b11208b5b36728f60769ad5e8f3b4ca2"
+      },
+      "payload_files": 770,
+      "native_lifecycle_status": "passed",
+      "native_lifecycle_seconds": 127.02,
+      "native_lifecycle_checks": [
+        "Bundled platform updater read-only preflight covers two schemas, one archived schema, two records, four nested children, zero/false/Unicode values and two attachments including a real XLSX document; original installation is byte-identical",
+        "Update coordination lock is inside the application folder; no legacy parent lock remains",
+        "Rebuilt platform executable migrates and cleans the staged app, publishes the final Unicode path and completes verified restart: exact data/metadata/attachment fingerprints, XLSX attachments/imports/exports, credentials, developer key and custom UI wording preserved; obsolete Excel, build/source/private-Python files and this app’s old backups retired",
+        "Two further final-path PostgreSQL restart probes preserve the exact logical, complete-snapshot and attachment hashes despite poisoned inherited PG/psycopg settings",
+        "Second complete PostgreSQL-to-PostgreSQL update preserves all three fingerprints and protected documents without historical workbook reimport or new legacy storage",
+        "Isolated executable check/migration/probe runners leave the complete sealed payload byte-identical; PostgreSQL recheck and final strict package validation succeed",
+        "Missing attachment blocks before migration with original bytes preserved",
+        "Unclassified file in the old backups folder blocks cleanup with original installation and complete verified recovery backup preserved",
+        "Installed rebuilt application authenticates a real HTTP session, unlocks the preserved administrator credential, creates a fresh logical PostgreSQL ZIP backup after cleanup and restores it into a separate synthetic deployment with exact records/metadata/attachment hashes"
+      ],
+      "logical_sha256": "62064f83953e99c0200fe5a8b2b3ade47a006f002f5b714af522d430f74a2e9d",
+      "snapshot_sha256": "bacc5e23297b617a891ec1ce8038c3f505675df45c2219911cbd6d577f35311f",
+      "attachment_sha256": "b1f4cb2c173248a9e420b12068216534f1a97c614aa9e37c685854142cf29ae9",
+      "gui_status": "passed",
+      "gui_completion_languages": [
+        "en",
+        "ar"
+      ],
+      "startup_self_test_exit": 0,
+      "execution_environment": "Native Ubuntu 24.04 x86_64 frozen Linux executable"
+    },
+    "Windows": {
+      "manifest_sha256": "d252716f84f3b9467974077176ec33563a84e546e9d3db2b78338f5bf1dc3498",
+      "executable_sha256": "f93f17152d3f730b2f96e9ef8d1f0e617057e9c9ca518d6f4d4929eac560d7e1",
+      "updater_sha256": {
+        "engine.py": "d701c180ba4a22c5742cfb76d65dcdb9eb0cce03ac7bb23fecc161ec5f310433",
+        "UPDATER_GUI.py": "be47c75a7d68defe7bdc796a2a34571a776992eab2faa374e6fafcf4e845ef26",
+        "startup_self_test.py": "49c585f1e1e723383d11bad598592912851037ad6ec8cccec0c7149e039a6e13",
+        "startup_support.py": "a212e80e5a57a6abe9aaf0eb0dc088a4d6e0b29a37bee3a6cf8abdbb9dc30e5f",
+        "updater_launcher.py": "5ac40bca0b94daae2a455deaa3c7afd0c58debce5607be05b3ade318467165e0",
+        "schemacraft_update_lock.py": "8fa5560ca2dcbc996ca7fea44c2b62b5b11208b5b36728f60769ad5e8f3b4ca2"
+      },
+      "payload_files": 781,
+      "native_lifecycle_status": "passed",
+      "native_lifecycle_seconds": 524.13,
+      "native_lifecycle_checks": [
+        "Bundled platform updater read-only preflight covers two schemas, one archived schema, two records, four nested children, zero/false/Unicode values and two attachments including a real XLSX document; original installation is byte-identical",
+        "Update coordination lock is inside the application folder; no legacy parent lock remains",
+        "Rebuilt platform executable migrates and cleans the staged app, publishes the final Unicode path and completes verified restart: exact data/metadata/attachment fingerprints, XLSX attachments/imports/exports, credentials, developer key and custom UI wording preserved; obsolete Excel, build/source/private-Python files and this app’s old backups retired",
+        "Two further final-path PostgreSQL restart probes preserve the exact logical, complete-snapshot and attachment hashes despite poisoned inherited PG/psycopg settings",
+        "Second complete PostgreSQL-to-PostgreSQL update preserves all three fingerprints and protected documents without historical workbook reimport or new legacy storage",
+        "Isolated executable check/migration/probe runners leave the complete sealed payload byte-identical; PostgreSQL recheck and final strict package validation succeed",
+        "Missing attachment blocks before migration with original bytes preserved",
+        "Unclassified file in the old backups folder blocks cleanup with original installation and complete verified recovery backup preserved",
+        "Installed rebuilt application authenticates a real HTTP session, unlocks the preserved administrator credential, creates a fresh logical PostgreSQL ZIP backup after cleanup and restores it into a separate synthetic deployment with exact records/metadata/attachment hashes"
+      ],
+      "logical_sha256": "62064f83953e99c0200fe5a8b2b3ade47a006f002f5b714af522d430f74a2e9d",
+      "snapshot_sha256": "951668b701f90ae79561618e056dcb4217de105b7a1c07884ef3c3b5d623a76e",
+      "attachment_sha256": "b1f4cb2c173248a9e420b12068216534f1a97c614aa9e37c685854142cf29ae9",
+      "gui_status": "passed",
+      "gui_completion_languages": [
+        "en",
+        "ar"
+      ],
+      "startup_self_test_exit": 0,
+      "execution_environment": "Actual Windows x64 binaries under Wine 11",
+      "batch_window_opens_and_closes": true
+    }
+  },
+  "source_validation": {
+    "focused_python_tests": 26,
+    "real_postgresql_count_test": 1,
+    "js_dom_search_tests": 13,
+    "date_cases": 41,
+    "native_linux_lock_and_immutable_runner_tests": 17,
+    "windows_lock_and_immutable_runner_tests": {
+      "total": 17,
+      "passed": 15,
+      "os_specific_skips": 2
+    }
+  },
+  "real_postgresql_chromium": {
+    "status": "passed",
+    "distinct_values": 137,
+    "duplicate_count": 3,
+    "empty_matches": 70,
+    "nonempty_matches": 69,
+    "false_checkbox_matches": 139,
+    "ui_errors": []
+  },
+  "real_frozen_linux_interruption_recovery": {
+    "status": "passed",
+    "checks": [
+      "A real frozen update interrupted between directory moves recovers a verified PostgreSQL installation at the missing target, preserving user documents and removing the legacy outside lock",
+      "Cleanup recovery retains a later PostgreSQL edit made after interrupted publication; no old Excel or older database is restored"
+    ]
+  },
+  "limitations": [
+    "Windows tests execute actual Windows binaries under Wine 11; native Microsoft Windows is unavailable.",
+    "Linux is verified on Ubuntu 24.04 x86_64 / glibc 2.39; older glibc versions are unverified.",
+    "Company-data equivalence is checked locally by the updater before activation and cleanup."
+  ]
+}

@@ -1,0 +1,24 @@
+SchemaCraft PostgreSQL Windows UTF-8 resource patch
+
+The eight PostgreSQL 18.6 executables were built from verified official source
+and then given an embedded Windows process manifest using the documented
+BeginUpdateResourceW/UpdateResourceW/EndUpdateResourceW API. Program code,
+nonresource sections, original icons and version resources remain byte-exact.
+DLLs are unchanged. This avoids narrow Windows CRT/ANSI API argument loss when
+an application or database directory contains Arabic or other Unicode text.
+
+Requires Windows 10 version 1903 (build 18362) or newer, or Windows 11.
+The activeCodePage setting is process-local; no system locale changes occur.
+
+SCHEMACRAFT_UTF8_MANIFEST_PATCH.json records reviewed source provenance and all
+before/after executable hashes. utf8-process-manifests/ contains exact embedded
+XML. The reproducible resource patch script is retained with the release build
+sources at Updates/SchemaCraft_PostgreSQL_Windows_Fix/work/runtime-utf8/
+embed_utf8_manifests.py; it runs against a clean original runtime copy named
+postgresql/ and the adjacent manifests/ directory.
+
+Tests execute real AMD64 Windows binaries under Wine 11. Native Windows testing
+remains unconfirmed. Existing PostgreSQL licensing and source notices apply.
+
+Microsoft manifest documentation:
+https://learn.microsoft.com/en-us/windows/win32/sbscs/application-manifests

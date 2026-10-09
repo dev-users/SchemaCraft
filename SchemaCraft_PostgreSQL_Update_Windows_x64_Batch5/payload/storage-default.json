@@ -1,5 +1,0 @@
-{
-  "version": 1,
-  "backend": "managed-postgresql",
-  "require_postgresql": true
-}

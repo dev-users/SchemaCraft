@@ -1,8 +1,0 @@
-/* Only used inside the script-free editing iframe. No production UI changes. */
-.ui-text-preview [data-ui-text-editable] { cursor: text; }
-.ui-text-preview [data-ui-text-editable]:hover { outline: 1px dashed var(--primary, #3367d6); outline-offset: 2px; }
-.ui-text-preview .ui-text-selected { outline: 2px solid var(--primary, #3367d6); outline-offset: 2px; }
-.ui-text-preview [data-ui-content] { visibility: hidden; }
-.ui-text-preview [hidden] { display: none !important; }
-.ui-text-preview input, .ui-text-preview textarea, .ui-text-preview select { caret-color: transparent; }
-.ui-text-preview .session-privacy-screen { display: none; }
