@@ -19,6 +19,11 @@ _VENDOR_MODULE_DIR = str(Path(_SOURCE_MODULE_DIR) / "vendor")
 if Path(_VENDOR_MODULE_DIR).is_dir() and _VENDOR_MODULE_DIR not in sys.path:
     sys.path.insert(0, _VENDOR_MODULE_DIR)
 
+# Clear inherited libpq/driver defaults only in the private deployed process,
+# before any third-party imports or application threads are started.
+from schemacraft_postgres_runtime import prepare_packaged_process_environment
+prepare_packaged_process_environment(Path(_SOURCE_MODULE_DIR))
+
 import schemacraft_link_config as LC
 import schemacraft_composite_text
 import schemacraft_finance

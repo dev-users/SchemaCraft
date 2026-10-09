@@ -1,5 +1,7 @@
 # SchemaCraft PostgreSQL update for Windows x64 — batch launcher
 
+This is Batch 3. Extract to a short location such as C:\SCUpdate, close the application, and select the same original application copy. Earlier blocked staging/backup folders can remain untouched. New working copies use the short .scu folder next to the application; earlier recovery journals remain supported. If blocked again, send the new migration report, which includes the failing operation and safe cause codes. The optional diagnostics/DIAGNOSE_WINDOWS.bat collects client readiness without connecting to or changing a database.
+
 Supported target: Windows 10 version 1903 (build 18362) or later, or Windows 11, on x64 computers. The launcher checks this before any data migration.
 
 1. Close SchemaCraft and any Excel windows using its files.

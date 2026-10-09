@@ -13,6 +13,7 @@ import math
 import os
 import re
 import shutil
+import sys
 import tempfile
 import uuid
 import zipfile
@@ -34,6 +35,89 @@ class MigrationBlocked(ValueError):
 
 def _block(code: str, location: Any) -> None:
     raise MigrationBlocked(code, str(location))
+
+
+def _exception_diagnostic(exc: BaseException) -> dict:
+    """Describe code provenance without formatting any exception or its data.
+
+    Exception messages, arguments, driver diagnostics, source lines and frame
+    locals can all contain workbook values or credentials. Only code metadata
+    and explicitly approved machine codes are copied into migration reports.
+    """
+    chain, seen = [], set()
+    storage = sys.modules.get("schemacraft_storage")
+    storage_error = getattr(storage, "StorageError", None)
+    current, relation = exc, "exception"
+    while current is not None and id(current) not in seen and len(chain) < 16:
+        seen.add(id(current))
+        name = type(current).__name__
+        item = {"exception_type": name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,127}", name) else "Exception",
+                "relation": relation, "traceback": []}
+        sqlstate = _diagnostic_attribute(current, "sqlstate")
+        if type(sqlstate) is str and re.fullmatch(r"[0-9A-Z]{5}", sqlstate):
+            item["sqlstate"] = sqlstate
+        for key in ("errno", "winerror"):
+            value = _diagnostic_attribute(current, key)
+            if type(value) is int:
+                item[key] = value
+        # A validation code is trusted only when storage explicitly publishes
+        # it as safe; arbitrary code/path/detail attributes are never reported.
+        if isinstance(storage_error, type) and isinstance(current, storage_error):
+            safe_codes = getattr(storage, "SAFE_VALIDATION_CODES", frozenset())
+            validation_code = _diagnostic_attribute(current, "validation_code")
+            if (type(validation_code) is str and isinstance(safe_codes, (set, frozenset))
+                    and validation_code in safe_codes and re.fullmatch(r"[a-z][a-z0-9_]{0,95}", validation_code)):
+                item["validation_code"] = validation_code
+        tb = current.__traceback__
+        while tb is not None and len(item["traceback"]) < 32:
+            code = tb.tb_frame.f_code
+            # Basenames describe the executing code without disclosing the
+            # developer's home directory or a selected company directory.
+            filename = code.co_filename.replace("\\", "/").rsplit("/", 1)[-1]
+            if not re.fullmatch(r"[A-Za-z0-9_.-]{1,160}\.py[cw]?", filename):
+                filename = "<dynamic>"
+            function = code.co_name
+            if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,127}|<module>|<lambda>|<genexpr>|<listcomp>|<dictcomp>|<setcomp>", function):
+                function = "<dynamic>"
+            item["traceback"].append({"filename": filename, "function": function, "line": tb.tb_lineno})
+            tb = tb.tb_next
+        chain.append(item)
+        if current.__cause__ is not None:
+            current, relation = current.__cause__, "cause"
+        elif not current.__suppress_context__:
+            current, relation = current.__context__, "context"
+        else:
+            current = None
+    diagnostic = {"exception_type": chain[0]["exception_type"],
+                  "root_cause_type": chain[-1]["exception_type"], "cause_chain": chain}
+    for key in ("sqlstate", "validation_code", "errno", "winerror"):
+        for item in reversed(chain):
+            if key in item:
+                diagnostic[key] = item[key]
+                break
+    return diagnostic
+
+
+def _diagnostic_attribute(exc: BaseException, key: str) -> Any:
+    try:
+        return getattr(exc, key, None)
+    except Exception:
+        return None
+
+
+def _failure_issue(exc: BaseException, code: str, location: str, *, stage: str, operation: str) -> dict:
+    return {"code": exc.code if isinstance(exc, MigrationBlocked) else code,
+            "location": exc.location if isinstance(exc, MigrationBlocked) else location,
+            "stage": stage, "operation": operation, "diagnostic": _exception_diagnostic(exc)}
+
+
+def _record_failure(report: dict, exc: BaseException, code: str, *, stage: str, operation: str,
+                    location: str | None = None) -> None:
+    report.update(status="blocked", activated=False)
+    report.setdefault("stage", stage)
+    report.setdefault("operation", operation)
+    report.setdefault("issues", []).append(_failure_issue(exc, code, location or type(exc).__name__,
+                                                         stage=stage, operation=operation))
 
 
 def _json(value: Any) -> str:
@@ -456,26 +540,37 @@ def migrate_workspace(app, store, *, activate: bool = False, diagnostic_root: Pa
     report = {"version": 1, "status": "blocked", "activated": False, "readback_verified": False,
               "issues": [], "migration_id": uuid.uuid4().hex, "checked_at": datetime.now(timezone.utc).isoformat()}
     original_snapshot, staged = None, False
-    root = Path(app.WORKSPACE_MANAGER.data_dir if app.WORKSPACE_MANAGER else app.DATA_DIR).resolve()
-    # The graphical updater verifies a sibling copy before moving it into place.
-    # Only diagnostic references use its final location; every read/write still
-    # targets the selected staging workspace.
-    final_root = Path(diagnostic_root).resolve() if diagnostic_root is not None else root
-    lock = getattr(app, "WORKBOOK_LOCK", None)
+    stage, operation = "source_preflight", "resolve_workspace"
     try:
+        root = Path(app.WORKSPACE_MANAGER.data_dir if app.WORKSPACE_MANAGER else app.DATA_DIR).resolve()
+        # The graphical updater verifies a sibling copy before moving it into place.
+        # Backup/report references use its final location, while the server log
+        # points to the actual workspace used by this migration attempt.
+        final_root = Path(diagnostic_root).resolve() if diagnostic_root is not None else root
+        if activate:
+            report["postgres_log_path"] = str(root / ".postgresql" / "postgres.log")
+        lock = getattr(app, "WORKBOOK_LOCK", None)
+        operation = "acquire_workbook_lock"
         with lock if lock is not None else nullcontext():
+            operation = "inventory_source"
             source_inventory = _inventory(root)
             if "workspace.json" not in source_inventory:
                 _block("workspace_catalog_required", "workspace.json")
+            operation = "read_workspace_catalog"
             manager = readonly_workspace(root)
             evidence, datasets = [], {}
             for context in manager.contexts(include_archived=True):
+                operation = "read_schema_definition"
                 relative = context.schema_path.relative_to(root).as_posix()
                 schema = _read_json(context.schema_path, relative)
+                operation = "validate_excel_dataset"
                 records = _strict_dataset(app, context, schema, root, evidence)
                 datasets[context.schema_id] = {"schema": schema, "records": records}
+            operation = "validate_excel_registry"
             registry = _strict_registry(manager, datasets, root, evidence)
+            operation = "validate_attachments"
             attachments = _attachments(app, manager, datasets, root, source_inventory)
+            operation = "summarize_source"
             source_signature = _digest(source_inventory)
             logical_signature = _digest({"datasets": datasets, "registry": registry})
             report.update({"status": "verified_source", "source_sha256": source_signature,
@@ -487,17 +582,22 @@ def migrate_workspace(app, store, *, activate: bool = False, diagnostic_root: Pa
                            "attachment_files": len(attachments["files"]), "attachment_sha256": _digest(attachments["files"]),
                            "source_files": len(source_inventory), "excel_nonempty_cells": len(evidence),
                            "cell_inventory_sha256": _digest(evidence)})
+            operation = "recheck_source_inventory"
             if _inventory(root) != source_inventory:
                 _block("source_changed_during_preflight", "workspace")
             if not activate:
                 return report
             if store is None:
                 _block("postgres_store_required", "target")
+            stage, operation = "backup", "backup_originals"
             backup = _backup(root, report["migration_id"], source_inventory, evidence)
             backup_reference = final_root / backup.relative_to(root)
             report["backup_path"] = str(backup_reference)
+            stage, operation = "target_initialization", "store.initialize"
             store.initialize()
+            stage, operation = "target_inspection", "store.export_snapshot"
             original_snapshot = store.export_snapshot()
+            operation = "verify_target_empty_or_identical"
             nonempty = bool(original_snapshot.get("datasets") or original_snapshot.get("registry")
                             or set(original_snapshot.get("metadata", {})) - {"storage_format_version"})
             existing = original_snapshot.get("metadata", {}).get("excel_migration")
@@ -510,38 +610,54 @@ def migrate_workspace(app, store, *, activate: bool = False, diagnostic_root: Pa
                                   "logical_sha256": logical_signature, "backup_path": str(backup_reference)}}}
             if not nonempty:
                 staged = True
+                stage, operation = "target_import", "store.restore_snapshot"
                 store.restore_snapshot(seed)
+            stage, operation = "target_readback", "store.export_snapshot"
             readback = store.export_snapshot()
+            operation = "compare_snapshot"
             if not _equal(readback["datasets"], datasets) or not _equal(readback["registry"], registry):
                 _block("postgres_readback_mismatch", "target")
             for sid, dataset in datasets.items():
-                if not _equal(store.read_schema(sid), dataset["schema"]) or not _equal(store.read_dataset(sid), dataset["records"]):
+                operation = "store.read_schema"
+                read_schema = store.read_schema(sid)
+                operation = "compare_schema"
+                if not _equal(read_schema, dataset["schema"]):
                     _block("postgres_dataset_readback_mismatch", sid)
-            if not _equal(store.read_registry(), registry):
+                operation = "store.read_dataset"
+                read_records = store.read_dataset(sid)
+                operation = "compare_dataset"
+                if not _equal(read_records, dataset["records"]):
+                    _block("postgres_dataset_readback_mismatch", sid)
+            operation = "store.read_registry"
+            read_registry = store.read_registry()
+            operation = "compare_registry"
+            if not _equal(read_registry, registry):
                 _block("postgres_registry_readback_mismatch", "target")
             report["readback_verified"] = True
+            stage, operation = "source_recheck", "inventory_before_activation"
             if _inventory(root) != source_inventory:
                 _block("source_changed_before_activation", "workspace")
             report.update({"status": "activated", "activated": True, "verified_at": datetime.now(timezone.utc).isoformat()})
             report_path = root / ".postgresql" / "migration-reports" / (report["migration_id"] + ".json")
+            stage, operation = "activation", "write_migration_report"
             _atomic_json(report_path, report)
+            operation = "write_storage_marker"
             _atomic_json(root / "storage.json", {"version": 1, "backend": "managed-postgresql",
                                                 "migration_id": report["migration_id"], "verified_at": report["verified_at"],
                                                 "report_path": str(final_root / report_path.relative_to(root))})
             return report
     except Exception as exc:
-        report.update({"status": "blocked", "activated": False})
+        report.update({"status": "blocked", "activated": False, "stage": stage, "operation": operation})
         if staged and original_snapshot is not None:
             try:
                 store.restore_snapshot(original_snapshot)
                 report["target_rolled_back"] = True
-            except Exception:
+            except Exception as rollback_exc:
                 report["target_rolled_back"] = False
-                report["issues"].append({"code": "target_rollback_failed", "location": "target"})
-        if isinstance(exc, MigrationBlocked):
-            report["issues"].append({"code": exc.code, "location": exc.location})
-        else:
-            report["issues"].append({"code": "preflight_or_storage_error", "location": type(exc).__name__})
+                report["issues"].append(_failure_issue(rollback_exc, "target_rollback_failed", "target",
+                                                        stage="target_rollback", operation="store.restore_snapshot"))
+        report["issues"].append(_failure_issue(exc, "preflight_or_storage_error", type(exc).__name__,
+                                               stage=stage, operation=operation))
         return report
 
 
@@ -636,66 +752,93 @@ def _extract_backup(archive_path: Path, destination: Path) -> dict:
 
 def restore_backup(app, store, archive_path: Path, *, data_dir: Path | None = None) -> dict:
     """Restore a portable PostgreSQL ZIP only into an empty deployment."""
-    root = Path(data_dir or app.DATA_DIR).resolve()
     report = {"version": 1, "status": "blocked", "activated": False, "readback_verified": False, "issues": []}
     original_snapshot, staged, installed = None, False, []
+    stage, operation = "restore_preflight", "resolve_workspace"
     try:
+        root = Path(data_dir or app.DATA_DIR).resolve()
+        report["postgres_log_path"] = str(root / ".postgresql" / "postgres.log")
+        operation = "prepare_empty_workspace"
         root.mkdir(parents=True, exist_ok=True)
+        operation = "inventory_restore_target"
         if _inventory(root):
             _block("restore_requires_empty_workspace", "target")
         if store is None:
             _block("postgres_store_required", "target")
+        operation = "create_restore_staging_directory"
         with tempfile.TemporaryDirectory(prefix="schemacraft-restore-", dir=root.parent) as temporary:
             extracted = Path(temporary)
+            operation = "extract_backup"
             snapshot = _extract_backup(Path(archive_path), extracted)
+            operation = "validate_postgres_seed"
             report.update(validate_postgres_seed(app, snapshot, extracted))
             # Every original backup byte is kept except portable logical
             # snapshot documentation; schema projections come from authority.
+            operation = "prepare_schema_projections"
             for context in readonly_workspace(extracted, require_workbooks=False).contexts():
                 _atomic_json(context.schema_path, snapshot["datasets"][context.schema_id]["schema"])
             (extracted / "storage.json").unlink(missing_ok=True)
+            stage, operation = "target_initialization", "store.initialize"
             store.initialize()
+            stage, operation = "target_inspection", "store.export_snapshot"
             original_snapshot = store.export_snapshot()
+            operation = "verify_restore_target_empty"
             if original_snapshot.get("datasets") or original_snapshot.get("registry") or set(original_snapshot.get("metadata", {})) - {"storage_format_version"}:
                 _block("restore_requires_empty_database", "target")
             staged = True
+            stage, operation = "target_import", "store.restore_snapshot"
             store.restore_snapshot(snapshot)
-            if not _equal(store.export_snapshot(), snapshot):
+            stage, operation = "target_readback", "store.export_snapshot"
+            readback = store.export_snapshot()
+            operation = "compare_restore_snapshot"
+            if not _equal(readback, snapshot):
                 _block("restore_postgres_readback_mismatch", "target")
             report["readback_verified"] = True
+            stage, operation = "restore_install", "inventory_before_install"
             if _inventory(root):
                 _block("restore_target_changed", "target")
             for path in list(extracted.iterdir()):
                 if path.name == "postgresql":
                     continue
                 target = root / path.name
+                operation = "install_restored_files"
                 os.replace(path, target)
                 installed.append(target)
-            validate_postgres_seed(app, store.export_snapshot(), root)
+            stage, operation = "target_readback", "store.export_snapshot"
+            readback = store.export_snapshot()
+            operation = "validate_installed_postgres_seed"
+            validate_postgres_seed(app, readback, root)
             restore_id = uuid.uuid4().hex
             report.update({"status": "activated", "activated": True, "restore_id": restore_id,
                            "verified_at": datetime.now(timezone.utc).isoformat()})
             report_path = root / ".postgresql" / "migration-reports" / ("restore-" + restore_id + ".json")
+            stage, operation = "activation", "write_restore_report"
             _atomic_json(report_path, report)
+            operation = "write_storage_marker"
             _atomic_json(root / "storage.json", {"version": 1, "backend": "managed-postgresql", "restore_id": restore_id,
                                                 "verified_at": report["verified_at"], "report_path": str(report_path)})
             return report
     except Exception as exc:
-        report.update(status="blocked", activated=False)
+        report.update(status="blocked", activated=False, stage=stage, operation=operation)
         if staged and original_snapshot is not None:
             try:
                 store.restore_snapshot(original_snapshot)
                 report["target_rolled_back"] = True
-            except Exception:
+            except Exception as rollback_exc:
                 report["target_rolled_back"] = False
-                report["issues"].append({"code": "target_rollback_failed", "location": "target"})
+                report["issues"].append(_failure_issue(rollback_exc, "target_rollback_failed", "target",
+                                                        stage="target_rollback", operation="store.restore_snapshot"))
         for path in installed:
-            if path.is_dir():
-                shutil.rmtree(path)
-            else:
-                path.unlink(missing_ok=True)
-        report["issues"].append({"code": exc.code if isinstance(exc, MigrationBlocked) else "backup_restore_error",
-                                 "location": exc.location if isinstance(exc, MigrationBlocked) else type(exc).__name__})
+            try:
+                if path.is_dir():
+                    shutil.rmtree(path)
+                else:
+                    path.unlink(missing_ok=True)
+            except Exception as cleanup_exc:
+                report["issues"].append(_failure_issue(cleanup_exc, "restore_cleanup_failed", "target",
+                                                        stage="restore_cleanup", operation="remove_installed_files"))
+        report["issues"].append(_failure_issue(exc, "backup_restore_error", type(exc).__name__,
+                                               stage=stage, operation=operation))
         return report
 
 
@@ -720,44 +863,72 @@ def cli_main(argv=None, *, app=None) -> int:
     if args.report and args.report.expanduser().resolve().is_relative_to(root):
         parser.error("--report must be outside the source workspace")
     imported_app = app is None
-    if imported_app:
-        import SchemaCraft as app
+    report = {"version": 1, "status": "blocked", "activated": False, "issues": []}
+    runtime, store = None, None
+    stage, operation = "migration_setup", "import_application"
     try:
+        if imported_app:
+            import SchemaCraft as app
+        operation = "acquire_application_instance"
         if imported_app and (args.apply or args.restore_backup) and not app.acquire_single_instance():
             _block("close_running_application_first", "application")
         app.DATA_DIR = root
+        if args.apply or args.restore_backup:
+            report["postgres_log_path"] = str(root / ".postgresql" / "postgres.log")
         if args.restore_backup:
             # Reject damaged/unsafe archives before provisioning a server.
+            stage, operation = "restore_preflight", "create_restore_staging_directory"
             with tempfile.TemporaryDirectory(prefix="schemacraft-restore-preflight-") as temporary:
+                operation = "extract_backup"
                 snapshot = _extract_backup(args.restore_backup.expanduser().resolve(), Path(temporary))
+                operation = "validate_postgres_seed"
                 validate_postgres_seed(app, snapshot, Path(temporary))
-            report = {"status": "verified_backup"}
+            report["status"] = "verified_backup"
         else:
+            stage, operation = "source_preflight", "read_workspace_catalog"
             app.WORKSPACE_MANAGER = readonly_workspace(root)
+            operation = "migrate_workspace"
             report = migrate_workspace(app, None, activate=False)
         if args.restore_backup or (args.apply and report["status"] == "verified_source"):
+            stage, operation = "migration_setup", "import_postgres_runtime"
             from schemacraft_postgres_runtime import ManagedPostgres
+            operation = "import_postgres_store"
             from schemacraft_storage import PostgresStore
+            operation = "create_managed_runtime"
+            report["postgres_log_path"] = str(root / ".postgresql" / "postgres.log")
             runtime = ManagedPostgres(app.BASE_DIR, root)
-            try:
-                dsn = runtime.start()
-                store = PostgresStore(dsn)
-                try:
-                    report = (restore_backup(app, store, args.restore_backup.expanduser().resolve(), data_dir=root)
-                              if args.restore_backup else migrate_workspace(app, store, activate=True, diagnostic_root=args.final_data_dir))
-                finally:
-                    store.close()
-            finally:
-                runtime.stop()
+            operation = "runtime.start"
+            dsn = runtime.start()
+            operation = "create_postgres_store"
+            store = PostgresStore(dsn)
+            stage = "restore" if args.restore_backup else "migration"
+            operation = "restore_backup" if args.restore_backup else "migrate_workspace"
+            report = (restore_backup(app, store, args.restore_backup.expanduser().resolve(), data_dir=root)
+                      if args.restore_backup else migrate_workspace(app, store, activate=True, diagnostic_root=args.final_data_dir))
     except Exception as exc:
-        # Driver/server failures must not leak conninfo or managed credentials.
-        report = {"version": 1, "status": "blocked", "activated": False,
-                  "issues": [{"code": exc.code if isinstance(exc, MigrationBlocked) else "migration_setup_failed", "location": exc.location if isinstance(exc, MigrationBlocked) else type(exc).__name__}]}
+        _record_failure(report, exc, "migration_setup_failed", stage=stage, operation=operation)
+    finally:
+        # Cleanup failures must not replace the primary migration failure. Both
+        # cleanup steps run independently, including when connection setup fails.
+        if store is not None:
+            try:
+                store.close()
+            except Exception as exc:
+                _record_failure(report, exc, "migration_cleanup_failed", stage="migration_cleanup", operation="store.close")
+        if runtime is not None:
+            try:
+                runtime.stop()
+            except Exception as exc:
+                _record_failure(report, exc, "migration_cleanup_failed", stage="migration_cleanup", operation="runtime.stop")
     output = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.report:
         try:
             args.report.expanduser().write_text(output, encoding="utf-8")
-        except OSError:
+        except OSError as exc:
+            report.setdefault("issues", []).append(_failure_issue(exc, "report_write_failed", "report",
+                                                                   stage="report_write", operation="write_requested_report"))
+            report["report_write_failed"] = True
+            output = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
             sys.stdout.write(output)
             sys.stderr.write("Unable to write the requested report file.\n")
             return 2

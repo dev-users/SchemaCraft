@@ -32,6 +32,23 @@ MANIFEST_NAME = "runtime-manifest.json"
 REQUIRED_TOOLS = ("postgres", "initdb", "pg_ctl", "pg_isready", "pg_controldata", "psql", "pg_dump", "pg_restore")
 
 
+def prepare_packaged_process_environment(base_dir: Path) -> tuple[str, ...]:
+    """Isolate a private portable process before driver imports or threads.
+
+    This never changes machine/user environment settings. Source development
+    runs retain their environment; deployed apps use their managed connection
+    rather than unrelated libpq defaults inherited from the desktop.
+    """
+    if not (Path(base_dir) / "portable-runtime.json").is_file():
+        return ()
+    removed = []
+    for name in tuple(os.environ):
+        if name.upper().startswith("PG") or name.upper() == "PSYCOPG_IMPL":
+            os.environ.pop(name, None)
+            removed.append(name)
+    return tuple(sorted(removed))
+
+
 class PostgresRuntimeError(RuntimeError):
     """An actionable, credential-free local runtime failure."""
 

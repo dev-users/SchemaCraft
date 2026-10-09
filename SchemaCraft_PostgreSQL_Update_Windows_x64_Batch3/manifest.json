@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "update_id": "SchemaCraft-PostgreSQL-2026.10.09-Windows-Batch-2",
+  "update_id": "SchemaCraft-PostgreSQL-2026.10.09-Windows-Batch-3",
   "platform": "windows-x86_64",
   "application_command": [
     "vendor/python/pythonw.exe",
@@ -35,8 +35,8 @@
     },
     {
       "path": "SchemaCraft.py",
-      "sha256": "768b9c3461fdec4f073600ad83ae315d055e7b5066556f383083971dd58db808",
-      "size": 531518,
+      "sha256": "715c9231d656429fcc08cc9eb16dafec1ba93bcbde1509720eae16e7167cab69",
+      "size": 531807,
       "mode": 420
     },
     {
@@ -1229,7 +1229,7 @@
     },
     {
       "path": "portable-runtime.json",
-      "sha256": "d415eccf2fa1a4f5dee6c463edc1661e32bede0a6ce2208806648be13a8feb71",
+      "sha256": "7e8232a8b801ec652345217c2222aa48a2526a7eb87eb227f5d57354ed9e0766",
       "size": 130,
       "mode": 420
     },
@@ -5867,14 +5867,14 @@
     },
     {
       "path": "schemacraft_migration.py",
-      "sha256": "9adaa8cebb5a4735b75dcd302d23262d080add841a3b8c96165b47b5da0fc8c1",
-      "size": 43423,
+      "sha256": "31dc71d21ad18fec700c87f960dcfabf7d134a7f89b6202ce417765bda0cb3ea",
+      "size": 53177,
       "mode": 420
     },
     {
       "path": "schemacraft_postgres_runtime.py",
-      "sha256": "20294959d53d4201b9b70745eb45d65110500b10277f1c0bcc6fb44a88c46472",
-      "size": 34997,
+      "sha256": "357c61d8bfe19d788ddd8121f128619f155af93b4ea47bc91795016c10031f00",
+      "size": 35702,
       "mode": 420
     },
     {
@@ -5921,8 +5921,8 @@
     },
     {
       "path": "schemacraft_storage.py",
-      "sha256": "9f867b7107d446f7d9266785922aca6c2abf6f58173ec44f92b9486439b6d062",
-      "size": 29413,
+      "sha256": "8fb703911593cbff458c385f257105399f9242b75787098aadbdc0049616507d",
+      "size": 29920,
       "mode": 420
     },
     {
@@ -16981,7 +16981,7 @@
   "obsolete_launcher_files": [
     "SchemaCraft.exe"
   ],
-  "windows_compatibility_execution": "Wine 9.0 GUI and batch startup; Wine 11.0 PostgreSQL migration and Unicode paths. See VERIFICATION.md.",
+  "windows_compatibility_execution": "Wine 11 Windows binaries; synthetic exact company folder path and inherited client settings. See VERIFICATION.md.",
   "minimum_windows_version": [
     10,
     0,

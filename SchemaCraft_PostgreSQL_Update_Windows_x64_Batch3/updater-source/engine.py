@@ -537,11 +537,71 @@ def _command(base, declared):
     return command
 
 
+def _migration_failure_summary(result):
+    """Render only fixed diagnostic categories, never exception messages/data."""
+    stages = {"source_preflight", "backup", "target_initialization", "target_inspection", "target_import",
+              "target_readback", "source_recheck", "activation", "target_rollback", "restore_preflight",
+              "restore_install", "restore_cleanup", "migration_setup", "migration_cleanup", "report_write"}
+    operations = {"resolve_workspace", "acquire_workbook_lock", "inventory_source", "read_workspace_catalog",
+                  "read_schema_definition", "validate_excel_dataset", "validate_excel_registry", "validate_attachments",
+                  "summarize_source", "recheck_source_inventory", "backup_originals", "store.initialize",
+                  "store.export_snapshot", "verify_target_empty_or_identical", "store.restore_snapshot",
+                  "compare_snapshot", "store.read_schema", "compare_schema", "store.read_dataset", "compare_dataset",
+                  "store.read_registry", "compare_registry", "inventory_before_activation", "write_migration_report",
+                  "write_storage_marker", "prepare_empty_workspace", "inventory_restore_target",
+                  "create_restore_staging_directory", "extract_backup", "validate_postgres_seed",
+                  "prepare_schema_projections", "verify_restore_target_empty", "compare_restore_snapshot",
+                  "inventory_before_install", "install_restored_files", "validate_installed_postgres_seed",
+                  "write_restore_report", "remove_installed_files", "import_application", "acquire_application_instance",
+                  "migrate_workspace", "import_postgres_runtime", "import_postgres_store", "create_managed_runtime",
+                  "runtime.start", "create_postgres_store", "restore_backup", "store.close", "runtime.stop",
+                  "write_requested_report"}
+    exceptions = {"StorageError", "StorageConflict", "MigrationBlocked", "PostgresRuntimeError", "ImportError",
+                  "ModuleNotFoundError", "OperationalError", "InterfaceError", "ProgrammingError", "DataError",
+                  "IntegrityError", "InternalError", "NotSupportedError", "DatabaseError", "Error", "OSError",
+                  "PermissionError", "FileNotFoundError", "FileExistsError", "NotADirectoryError", "IsADirectoryError",
+                  "TimeoutError", "ConnectionError", "ConnectionRefusedError", "ConnectionResetError", "BrokenPipeError",
+                  "ValueError", "TypeError", "KeyError", "RuntimeError", "OverflowError", "RecursionError",
+                  "UnicodeDecodeError", "UnicodeEncodeError", "JSONDecodeError", "TimeoutExpired"}
+    reasons = {"repository_closed", "driver_unavailable", "unsupported_storage_format", "failed_transaction"}
+    if not isinstance(result, dict) or not isinstance(result.get("issues"), list):
+        return ""
+    for issue in result["issues"]:
+        if not isinstance(issue, dict) or not isinstance(issue.get("diagnostic"), dict):
+            continue
+        diagnostic, details = issue["diagnostic"], []
+        stage = issue.get("stage", result.get("stage"))
+        operation = issue.get("operation", result.get("operation"))
+        if isinstance(stage, str) and stage in stages:
+            details.append("stage: " + stage)
+        if isinstance(operation, str) and operation in operations:
+            details.append("operation: " + operation)
+        reason = diagnostic.get("validation_code")
+        if isinstance(reason, str) and reason in reasons:
+            details.append("reason: " + reason)
+        else:
+            sqlstate = diagnostic.get("sqlstate")
+            if isinstance(sqlstate, str) and re.fullmatch(r"[0-9A-Z]{5}", sqlstate):
+                details.append("SQLSTATE: " + sqlstate)
+            for field in ("winerror", "errno"):
+                code = diagnostic.get(field)
+                if type(code) is int and 0 <= code <= 65535:
+                    details.append(field + ": " + str(code))
+        root_cause = diagnostic.get("root_cause_type", diagnostic.get("exception_type"))
+        if isinstance(root_cause, str) and root_cause in exceptions:
+            details.append("root cause: " + root_cause)
+        if details:
+            return " Diagnostic " + "; ".join(details) + "."
+    return ""
+
+
 def _run(base, declared, data, report, action, emit=None, phase="preflight", timeout=14400):
     command = _command(base, declared) + ["--data-dir", str(data), "--report", str(report)] + action
     env = dict(os.environ)
-    for key in ("SCHEMACRAFT_POSTGRES_BIN", "SCHEMACRAFT_POSTGRES_DEV", "PYTHONPATH", "PYTHONHOME"):
-        env.pop(key, None)
+    isolated = {"SCHEMACRAFT_POSTGRES_BIN", "SCHEMACRAFT_POSTGRES_DEV", "PYTHONPATH", "PYTHONHOME", "PSYCOPG_IMPL"}
+    for key in list(env):
+        if key.upper() in isolated or key.upper().startswith("PG"):
+            env.pop(key)
     env["PYTHONNOUSERSITE"] = "1"
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     creationflags = 0x08000000 if os.name == "nt" else 0
@@ -573,7 +633,7 @@ def _run(base, declared, data, report, action, emit=None, phase="preflight", tim
         raise UpdateError("The packaged application did not produce a verification report.")
     result = _read_json(report)
     if process.returncode != 0:
-        error = UpdateError(f"Verification blocked. Review the report: {report}")
+        error = UpdateError(f"Verification blocked.{_migration_failure_summary(result)} Review the report: {report}")
         error.report = str(report)
         raise error
     return result
@@ -615,12 +675,30 @@ def _verified_probe(report):
 
 
 def _workspace_path(target, update_id):
-    parent = target.parent / ".schemacraft-update-backups" / _key(target)
+    parent = target.parent / ".scu" / _key(target)
     if _linked(parent.parent) or _linked(parent):
         raise UpdateError("The private update backup directory must not be linked or a junction.")
     # Keep the full update ID in the journal rather than adding it to every
     # runtime path. PostgreSQL's Windows file APIs still impose path limits.
     return parent / uuid.uuid4().hex
+
+
+def _check_windows_runtime_paths(target, stage, entries):
+    """Block native loader paths before copying any original installation."""
+    if _host() != "windows-x86_64":
+        return
+    for relative in entries:
+        if PurePosixPath(relative).suffix.casefold() not in {".dll", ".pyd", ".exe"}:
+            continue
+        parts = _relative(relative)
+        for base in (target, stage):
+            native_path = base.joinpath(*parts)
+            # MAX_PATH includes the terminating NUL. Extended-path filesystem
+            # support does not establish native DLL loader support.
+            if len(str(native_path)) >= 260:
+                raise UpdateError("A required Windows runtime file would have a path of 260 characters or more. "
+                                  "Move the application to a shorter parent folder and retry. "
+                                  "No backup or migration was started.")
 
 
 def _pending(target):
@@ -681,11 +759,13 @@ def apply(target, package=None, emit=None):
         backend = _backend(target)
         original = _inventory(target, emit)
         work = _workspace_path(target, manifest["update_id"])
+        # Exercise the full final basename without the old lengthy work root.
+        stage = work / ("staged-" + target.name)
+        _check_windows_runtime_paths(target, stage, entries)
         work.mkdir(parents=True, mode=0o700)
         _secure_work(work)
         # Exercise the final folder's characters before publication: Windows
         # runtime tools must handle the same Unicode and shell-sensitive name.
-        stage = work / ("staged-" + target.name)
         backup, retired = work / "application-backup", work / "retired-installation"
         journal = {"format_version": 1, "status": "preflight", "target": str(target), "work": str(work),
                    "stage": str(stage), "backup": str(backup), "retired": str(retired),
@@ -813,7 +893,11 @@ def _validated_journal(target):
             or journal.get("platform") != _host()):
         raise UpdateError("The recovery journal does not belong to this installation/platform.")
     work = Path(journal.get("work", ""))
-    expected_parent = target.parent / ".schemacraft-update-backups" / _key(target)
+    allowed_parents = {target.parent / name / _key(target)
+                       for name in (".scu", ".schemacraft-update-backups")}
+    if not work.is_absolute() or work.parent not in allowed_parents:
+        raise UpdateError("Unsafe recovery workspace.")
+    expected_parent = work.parent
     for directory in (expected_parent, expected_parent.parent, work):
         if _linked(directory):
             raise UpdateError("Linked recovery parent directories are unsafe.")

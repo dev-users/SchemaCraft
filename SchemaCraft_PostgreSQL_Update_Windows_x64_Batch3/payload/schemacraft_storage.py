@@ -18,10 +18,18 @@ from typing import Any, Iterator
 
 FORMAT_VERSION = 1
 _WRITE_LOCK = 2072409279001
+SAFE_VALIDATION_CODES = frozenset({
+    "repository_closed", "driver_unavailable", "unsupported_storage_format",
+    "failed_transaction",
+})
 
 
 class StorageError(ValueError):
     """A persistence or integrity failure safe for the application's error path."""
+
+    def __init__(self, *args: Any, validation_code: str | None = None):
+        super().__init__(*args)
+        self.validation_code = validation_code if validation_code in SAFE_VALIDATION_CODES else None
 
 
 class StorageConflict(StorageError):
@@ -230,7 +238,7 @@ class PostgresStore:
     def _connection(self, *, readonly: bool = False, wrap_errors: bool = True) -> Iterator[Any]:
         with self._state_lock:
             if self._closed:
-                raise StorageError("PostgreSQL repository is closed")
+                raise StorageError("PostgreSQL repository is closed", validation_code="repository_closed")
         state = self._transaction_state.get()
         if state is not None:
             try:
@@ -247,7 +255,7 @@ class PostgresStore:
         try:
             import psycopg
         except ImportError as exc:
-            raise StorageError("PostgreSQL support requires the bundled psycopg 3 driver") from exc
+            raise StorageError("PostgreSQL support requires the bundled psycopg 3 driver", validation_code="driver_unavailable") from exc
         connection = None
         try:
             connection = psycopg.connect(self.dsn, connect_timeout=15, application_name="SchemaCraft")
@@ -291,7 +299,7 @@ class PostgresStore:
                 try:
                     yield self
                     if state["failed"]:
-                        raise StorageError("The PostgreSQL transaction contains a failed operation")
+                        raise StorageError("The PostgreSQL transaction contains a failed operation", validation_code="failed_transaction")
                 finally:
                     self._transaction_state.reset(token)
         except BaseException:
@@ -333,7 +341,7 @@ class PostgresStore:
             connection.execute(_DDL)
             row = connection.execute("SELECT value_text FROM schemacraft.metadata WHERE name = 'storage_format_version'").fetchone()
             if row and json.loads(row[0]) != FORMAT_VERSION:
-                raise StorageError("Unsupported PostgreSQL storage format version")
+                raise StorageError("Unsupported PostgreSQL storage format version", validation_code="unsupported_storage_format")
             encoded = _encode(FORMAT_VERSION)
             connection.execute("INSERT INTO schemacraft.metadata(name,value,value_text) VALUES ('storage_format_version',%s::jsonb,%s) ON CONFLICT (name) DO NOTHING", (encoded, encoded))
 
