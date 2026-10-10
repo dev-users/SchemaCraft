@@ -17356,7 +17356,16 @@ button.alert-copy-id:focus-visible { outline: 2px solid var(--primary); }
 /* Keep preset filters as one counted-value combobox, including state choices. */
 .entry-search-counted-field > .entry-control-surface { width: 100%; min-width: 0; }
 .entry-search-counted-field > .entry-control-surface > .control { width: 100%; }
-.entry-search-suggestions { max-height: 220px; }
+.entry-search-suggestions {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  box-sizing: border-box;
+  max-height: 220px;
+  max-width: calc(100vw - 16px);
+  z-index: 10000;
+  font-size: 0.78rem;
+}
 .entry-search-suggestion.is-active { background: var(--primary-soft); }
 .entry-search-suggestion > span { min-width: 0; overflow-wrap: anywhere; }
 .entry-search-suggestion > small { flex: 0 0 auto; }

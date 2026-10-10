@@ -16526,13 +16526,102 @@ function entrySearchControlValue(control, field) {
   return value;
 }
 
+function entrySearchMenu(wrapper) {
+  return wrapper._entrySearchMenu || wrapper.querySelector("[data-entry-search-suggestions]");
+}
+
+function openEntrySearchOverlay(wrapper) {
+  const menu = entrySearchMenu(wrapper);
+  const control = wrapper.querySelector("[data-value-control]");
+  const labelStyle = window.getComputedStyle(wrapper.querySelector("label"));
+  menu.style.fontSize = labelStyle.fontSize;
+  menu.style.fontFamily = labelStyle.fontFamily;
+  menu.style.direction = window.getComputedStyle(control).direction;
+  menu.hidden = false;
+  // A top-layer menu escapes the scrolling sidebar without changing its height.
+  // Older browsers use a body portal while keeping the same combobox/listbox IDs.
+  if (typeof menu.showPopover === "function") {
+    menu.setAttribute("popover", "manual");
+    menu.showPopover();
+  } else {
+    menu.removeAttribute("popover");
+    document.body.append(menu);
+  }
+  let frame = 0;
+  const position = () => {
+    frame = 0;
+    if (!wrapper.isConnected || !control.getClientRects().length) {
+      closeEntrySearchSuggestions(wrapper); return;
+    }
+    const rect = control.getBoundingClientRect();
+    const viewport = window.visualViewport;
+    const left = (viewport?.offsetLeft || 0) + 8;
+    const top = (viewport?.offsetTop || 0) + 8;
+    const right = left + (viewport?.width || window.innerWidth) - 16;
+    const bottom = top + (viewport?.height || window.innerHeight) - 16;
+    let visibleTop = top, visibleBottom = bottom;
+    let visibleLeft = left, visibleRight = right;
+    for (let parent = control.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+      const style = window.getComputedStyle(parent);
+      const bounds = parent.getBoundingClientRect();
+      if (/(auto|scroll|hidden|clip)/.test(style.overflowY)) {
+        visibleTop = Math.max(visibleTop, bounds.top);
+        visibleBottom = Math.min(visibleBottom, bounds.bottom);
+      }
+      if (/(auto|scroll|hidden|clip)/.test(style.overflowX)) {
+        visibleLeft = Math.max(visibleLeft, bounds.left);
+        visibleRight = Math.min(visibleRight, bounds.right);
+      }
+    }
+    if (rect.bottom <= visibleTop || rect.top >= visibleBottom || rect.right <= visibleLeft || rect.left >= visibleRight) {
+      closeEntrySearchSuggestions(wrapper); return;
+    }
+    menu.style.width = `${Math.min(rect.width, Math.max(0, right - left))}px`;
+    const desiredHeight = Math.min(220, menu.scrollHeight + 2);
+    const below = Math.max(0, bottom - rect.bottom - 4);
+    const above = Math.max(0, rect.top - top - 4);
+    const openAbove = below < desiredHeight && above > below;
+    menu.style.maxHeight = `${Math.min(220, openAbove ? above : below)}px`;
+    const height = menu.getBoundingClientRect().height;
+    menu.style.left = `${Math.max(left, Math.min(rect.left, right - menu.getBoundingClientRect().width))}px`;
+    menu.style.top = `${openAbove ? rect.top - height - 4 : rect.bottom + 4}px`;
+  };
+  const schedule = event => {
+    if (event?.target instanceof window.Node && menu.contains(event.target)) return;
+    if (!frame) frame = window.requestAnimationFrame(position);
+  };
+  const resize = typeof ResizeObserver === "function" ? new ResizeObserver(schedule) : null;
+  resize?.observe(control);
+  window.addEventListener("resize", schedule);
+  document.addEventListener("scroll", schedule, true);
+  window.visualViewport?.addEventListener("resize", schedule);
+  window.visualViewport?.addEventListener("scroll", schedule);
+  wrapper._entrySearchPosition = schedule;
+  wrapper._entrySearchOverlayCleanup = () => {
+    window.cancelAnimationFrame(frame);
+    resize?.disconnect();
+    window.removeEventListener("resize", schedule);
+    document.removeEventListener("scroll", schedule, true);
+    window.visualViewport?.removeEventListener("resize", schedule);
+    window.visualViewport?.removeEventListener("scroll", schedule);
+    delete wrapper._entrySearchPosition;
+    delete wrapper._entrySearchOverlayCleanup;
+  };
+  position();
+}
+
 function closeEntrySearchSuggestions(wrapper) {
-  const menu = wrapper.querySelector("[data-entry-search-suggestions]");
+  const menu = entrySearchMenu(wrapper);
   const control = wrapper.querySelector("[data-value-control]");
   wrapper._entrySearchRequest = Number(wrapper._entrySearchRequest || 0) + 1;
   wrapper._entrySearchAbort?.abort();
   window.clearTimeout(wrapper._entrySearchTimer);
-  if (menu) menu.hidden = true;
+  wrapper._entrySearchOverlayCleanup?.();
+  if (menu) {
+    if (typeof menu.hidePopover === "function" && menu.matches(":popover-open")) menu.hidePopover();
+    menu.hidden = true;
+    if (menu.parentElement !== wrapper) wrapper.append(menu);
+  }
   if (control) {
     control.setAttribute("aria-expanded", "false");
     control.removeAttribute("aria-activedescendant");
@@ -16551,7 +16640,7 @@ function setEntrySearchSelection(wrapper, field, mode = "ignore", value = "") {
 }
 
 function entrySearchSuggestionButton(wrapper, field, mode, label, value, count) {
-  const menu = wrapper.querySelector("[data-entry-search-suggestions]");
+  const menu = entrySearchMenu(wrapper);
   const button = document.createElement("button");
   button.type = "button";
   button.className = "shared-filter-suggestion entry-search-suggestion";
@@ -16584,7 +16673,7 @@ function entrySearchSuggestionButton(wrapper, field, mode, label, value, count) 
 
 async function entrySearchSuggestions(wrapper, field, query = "") {
   closeEntrySearchSuggestions(wrapper);
-  const menu = wrapper.querySelector("[data-entry-search-suggestions]");
+  const menu = entrySearchMenu(wrapper);
   const control = wrapper.querySelector("[data-value-control]");
   const schemaId = state.activeSchemaId || state.schema?.schema_id || "";
   const request = wrapper._entrySearchRequest;
@@ -16598,8 +16687,8 @@ async function entrySearchSuggestions(wrapper, field, query = "") {
   loading.textContent = scText("جاري تحميل القيم…");
   loading.setAttribute("role", "status");
   menu.append(loading);
-  menu.hidden = false;
   control.setAttribute("aria-expanded", "true");
+  openEntrySearchOverlay(wrapper);
   const headers = schemaId ? { "X-Schema-ID": schemaId } : {};
   const current = () => wrapper._entrySearchRequest === request && wrapper.isConnected &&
     schemaId === (state.activeSchemaId || state.schema?.schema_id || "");
@@ -16639,7 +16728,10 @@ async function entrySearchSuggestions(wrapper, field, query = "") {
         more.disabled = false;
         more.textContent = scText("تعذّر تحميل المزيد. انقر لإعادة المحاولة.");
       } else loading.textContent = scText("تعذّر تحميل القيم. يمكنك كتابة معيار البحث أو اختيار حالة الحقل.");
-    } finally { loadingPage = false; }
+    } finally {
+      loadingPage = false;
+      if (current()) wrapper._entrySearchPosition?.();
+    }
   };
   await loadPage();
 }
@@ -16671,8 +16763,10 @@ function createEntrySearchField(field, categoryId) {
   menu.dataset.entrySearchSuggestions = field.id;
   menu.id = `${control.id}-suggestions`;
   menu.setAttribute("role", "listbox");
+  menu.setAttribute("popover", "manual");
   menu.setAttribute("aria-label", displayLabel(field));
   menu.hidden = true;
+  wrapper._entrySearchMenu = menu;
   control.setAttribute("aria-controls", menu.id);
   surface.append(control);
   wrapper.append(label, surface, menu);
@@ -16712,7 +16806,10 @@ function createEntrySearchField(field, categoryId) {
       const next = event.key === "ArrowDown" ? (current + 1) % buttons.length : current < 0 ? buttons.length - 1 : (current - 1 + buttons.length) % buttons.length;
       buttons.forEach((button, index) => button.classList.toggle("is-active", index === next));
       control.setAttribute("aria-activedescendant", buttons[next].id);
-      buttons[next].scrollIntoView?.({ block: "nearest" });
+      const optionBounds = buttons[next].getBoundingClientRect();
+      const menuBounds = menu.getBoundingClientRect();
+      if (optionBounds.top < menuBounds.top) menu.scrollTop -= menuBounds.top - optionBounds.top;
+      else if (optionBounds.bottom > menuBounds.bottom) menu.scrollTop += optionBounds.bottom - menuBounds.bottom;
     } else if (event.key === "Enter" && !menu.hidden) {
       const selected = menu.querySelector(`[id="${control.getAttribute("aria-activedescendant")}"]`);
       if (selected) { event.preventDefault(); event.stopPropagation(); selected.click(); }

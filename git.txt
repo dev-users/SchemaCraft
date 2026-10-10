@@ -1,0 +1,4 @@
+git add .
+git status --short
+git commit -m "Add Windows graphical PostgreSQL updater7"
+git push -u origin HEAD

@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "update_id": "SchemaCraft-PostgreSQL-Lock-Search-2026.10.10-Windows-Batch-6",
+  "update_id": "SchemaCraft-PostgreSQL-Search-Overlay-2026.10.10-Windows-Batch-7",
   "platform": "windows-x86_64",
   "application_command": [
     "SchemaCraft.exe"
@@ -211,8 +211,8 @@
     },
     {
       "path": "app/app.js",
-      "sha256": "19acd98cb48ec9b83b3fd4a500b524fcf09163db61ea47ac8d4f79928a008206",
-      "size": 1398255,
+      "sha256": "d6049615b25d3c48dd29ff8d3dab8a64f8a9234a7042e1a8da476b8bb230e8f8",
+      "size": 1402808,
       "mode": 420
     },
     {
@@ -301,8 +301,8 @@
     },
     {
       "path": "app/styles.css",
-      "sha256": "0f98260eae4793f02cc94bd775349fb338f7e27f2e97c6d9a0a6c173d1019b8c",
-      "size": 569582,
+      "sha256": "ba10f60d4ecb69163dba127f663ecbd89976b84adcfd017fda574524f2498e0e",
+      "size": 569730,
       "mode": 420
     },
     {
@@ -4892,6 +4892,7 @@
   "windows_compatibility_execution": "Actual Windows frozen executable and portable updater tested under Wine 11; native Microsoft Windows and company data are not available here. See VERIFICATION.md.",
   "release_changes": [
     "internal_application_update_lock",
-    "entry_search_counted_value_picker"
+    "entry_search_counted_value_picker",
+    "entry_search_compact_overlay_dropdown"
   ]
 }

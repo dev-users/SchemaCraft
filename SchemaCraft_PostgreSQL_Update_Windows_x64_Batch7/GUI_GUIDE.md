@@ -1,8 +1,8 @@
-# SchemaCraft PostgreSQL consolidation — Batch 5
+# SchemaCraft PostgreSQL consolidation — Batch 7
 
 1. Extract the entire ZIP to a separate folder. Do not run it inside the ZIP.
 2. Save your work and close SchemaCraft and the workspace's Excel files.
-3. Run `UPDATE.bat`. On Linux, if needed: `chmod +x UPDATE_LINUX.sh SchemaCraft-Updater`, then `./UPDATE_LINUX.sh`.
+3. Run `UPDATE.bat`.
 4. Choose the existing application folder containing `data`. Confirm that the app is closed.
 5. Click **Check data**, then **Update and clean up**.
 6. After successful completion, click **Open SchemaCraft** or open `SchemaCraft.exe` in the updated application folder. The app is already built; no rebuilding or Python installation is required.
